@@ -35,12 +35,29 @@ export interface Database {
         };
         Update: Partial<Database["public"]["Tables"]["user_profiles"]["Row"]>;
       };
+      referrals: {
+        Row: {
+          id: string;
+          referrer_id: string;
+          referee_id: string;
+          reward_xp: number;
+          status: "pending" | "granted";
+          created_at: string;
+        };
+        Insert: Omit<Database["public"]["Tables"]["referrals"]["Row"], "id" | "created_at" | "status"> & {
+          id?: string;
+          created_at?: string;
+          status?: "pending" | "granted";
+        };
+        Update: Partial<Database["public"]["Tables"]["referrals"]["Row"]>;
+      };
     };
   };
 }
 
 type Payment = Database["public"]["Tables"]["payments"]["Row"];
 type UserProfile = Database["public"]["Tables"]["user_profiles"]["Row"];
+type Referral = Database["public"]["Tables"]["referrals"]["Row"];
 
 // Initial seed data
 const SEED_PAYMENTS: Payment[] = [
@@ -50,7 +67,7 @@ const SEED_PAYMENTS: Payment[] = [
     user_id: "user_1",
     amount: 15000,
     sender_name: "Grace Mwangi",
-    created_at: new Date(Date.now() - 3600000 * 2).toISOString(), // 2 hours ago
+    created_at: new Date(Date.now() - 3600000 * 2).toISOString(),
     premium_days: 30,
     status: "pending",
     reviewed_at: null,
@@ -61,7 +78,7 @@ const SEED_PAYMENTS: Payment[] = [
     user_id: "user_2",
     amount: 45000,
     sender_name: "John Kamau",
-    created_at: new Date(Date.now() - 86400000).toISOString(), // 1 day ago
+    created_at: new Date(Date.now() - 86400000).toISOString(),
     premium_days: 90,
     status: "approved",
     reviewed_at: new Date(Date.now() - 86400000 + 3600000).toISOString(),
@@ -72,7 +89,7 @@ const SEED_PAYMENTS: Payment[] = [
     user_id: "user_3",
     amount: 15000,
     sender_name: "Sarah Juma",
-    created_at: new Date(Date.now() - 86400000 * 3).toISOString(), // 3 days ago
+    created_at: new Date(Date.now() - 86400000 * 3).toISOString(),
     premium_days: 30,
     status: "rejected",
     reviewed_at: new Date(Date.now() - 86400000 * 3 + 7200000).toISOString(),
@@ -100,9 +117,21 @@ const SEED_PROFILES: UserProfile[] = [
   },
 ];
 
+const SEED_REFERRALS: Referral[] = [
+  {
+    id: "ref_1",
+    referrer_id: "user_1",
+    referee_id: "user_2",
+    reward_xp: 500,
+    status: "granted",
+    created_at: new Date(Date.now() - 86400000 * 7).toISOString(),
+  },
+];
+
 // Helper keys for AsyncStorage
 const PAYMENTS_KEY = "lingua_mock_payments";
 const PROFILES_KEY = "lingua_mock_profiles";
+const REFERRALS_KEY = "lingua_mock_referrals";
 
 async function initializeStorage() {
   try {
@@ -114,6 +143,10 @@ async function initializeStorage() {
     if (!existingProfiles) {
       await AsyncStorage.setItem(PROFILES_KEY, JSON.stringify(SEED_PROFILES));
     }
+    const existingReferrals = await AsyncStorage.getItem(REFERRALS_KEY);
+    if (!existingReferrals) {
+      await AsyncStorage.setItem(REFERRALS_KEY, JSON.stringify(SEED_REFERRALS));
+    }
   } catch (err) {
     console.error("Failed to seed mock database:", err);
   }
@@ -121,6 +154,15 @@ async function initializeStorage() {
 
 // Automatically invoke setup
 initializeStorage();
+
+function getStorageKey(tableName: string): string {
+  switch (tableName) {
+    case "payments": return PAYMENTS_KEY;
+    case "user_profiles": return PROFILES_KEY;
+    case "referrals": return REFERRALS_KEY;
+    default: return PAYMENTS_KEY;
+  }
+}
 
 class QueryBuilder<T> {
   private tableName: string;
@@ -149,20 +191,17 @@ class QueryBuilder<T> {
     return this;
   }
 
-  async update(values: Partial<T>) {
+  async update(values: Record<string, any>) {
     try {
-      const storageKey = this.tableName === "payments" ? PAYMENTS_KEY : PROFILES_KEY;
+      const storageKey = getStorageKey(this.tableName);
       const rawData = await AsyncStorage.getItem(storageKey);
       const data: any[] = rawData ? JSON.parse(rawData) : [];
 
-      let updatedCount = 0;
       const updatedData = data.map((item) => {
-        // Check equality filters
         const matches = this.equalityFilters.every(
           (filter) => item[filter.column] === filter.value
         );
         if (matches) {
-          updatedCount++;
           return { ...item, ...values };
         }
         return item;
@@ -175,9 +214,9 @@ class QueryBuilder<T> {
     }
   }
 
-  async insert(values: any) {
+  async insert(values: Record<string, any>) {
     try {
-      const storageKey = this.tableName === "payments" ? PAYMENTS_KEY : PROFILES_KEY;
+      const storageKey = getStorageKey(this.tableName);
       const rawData = await AsyncStorage.getItem(storageKey);
       const data: any[] = rawData ? JSON.parse(rawData) : [];
 
@@ -185,7 +224,6 @@ class QueryBuilder<T> {
         id: Math.random().toString(36).substr(2, 9),
         created_at: new Date().toISOString(),
         status: "pending",
-        reviewed_at: null,
         ...values,
       };
 
@@ -197,15 +235,12 @@ class QueryBuilder<T> {
     }
   }
 
-  // Execution method that runs the mock query
   async then(
     onfulfilled?: ((value: { data: any[] | null; error: any }) => any) | null
   ) {
     try {
-      const isPayments = this.tableName === "payments";
-      const mainStorageKey = isPayments ? PAYMENTS_KEY : PROFILES_KEY;
-
-      const mainRaw = await AsyncStorage.getItem(mainStorageKey);
+      const storageKey = getStorageKey(this.tableName);
+      const mainRaw = await AsyncStorage.getItem(storageKey);
       let items: any[] = mainRaw ? JSON.parse(mainRaw) : [];
 
       // Apply equality filters
@@ -217,37 +252,49 @@ class QueryBuilder<T> {
         );
       }
 
-      // Join user_profiles if select contains user_profiles
-      if (isPayments && this.selectColumns.includes("user_profiles")) {
+      // Join user_profiles for payments
+      if (this.tableName === "payments" && this.selectColumns.includes("user_profiles")) {
         const profilesRaw = await AsyncStorage.getItem(PROFILES_KEY);
         const profiles: UserProfile[] = profilesRaw ? JSON.parse(profilesRaw) : [];
 
-        items = items.map((payment) => {
-          const profile = profiles.find((p) => p.id === payment.user_id) || null;
-          return {
-            ...payment,
-            user_profiles: profile,
-          };
+        items = items.map((payment: any) => {
+          const profile = profiles.find((p: UserProfile) => p.id === payment.user_id) || null;
+          return { ...payment, user_profiles: profile };
         });
+      }
+
+      // Join referrer/referee for referrals
+      if (this.tableName === "referrals") {
+        const profilesRaw = await AsyncStorage.getItem(PROFILES_KEY);
+        const profiles: UserProfile[] = profilesRaw ? JSON.parse(profilesRaw) : [];
+
+        if (this.selectColumns.includes("referrer")) {
+          items = items.map((ref: any) => {
+            const referrer = profiles.find((p: UserProfile) => p.id === ref.referrer_id) || null;
+            return { ...ref, referrer };
+          });
+        }
+        if (this.selectColumns.includes("referee")) {
+          items = items.map((ref: any) => {
+            const referee = profiles.find((p: UserProfile) => p.id === ref.referee_id) || null;
+            return { ...ref, referee };
+          });
+        }
       }
 
       // Apply ordering
       if (this.orderColumn) {
         const col = this.orderColumn;
         const ascending = this.orderOptions.ascending !== false;
-        items.sort((a, b) => {
+        items.sort((a: any, b: any) => {
           const valA = a[col];
           const valB = b[col];
           if (valA === valB) return 0;
           if (valA == null) return ascending ? -1 : 1;
           if (valB == null) return ascending ? 1 : -1;
           return ascending
-            ? valA < valB
-              ? -1
-              : 1
-            : valA < valB
-            ? 1
-            : -1;
+            ? valA < valB ? -1 : 1
+            : valA < valB ? 1 : -1;
         });
       }
 

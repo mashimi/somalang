@@ -3,13 +3,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import {
-    ActivityIndicator,
-    Alert,
-    FlatList,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -30,7 +30,7 @@ export default function ReferralsScreen() {
     try {
       const { data, error } = await supabase
         .from("referrals")
-        .select("*, referrer:user_profiles!referrals_referrer_id_fkey(*), referee:user_profiles!referee_id_fkey(*)")
+        .select("*, referrer(*), referee(*)")
         .order("created_at", { ascending: false });
 
       if (error) throw error;
