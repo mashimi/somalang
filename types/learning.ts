@@ -13,7 +13,8 @@ export type ActivityType =
   | "vocabulary"
   | "translate"
   | "multiple-choice"
-  | "listen";
+  | "listen"
+  | "flashcard";
 
 export interface VocabularyItem {
   word: string;

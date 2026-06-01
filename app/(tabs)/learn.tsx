@@ -16,6 +16,7 @@ import { images } from "@/constants/images";
 import { colors } from "@/constants/theme";
 import { LESSONS } from "@/data/lessons";
 import { UNITS } from "@/data/units";
+import { LANGUAGES } from "@/data/languages";
 import { useLanguageStore } from "@/store/languageStore";
 import { useLearningStore } from "@/store/learningStore";
 import { Lesson } from "@/types/learning";
@@ -25,22 +26,22 @@ export default function LearnScreen() {
   const { selectedLanguage } = useLanguageStore();
   const { completedLessonIds } = useLearningStore();
 
-  const unit = UNITS.find((u) => u.languageCode === selectedLanguage);
-  const lessons = unit
-    ? (unit.lessonIds
-        .map((id) => LESSONS.find((l) => l.id === id))
-        .filter(Boolean) as Lesson[])
-    : [];
+  const language = LANGUAGES.find((l) => l.code === selectedLanguage);
+  const languageName = language ? language.name : "Language";
 
-  const completedCount = lessons.filter((l) =>
+  const units = UNITS.filter((u) => u.languageCode === selectedLanguage);
+  
+  const allLessons = units.flatMap((u) =>
+    u.lessonIds
+      .map((id) => LESSONS.find((l) => l.id === id))
+      .filter(Boolean) as Lesson[]
+  );
+
+  const completedCount = allLessons.filter((l) =>
     completedLessonIds.includes(l.id)
   ).length;
 
-  const inProgressIndex = lessons.findIndex(
-    (l) => !completedLessonIds.includes(l.id)
-  );
-
-  if (!selectedLanguage || !unit) {
+  if (!selectedLanguage || units.length === 0) {
     return (
       <SafeAreaView
         style={{ flex: 1, backgroundColor: colors.neutral.background }}
@@ -77,14 +78,15 @@ export default function LearnScreen() {
             className="flex-1 text-center font-poppins-semibold text-base text-text-primary"
             numberOfLines={1}
           >
-            {unit.title}
+            {languageName} Course
           </Text>
 
           <TouchableOpacity
+            onPress={() => router.push("/admin/login")}
             hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
           >
             <Ionicons
-              name="bookmark-outline"
+              name="shield-checkmark-outline"
               size={22}
               color={colors.neutral.textPrimary}
             />
@@ -92,7 +94,7 @@ export default function LearnScreen() {
         </View>
 
         <Text className="caption text-center">
-          Unit {unit.order} · {completedCount}/{lessons.length} lessons
+          {units.length} {units.length === 1 ? "Unit" : "Units"} · {completedCount}/{allLessons.length} lessons completed
         </Text>
       </View>
 
@@ -128,22 +130,41 @@ export default function LearnScreen() {
           </View>
         </View>
 
-        {/* Lesson cards */}
-        <View className="gap-3">
-          {lessons.map((lesson, index) => (
-            <LessonCard
-              key={lesson.id}
-              lesson={lesson}
-              index={index}
-              isCompleted={completedLessonIds.includes(lesson.id)}
-              isInProgress={
-                !completedLessonIds.includes(lesson.id) &&
-                index === inProgressIndex
-              }
-              onPress={() => router.push(`/lesson/${lesson.id}`)}
-            />
-          ))}
-        </View>
+        {/* Render Units */}
+        {units.map((unit) => {
+          const unitLessons = unit.lessonIds
+            .map((id) => LESSONS.find((l) => l.id === id))
+            .filter(Boolean) as Lesson[];
+
+          const unitInProgressIndex = unitLessons.findIndex(
+            (l) => !completedLessonIds.includes(l.id)
+          );
+
+          return (
+            <View key={unit.id} style={styles.unitContainer}>
+              <View style={styles.unitHeader}>
+                <Text style={styles.unitTitle}>{unit.title}</Text>
+                <Text style={styles.unitDescription}>{unit.description}</Text>
+              </View>
+
+              <View className="gap-3">
+                {unitLessons.map((lesson, index) => (
+                  <LessonCard
+                    key={lesson.id}
+                    lesson={lesson}
+                    index={index}
+                    isCompleted={completedLessonIds.includes(lesson.id)}
+                    isInProgress={
+                      !completedLessonIds.includes(lesson.id) &&
+                      index === unitInProgressIndex
+                    }
+                    onPress={() => router.push(`/lesson/${lesson.id}`)}
+                  />
+                ))}
+              </View>
+            </View>
+          );
+        })}
       </ScrollView>
     </SafeAreaView>
   );
@@ -171,5 +192,35 @@ const styles = StyleSheet.create({
     right: 16,
     width: 110,
     height: 110,
+  },
+  unitContainer: {
+    marginBottom: 24,
+    backgroundColor: "#ffffff",
+    borderRadius: 20,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 6,
+    elevation: 2,
+  },
+  unitHeader: {
+    marginBottom: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: "#f3f4f6",
+    paddingBottom: 12,
+  },
+  unitTitle: {
+    fontFamily: "Poppins-Bold",
+    fontSize: 18,
+    color: "#001328",
+  },
+  unitDescription: {
+    fontFamily: "Poppins-Regular",
+    fontSize: 13,
+    color: "#6b7280",
+    marginTop: 2,
   },
 });

@@ -1,4 +1,5 @@
 import { Lesson } from '@/types/learning';
+import { ALL_GERMAN_LESSONS } from './lessons-de';
 
 export const LESSONS: Lesson[] = [
   // ─── Spanish ───────────────────────────────────────────────────────────────
@@ -1011,4 +1012,5 @@ export const LESSONS: Lesson[] = [
       topics: ['food', 'drinks', 'ordering', 'café phrases', 'polite German'],
     },
   },
+  ...ALL_GERMAN_LESSONS,
 ];
