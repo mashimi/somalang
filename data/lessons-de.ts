@@ -1,1733 +1,729 @@
 import { Lesson } from "@/types/learning";
 
-// ============ A1 - BEGINNER (5 Lessons) ============
+// ═══════════════════════════════════════════════════════════
+// 🇩🇪 A1 - BEGINNER (MWANZISHI) - 5 Lessons
+// ═══════════════════════════════════════════════════════════
+
 export const GERMAN_A1_LESSONS: Lesson[] = [
   {
     id: "de-a1-lesson-1",
     unitId: "de-a1-unit-1",
-    title: "Begrüßungen & Vorstellung",
-    description: "Lerne grundlegende Begrüßungen und wie du dich vorstellst",
+    title: "Begrüßungen - Salamu",
+    description: "Jifunze salamu za msingi za Kijerumani",
     icon: "👋",
     level: "A1",
     xpReward: 20,
     estimatedMinutes: 8,
     goals: [
-      { description: "Grundlegende Begrüßungen beherrschen", xpReward: 10 },
-      { description: "Dich selbst vorstellen können", xpReward: 10 },
+      { description: "Kujua salamu za kila siku", xpReward: 10 },
+      { description: "Kujitambulisha kwa Kijerumani", xpReward: 10 },
     ],
     vocabulary: [
-      { word: "Hallo", translation: "Hello", pronunciation: "HAH-loh", emoji: "👋", example: "Hallo! Wie geht's?" },
-      { word: "Guten Morgen", translation: "Good morning", pronunciation: "GOO-ten MOR-gen", emoji: "🌅", example: "Guten Morgen! Ich heiße Anna." },
-      { word: "Guten Tag", translation: "Good day", pronunciation: "GOO-ten TAHK", emoji: "☀️", example: "Guten Tag, Herr Müller." },
-      { word: "Guten Abend", translation: "Good evening", pronunciation: "GOO-ten AH-bent", emoji: "🌆", example: "Guten Abend!" },
-      { word: "Auf Wiedersehen", translation: "Goodbye", pronunciation: "owf VEE-der-zay-en", emoji: "👋", example: "Auf Wiedersehen! Bis morgen." },
-      { word: "Tschüss", translation: "Bye", pronunciation: "choos", emoji: "👋" },
-      { word: "Ich heiße", translation: "My name is", pronunciation: "ikh HY-suh", emoji: "📛", example: "Ich heiße Maria." },
-      { word: "Wie heißt du?", translation: "What's your name?", pronunciation: "vee heyst doo", emoji: "❓" },
+      { word: "Hallo", translation: "Hujambo / Habari", pronunciation: "HAH-loh", emoji: "👋", example: "Hallo! Wie geht's? (Habari! U hali gani?)" },
+      { word: "Guten Morgen", translation: "Habari za asubuhi", pronunciation: "GOO-ten MOR-gen", emoji: "🌅", example: "Guten Morgen! (Habari za asubuhi!)" },
+      { word: "Guten Tag", translation: "Habari za mchana", pronunciation: "GOO-ten TAHK", emoji: "☀️", example: "Guten Tag, Herr Müller." },
+      { word: "Guten Abend", translation: "Habari za jioni", pronunciation: "GOO-ten AH-bent", emoji: "🌆", example: "Guten Abend! (Habari za jioni!)" },
+      { word: "Auf Wiedersehen", translation: "Kwaheri", pronunciation: "owf VEE-der-zay-en", emoji: "👋", example: "Auf Wiedersehen! Bis morgen." },
+      { word: "Tschüss", translation: "Kwaheri (ya kirafiki)", pronunciation: "choos", emoji: "✌️", example: "Tschüss! Bis bald!" },
+      { word: "Ich heiße...", translation: "Naitwa...", pronunciation: "ikh HY-suh", emoji: "📛", example: "Ich heiße Amina." },
+      { word: "Wie heißt du?", translation: "Unaitwa nani?", pronunciation: "vee heyst doo", emoji: "❓", example: "Hallo! Wie heißt du?" },
     ],
     phrases: [
-      { text: "Hallo! Ich heiße Anna.", translation: "Hello! My name is Anna.", pronunciation: "HAH-loh! ikh HY-suh AH-nah." },
-      { text: "Wie heißt du?", translation: "What's your name?", pronunciation: "Vee heyst doo?" },
-      { text: "Freut mich!", translation: "Nice to meet you!", pronunciation: "Froyt mikh!" },
-      { text: "Woher kommst du?", translation: "Where are you from?", pronunciation: "VOH-hair komst doo?" },
+      { text: "Hallo! Ich heiße Anna.", translation: "Habari! Naitwa Anna.", pronunciation: "HAH-loh! ikh HY-suh AH-nah." },
+      { text: "Wie heißt du?", translation: "Unaitwa nani?", pronunciation: "Vee heyst doo?" },
+      { text: "Freut mich!", translation: "Nafurahi kukutana nawe!", pronunciation: "Froyt mikh!" },
+      { text: "Woher kommst du?", translation: "Unatoka wapi?", pronunciation: "VOH-hair komst doo?" },
     ],
     grammar: {
-      topic: "Personal Pronouns (ich, du, er/sie/es)",
-      explanation: "German uses different pronouns for I, you, he/she/it",
+      topic: "Vivumishi vya nafsi (Personalpronomen)",
+      explanation: "Kijerumani kina vivumishi tofauti kwa 'mimi', 'wewe', 'yeye' - kama Kiswahili lakini na matamshi tofauti.",
       examples: [
-        "Ich bin Student. (I am a student)",
-        "Du bist nett. (You are nice)",
-        "Er ist Lehrer. (He is a teacher)",
+        "Ich bin Student. (Mimi ni mwanafunzi.)",
+        "Du bist nett. (Wewe ni mpole.)",
+        "Er ist Lehrer. (Yeye ni mwalimu - mwanaume).",
+        "Sie ist Lehrerin. (Yeye ni mwalimu - mwanamke).",
       ],
-      commonMistakes: ["Don't confuse 'du' (informal) with 'Sie' (formal)"],
+      commonMistakes: [
+        "Usichanganye 'du' (rafiki) na 'Sie' (rasmi/heshima) - kama 'wewe' vs 'Shikamoo'",
+      ],
+    },
+    culturalNote: {
+      title: "Utamaduni wa Ujerumani 🇩🇪",
+      content: "Wajerumani husema 'Hallo' kwa marafiki, lakini 'Guten Tag' kwa watu wasiowajua au wazee. Hii ni kama tofauti ya 'Habari' na 'Shikamoo' katika Kiswahili!",
     },
     activities: [
       {
-        id: "de-a1-1-act-1",
+        id: "de-a1-1-mc1",
         type: "multiple-choice",
-        question: "Wie sagt man 'Hello' auf Deutsch?",
+        question: "Unasemaje 'Hello' kwa Kijerumani?",
         correctAnswer: "Hallo",
         options: ["Tschüss", "Hallo", "Danke", "Bitte"],
-        hint: "Es ist eine Begrüßung",
-        explanation: "'Hallo' is the most common greeting in German",
+        hint: "Ni salamu ya kawaida",
       },
       {
-        id: "de-a1-1-act-2",
-        type: "translate",
-        question: "Übersetze: 'My name is Max'",
-        correctAnswer: "Ich heiße Max",
-        hint: "Benutze 'Ich heiße'",
-      },
-      {
-        id: "de-a1-1-act-3",
+        id: "de-a1-1-fc1",
         type: "flashcard",
-        question: "Was bedeutet 'Auf Wiedersehen'?",
-        correctAnswer: "Goodbye",
-        options: ["Hello", "Goodbye", "Thank you", "Please"],
-        hint: "Man sagt es beim Abschied",
-        front: "Auf Wiedersehen",
-        back: "Goodbye",
-        example: "Auf Wiedersehen! Bis morgen.",
+        question: "Guten Morgen inamaanisha nini?",
+        correctAnswer: "Habari za asubuhi",
+        options: ["Habari za jioni", "Habari za asubuhi", "Habari za mchana", "Kwaheri"],
       },
       {
-        id: "de-a1-1-act-4",
+        id: "de-a1-1-match1",
         type: "match",
-        instruction: "Verbinde die Begrüßung mit der Bedeutung",
+        instruction: "Unganisha salamu ya Kijerumani na maana yake ya Kiswahili",
         pairs: [
-          { id: "1", left: "Hallo", right: "Hello" },
-          { id: "2", left: "Guten Tag", right: "Good day" },
-          { id: "3", left: "Auf Wiedersehen", right: "Goodbye" },
-          { id: "4", left: "Wie heißt du?", right: "What's your name?" },
+          { id: "1", left: "Hallo", right: "Habari" },
+          { id: "2", left: "Tschüss", right: "Kwaheri" },
+          { id: "3", left: "Guten Morgen", right: "Habari za asubuhi" },
+          { id: "4", left: "Ich heiße", right: "Naitwa" },
         ],
-        shuffle: true,
+      },
+      {
+        id: "de-a1-1-pron1",
+        type: "pronunciation",
+        targetPhrase: "Ich heiße Anna",
+        phoneticHint: "ikh HY-suh AH-nah",
+        difficulty: "easy",
+        tolerance: "lenient",
       },
     ],
     aiTeacherPrompt: {
-      systemPrompt: `You are teaching German A1 - Greetings & Introductions.
-Current lesson vocabulary: Hallo, Guten Morgen, Guten Tag, Guten Abend, Auf Wiedersehen, Tschüss, Ich heiße, Wie heißt du?
-Current lesson phrases: Hallo! Ich heiße Anna. / Wie heißt du? / Freut mich! / Woher kommst du?
+      systemPrompt: `Wewe ni mwalimu wa Kijerumani anayezungumza Kiswahili. Fundisha somo la A1 - Salamu.
+Maelekezo:
+- Zungumza KISWAHILI zaidi, fundisha maneno ya Kijerumani polepole
+- Linganisha na Kiswahili: "Kama 'habari' kwa Kiswahili, 'Hallo' kwa Kijerumani"
+- Toa matamshi ya Kiswahili kwa maneno ya Kijerumani
+- Sikiliza majibu ya mwanafunzi na urekebishe kwa upole
 
-TEACHING MODE:
-1. Say ONE German word/phrase from the lesson vocabulary
-2. Give the English translation
-3. Give pronunciation tip
-4. Ask: "Can you say that?" or "Try to repeat it!"
-STOP after the question.
-
-REACTING MODE:
-1. React to what student said (praise or gentle correction)
-2. Either ask them to try again OR introduce next word
-STOP after one sentence.
-
-INTERACTIVE MODE (when doing activities):
-- For multiple choice: Ask the question, wait for answer, give feedback
-- For flashcards: Show word, ask for meaning, provide feedback
-- For translation: Ask to translate, provide hints if needed
-
-Stay STRICTLY within this lesson's vocabulary and phrases.`,
-      introMessage: "Hallo! Willkommen zu deiner ersten Deutschstunde! Bist du bereit?",
-      topics: ["greetings", "introductions", "basic phrases"],
-      fallbackResponses: ["Versuche es nochmal!", "Fast richtig!", "Sehr gut!"],
+Mfano: "Karibu! Leo tutajifunza salamu za Kijerumani. Neno la kwanza ni 'Hallo' - linamaanisha 'habari'. Unaweza kusema 'Hallo'?"`,
+      introMessage: "Habari! Karibu kwenye somo lako la kwanza la Kijerumani! Uko tayari kuanza?",
+      topics: ["salamu", "kujitambulisha", "msingi"],
+      fallbackResponses: ["Jaribu tena!", "Karibu sahihi!", "Vizuri sana!"],
     },
   },
   {
     id: "de-a1-lesson-2",
     unitId: "de-a1-unit-1",
-    title: "Zahlen 1-20",
-    description: "Lerne die Zahlen von 1 bis 20",
+    title: "Zahlen 1-20 - Namba",
+    description: "Jifunze namba kutoka 1 hadi 20 kwa Kijerumani",
     icon: "🔢",
     level: "A1",
     xpReward: 20,
     estimatedMinutes: 10,
-    goals: [
-      { description: "Zahlen 1-10 beherrschen", xpReward: 10 },
-      { description: "Zahlen 11-20 beherrschen", xpReward: 10 },
-    ],
+    goals: [{ description: "Kuhesabu hadi 20 kwa Kijerumani", xpReward: 20 }],
     vocabulary: [
-      { word: "eins", translation: "one", pronunciation: "ayns", emoji: "1️⃣" },
-      { word: "zwei", translation: "two", pronunciation: "tsvye", emoji: "2️⃣" },
-      { word: "drei", translation: "three", pronunciation: "dry", emoji: "3️⃣" },
-      { word: "vier", translation: "four", pronunciation: "feer", emoji: "4️⃣" },
-      { word: "fünf", translation: "five", pronunciation: "fuenf", emoji: "5️⃣" },
-      { word: "sechs", translation: "six", pronunciation: "zex", emoji: "6️⃣" },
-      { word: "sieben", translation: "seven", pronunciation: "ZEE-ben", emoji: "7️⃣" },
-      { word: "acht", translation: "eight", pronunciation: "ahkt", emoji: "8️⃣" },
-      { word: "neun", translation: "nine", pronunciation: "noyn", emoji: "9️⃣" },
-      { word: "zehn", translation: "ten", pronunciation: "tsayn", emoji: "🔟" },
+      { word: "eins", translation: "moja", pronunciation: "ayns", emoji: "1️⃣" },
+      { word: "zwei", translation: "mbili", pronunciation: "tsvye", emoji: "2️⃣" },
+      { word: "drei", translation: "tatu", pronunciation: "dry", emoji: "3️⃣" },
+      { word: "vier", translation: "nne", pronunciation: "feer", emoji: "4️⃣" },
+      { word: "fünf", translation: "tano", pronunciation: "fuenf", emoji: "5️⃣" },
+      { word: "sechs", translation: "sita", pronunciation: "zex", emoji: "6️⃣" },
+      { word: "sieben", translation: "saba", pronunciation: "ZEE-ben", emoji: "7️⃣" },
+      { word: "acht", translation: "nane", pronunciation: "ahkt", emoji: "8️⃣" },
+      { word: "neun", translation: "tisa", pronunciation: "noyn", emoji: "9️⃣" },
+      { word: "zehn", translation: "kumi", pronunciation: "tsayn", emoji: "🔟" },
     ],
     phrases: [
-      { text: "Wie alt bist du?", translation: "How old are you?", pronunciation: "Vee ahlt bist doo?" },
-      { text: "Ich bin zehn Jahre alt.", translation: "I am ten years old.", pronunciation: "Ikh bin tsayn YAH-re ahlt." },
+      { text: "Wie alt bist du?", translation: "Una umri gani?", pronunciation: "Vee ahlt bist doo?" },
+      { text: "Ich bin zwanzig Jahre alt.", translation: "Nina miaka ishirini.", pronunciation: "Ikh bin TSVAN-tsikh YAH-re ahlt." },
     ],
     grammar: {
-      topic: "Numbers 1-20",
-      explanation: "Numbers 1-12 are unique words. 13-19 are formed with number + zehn (e.g., drei + zehn = dreizehn)",
+      topic: "Namba katika sentensi",
+      explanation: "Namba za Kijerumani hutumika kama za Kiswahili - zinakuja kabla ya nomino.",
       examples: [
-        "eins, zwei, drei, vier, fünf (1-5)",
-        "sechs, sieben, acht, neun, zehn (6-10)",
+        "Ich habe drei Brüder. (Nina kaka watatu.)",
+        "Sie ist acht Jahre alt. (Ana miaka minane.)",
       ],
-      commonMistakes: ["'sechs' is pronounced 'zex', not 'seks'"],
+    },
+    culturalNote: {
+      title: "Kuhesabu kwa Kijerumani 🇩🇪",
+      content: "Kumbuka: Kijerumani 'zwei' (mbili) inasikika kama 'tsvye', si 'zway'. Hii ni tofauti kubwa na Kiswahili!",
     },
     activities: [
       {
-        id: "de-a1-2-act-1",
+        id: "de-a1-2-mc1",
         type: "multiple-choice",
-        question: "Was ist 'five' auf Deutsch?",
-        correctAnswer: "fünf",
+        question: "'Tano' kwa Kijerumani ni nini?",
         options: ["vier", "fünf", "sechs", "drei"],
-        hint: "Es kommt nach vier",
+        correctAnswer: "fünf",
       },
       {
-        id: "de-a1-2-act-2",
-        type: "flashcard",
-        question: "Was bedeutet 'sieben'?",
-        correctAnswer: "seven",
-        options: ["six", "seven", "eight", "nine"],
-        hint: "Es ist eine Zahl zwischen 6 und 8",
-        front: "sieben",
-        back: "seven",
-      },
-      {
-        id: "de-a1-2-act-3",
+        id: "de-a1-2-order1",
         type: "order-sentence",
-        instruction: "Ordne die Wörter zu einem Satz",
-        correctOrder: ["Ich", "bin", "zehn", "Jahre", "alt"],
-        scrambled: ["alt", "Ich", "Jahre", "zehn", "bin"],
-        hint: "Beginne mit 'Ich'",
+        instruction: "Panga namba hizi kwa mpangilio sahihi",
+        correctOrder: ["eins", "zwei", "drei", "vier", "fünf"],
+        scrambled: ["drei", "eins", "fünf", "zwei", "vier"],
       },
     ],
     aiTeacherPrompt: {
-      systemPrompt: `You are teaching German A1 - Numbers 1-20.
-Current lesson vocabulary: eins, zwei, drei, vier, fünf, sechs, sieben, acht, neun, zehn
-Current lesson phrases: Wie alt bist du? / Ich bin zehn Jahre alt.
-
-TEACHING MODE:
-1. Say ONE German number from the lesson
-2. Give the English translation
-3. Give pronunciation tip
-4. Ask: "Can you count to [number]?" or "Say the number!"
-STOP after the question.
-
-REACTING MODE:
-1. React to student's pronunciation
-2. Either correct gently or praise
-3. Move to next number or practice counting
-STOP after one sentence.
-
-Stay STRICTLY within numbers 1-20.`,
-      introMessage: "Hallo! Heute lernen wir Zahlen! Kannst du bis zehn zählen?",
-      topics: ["numbers", "counting", "age"],
-      fallbackResponses: ["Zähl nochmal!", "Fast!", "Perfekt gezählt!"],
+      systemPrompt: "Fundisha namba za Kijerumani 1-20 kwa Kiswahili. Linganisha: 'Kama moja kwa Kiswahili, eins kwa Kijerumani (inasemeka ayns)'.",
+      introMessage: "Habari! Leo tutajifunza kuhesabu kwa Kijerumani! Unaweza kuhesabu hadi kumi?",
+      topics: ["namba", "kuhesabu", "umri"],
     },
   },
   {
     id: "de-a1-lesson-3",
     unitId: "de-a1-unit-1",
-    title: "Farben & Gegenstände",
-    description: "Lerne Farben und alltägliche Gegenstände",
+    title: "Farben & Gegenstände - Rangi na Vitu",
+    description: "Jifunze rangi na vitu vya kila siku",
     icon: "🎨",
     level: "A1",
     xpReward: 25,
     estimatedMinutes: 12,
     goals: [
-      { description: "Farben auf Deutsch erkennen", xpReward: 12 },
-      { description: "Alltagsgegenstände benennen", xpReward: 13 },
+      { description: "Kujua rangi za msingi kwa Kijerumani", xpReward: 12 },
+      { description: "Kujua vitu vya kila siku", xpReward: 13 },
     ],
     vocabulary: [
-      { word: "rot", translation: "red", pronunciation: "roht", emoji: "🟥" },
-      { word: "blau", translation: "blue", pronunciation: "blow", emoji: "🟦" },
-      { word: "grün", translation: "green", pronunciation: "groon", emoji: "🟩" },
-      { word: "gelb", translation: "yellow", pronunciation: "gelp", emoji: "🟨" },
-      { word: "schwarz", translation: "black", pronunciation: "shvarts", emoji: "⬛" },
-      { word: "weiß", translation: "white", pronunciation: "vyss", emoji: "⬜" },
-      { word: "das Buch", translation: "the book", pronunciation: "dahs BOOKH", emoji: "📖" },
-      { word: "der Stift", translation: "the pen", pronunciation: "dair SHTIFT", emoji: "🖊️" },
-      { word: "der Tisch", translation: "the table", pronunciation: "dair TISH", emoji: "🪑" },
+      { word: "rot", translation: "nyekundu", pronunciation: "roht", emoji: "🔴" },
+      { word: "blau", translation: "bluu", pronunciation: "blow", emoji: "🔵" },
+      { word: "grün", translation: "kijani", pronunciation: "groon", emoji: "🟢" },
+      { word: "gelb", translation: "njano", pronunciation: "gelb", emoji: "🟡" },
+      { word: "das Buch", translation: "kitabu", pronunciation: "dahs BOOKH", emoji: "📖" },
+      { word: "der Tisch", translation: "meza", pronunciation: "dair TISH", emoji: "🪑" },
+      { word: "die Lampe", translation: "taa", pronunciation: "dee LAM-peh", emoji: "💡" },
     ],
     phrases: [
-      { text: "Das Buch ist rot.", translation: "The book is red.", pronunciation: "Dahs BOOKH ist roht." },
-      { text: "Der Tisch ist braun.", translation: "The table is brown.", pronunciation: "Dair TISH ist brown." },
+      { text: "Das Buch ist rot.", translation: "Kitabu ni chekundu.", pronunciation: "Dahs BOOKH ist roht." },
+      { text: "Welche Farbe ist das?", translation: "Hii ni rangi gani?", pronunciation: "VEL-kheh FAR-beh ist dahs?" },
     ],
     grammar: {
-      topic: "Articles (der, die, das)",
-      explanation: "German nouns have gender: masculine (der), feminine (die), neuter (das)",
+      topic: "Vifungu vya jinsia (Artikel: der, die, das)",
+      explanation: "Kijerumani kina jinsia tatu za nomino: der (kiume), die (kike), das (kisicho na jinsia). Hii ni tofauti na Kiswahili ambacho hakina jinsia za nomino!",
       examples: [
-        "der Tisch (masculine)",
-        "die Lampe (feminine)",
-        "das Buch (neuter)",
+        "der Tisch (meza) - kiume",
+        "die Lampe (taa) - kike",
+        "das Buch (kitabu) - kisicho na jinsia",
       ],
-      commonMistakes: ["Learn each noun with its article from the start!"],
+      commonMistakes: ["Lazima ukariri jinsia ya kila neno - hakuna kanuni kamili!"],
     },
     activities: [
       {
-        id: "de-a1-3-act-1",
+        id: "de-a1-3-mc1",
+        type: "multiple-choice",
+        question: "'Nyekundu' kwa Kijerumani ni nini?",
+        options: ["blau", "grün", "rot", "gelb"],
+        correctAnswer: "rot",
+      },
+      {
+        id: "de-a1-3-match1",
         type: "match",
-        instruction: "Verbinde den Gegenstand mit dem Artikel",
+        instruction: "Unganisha neno na kifungu chake sahihi",
         pairs: [
           { id: "1", left: "Tisch", right: "der" },
           { id: "2", left: "Lampe", right: "die" },
           { id: "3", left: "Buch", right: "das" },
-          { id: "4", left: "Stuhl", right: "der" },
         ],
-      },
-      {
-        id: "de-a1-3-act-2",
-        type: "fill-blank",
-        sentence: "Das ist ___ rotes Buch.",
-        blank: "___",
-        correctAnswer: "ein",
-        options: ["ein", "eine", "einen", "einem"],
-        hint: "Buch ist neutral (das)",
-      },
-      {
-        id: "de-a1-3-act-3",
-        type: "multiple-choice",
-        question: "Welche Farbe hat die Sonne?",
-        correctAnswer: "gelb",
-        options: ["blau", "grün", "gelb", "rot"],
-        hint: "Die Sonne ist yellow",
       },
     ],
     aiTeacherPrompt: {
-      systemPrompt: `You are teaching German A1 - Colors & Objects.
-Current lesson vocabulary: rot, blau, grün, gelb, schwarz, weiß, das Buch, der Stift, der Tisch
-Current lesson phrases: Das Buch ist rot. / Der Tisch ist braun.
-
-TEACHING MODE:
-1. Teach ONE color or object word
-2. Show the article (der/die/das)
-3. Ask student to identify objects by color
-STOP after the question.
-
-Stay STRICTLY within lesson vocabulary.`,
-      introMessage: "Schau mal! Welche Farben siehst du?",
-      topics: ["colors", "objects", "articles"],
-      fallbackResponses: ["Schöne Farbe!", "Richtig, das ist der Tisch!", "Fast - denk an den Artikel!"],
+      systemPrompt: "Fundisha rangi na vitu vya Kijerumani kwa Kiswahili. Eleza dhana ya 'der/die/das' - jinsia tatu za Kijerumani, tofauti na Kiswahili.",
+      introMessage: "Habari! Leo tutajifunza rangi na vitu. Tayari?",
+      topics: ["rangi", "vitu", "artikel"],
     },
   },
   {
     id: "de-a1-lesson-4",
     unitId: "de-a1-unit-1",
-    title: "Familie & Personen",
-    description: "Lerne Wörter über Familie und Menschen",
-    icon: "👨‍👩‍👧‍👦",
+    title: "Familie - Familia",
+    description: "Maneno ya familia kwa Kijerumani",
+    icon: "👨‍👩‍👧",
     level: "A1",
     xpReward: 25,
     estimatedMinutes: 10,
     goals: [
-      { description: "Familienmitglieder benennen", xpReward: 12 },
-      { description: "Über Familie sprechen", xpReward: 13 },
+      { description: "Kujua wanachama wa familia kwa Kijerumani", xpReward: 15 },
+      { description: "Kuzungumza kuhusu familia yako", xpReward: 10 },
     ],
     vocabulary: [
-      { word: "die Mutter", translation: "mother", pronunciation: "dee MOO-ter", emoji: "👩" },
-      { word: "der Vater", translation: "father", pronunciation: "dair FAH-ter", emoji: "👨" },
-      { word: "die Schwester", translation: "sister", pronunciation: "dee SHVES-ter", emoji: "👧" },
-      { word: "der Bruder", translation: "brother", pronunciation: "dair BROO-der", emoji: "👦" },
-      { word: "die Großmutter", translation: "grandmother", pronunciation: "dee GROHS-moo-ter", emoji: "👵" },
-      { word: "der Großvater", translation: "grandfather", pronunciation: "dair GROHS-fah-ter", emoji: "👴" },
-      { word: "die Familie", translation: "family", pronunciation: "dee fah-MEE-lyeh", emoji: "👨‍👩‍👧‍👦" },
+      { word: "die Mutter", translation: "mama", pronunciation: "dee MOO-ter", emoji: "👩" },
+      { word: "der Vater", translation: "baba", pronunciation: "dair FAH-ter", emoji: "👨" },
+      { word: "die Schwester", translation: "dada", pronunciation: "dee SHVES-ter", emoji: "👧" },
+      { word: "der Bruder", translation: "kaka", pronunciation: "dair BROO-der", emoji: "👦" },
+      { word: "das Kind", translation: "mtoto", pronunciation: "dahs KINT", emoji: "👶" },
+      { word: "die Familie", translation: "familia", pronunciation: "dee fah-MEE-lyeh", emoji: "👨‍👩‍👧‍👦" },
+      { word: "die Großmutter", translation: "bibi", pronunciation: "dee GROHS-moo-ter", emoji: "👵" },
+      { word: "der Großvater", translation: "babu", pronunciation: "dair GROHS-fah-ter", emoji: "👴" },
     ],
     phrases: [
-      { text: "Das ist meine Mutter.", translation: "This is my mother.", pronunciation: "Dahs ist MEYE-nuh MOO-ter." },
-      { text: "Ich habe eine Schwester.", translation: "I have a sister.", pronunciation: "Ikh HAH-buh EYE-nuh SHVES-ter." },
+      { text: "Das ist meine Mutter.", translation: "Huyu ni mama yangu.", pronunciation: "Dahs ist MEYE-neh MOO-ter." },
+      { text: "Ich habe zwei Brüder.", translation: "Nina kaka wawili.", pronunciation: "Ikh HAH-beh tsvye BROO-der." },
     ],
+    grammar: {
+      topic: "Vivumishi vya kumiliki (Possessivartikel)",
+      explanation: "Kijerumani hutumia 'mein' (wangu), 'dein' (wako) - vinabadilika kulingana na jinsia ya nomino.",
+      examples: [
+        "mein Vater (baba yangu)",
+        "meine Mutter (mama yangu)",
+        "mein Bruder (kaka yangu)",
+      ],
+    },
     activities: [
       {
-        id: "de-a1-4-act-1",
+        id: "de-a1-4-mc1",
+        type: "multiple-choice",
+        question: "'Mama' kwa Kijerumani ni nini?",
+        options: ["der Vater", "die Mutter", "die Schwester", "das Kind"],
+        correctAnswer: "die Mutter",
+      },
+      {
+        id: "de-a1-4-dialogue1",
         type: "dialogue",
-        context: "Du triffst einen neuen Freund und sprichst über Familie",
+        context: "Unakutana na rafiki mpya na kuzungumzia familia",
         lines: [
           { speaker: "ai", text: "Hallo! Wie heißt du?" },
-          { speaker: "user", text: "", isBlank: true, options: ["Ich heiße Max", "Ich bin Student", "Ich komme aus Tansania"], correctAnswer: "Ich heiße Max" },
-          { speaker: "ai", text: "Freut mich, Max! Hast du Geschwister?" },
-          { speaker: "user", text: "", isBlank: true, options: ["Ja, ich habe eine Schwester", "Nein, ich bin allein", "Ich habe einen Hund"], correctAnswer: "Ja, ich habe eine Schwester" },
-          { speaker: "ai", text: "Wie heißt deine Schwester?" },
+          { speaker: "user", text: "", isBlank: true, options: ["Ich heiße Juma", "Ich bin Student", "Ich komme aus Tansania"], correctAnswer: "Ich heiße Juma" },
+          { speaker: "ai", text: "Hast du Geschwister?" },
+          { speaker: "user", text: "", isBlank: true, options: ["Ja, ich habe eine Schwester", "Nein", "Ich habe einen Hund"], correctAnswer: "Ja, ich habe eine Schwester" },
         ],
-      },
-      {
-        id: "de-a1-4-act-2",
-        type: "multiple-choice",
-        question: "Was bedeutet 'die Schwester'?",
-        correctAnswer: "sister",
-        options: ["mother", "sister", "daughter", "aunt"],
-        hint: "Weibliches Geschwisterkind",
-      },
-      {
-        id: "de-a1-4-act-3",
-        type: "translate",
-        question: "Übersetze: 'I have a brother'",
-        correctAnswer: "Ich habe einen Bruder",
-        hint: "'einen' für maskulin Akkusativ",
       },
     ],
     aiTeacherPrompt: {
-      systemPrompt: `You are teaching German A1 - Family & People.
-Current lesson vocabulary: die Mutter, der Vater, die Schwester, der Bruder, die Großmutter, der Großvater, die Familie
-Current lesson phrases: Das ist meine Mutter. / Ich habe eine Schwester.
-
-TEACHING MODE:
-1. Teach ONE family member word
-2. Show the article (der/die)
-3. Ask: "Wer ist das in deiner Familie?"
-STOP after the question.
-
-Stay STRICTLY within family vocabulary.`,
-      introMessage: "Erzähl mir von deiner Familie! Hast du Geschwister?",
-      topics: ["family", "people", "possessives"],
-      fallbackResponses: ["Interessant!", "Erzähl mehr!", "Sehr schön!"],
+      systemPrompt: "Fundisha familia ya Kijerumani kwa Kiswahili. Linganisha: 'Kama mama kwa Kiswahili, Mutter kwa Kijerumani'.",
+      introMessage: "Habari! Leo tutajifunza maneno ya familia. Una ndugu?",
+      topics: ["familia", "ndugu", "wazazi"],
     },
   },
   {
     id: "de-a1-lesson-5",
     unitId: "de-a1-unit-1",
-    title: "Einfache Sätze bilden",
-    description: "Lerne, einfache Sätze auf Deutsch zu bilden",
-    icon: "📝",
+    title: "Essen & Trinken - Chakula na Vinywaji",
+    description: "Agiza chakula kwa Kijerumani",
+    icon: "🍽️",
     level: "A1",
-    xpReward: 30,
-    estimatedMinutes: 15,
+    xpReward: 25,
+    estimatedMinutes: 10,
     goals: [
-      { description: "Satzstruktur verstehen", xpReward: 15 },
-      { description: "Einfache Sätze schreiben", xpReward: 15 },
+      { description: "Kujua maneno ya chakula na vinywaji", xpReward: 15 },
+      { description: "Kuagiza chakula kwa Kijerumani", xpReward: 10 },
     ],
     vocabulary: [
-      { word: "und", translation: "and", pronunciation: "oont", emoji: "➕" },
-      { word: "aber", translation: "but", pronunciation: "AH-ber", emoji: "🔄" },
-      { word: "oder", translation: "or", pronunciation: "OH-der", emoji: "🔀" },
-      { word: "nicht", translation: "not", pronunciation: "nisht", emoji: "🚫" },
-      { word: "auch", translation: "also/too", pronunciation: "owkh", emoji: "➕" },
+      { word: "das Wasser", translation: "maji", pronunciation: "dahs VAH-ser", emoji: "💧" },
+      { word: "der Kaffee", translation: "kahawa", pronunciation: "dair KAF-ee", emoji: "☕" },
+      { word: "das Brot", translation: "mkate", pronunciation: "dahs BROHT", emoji: "🍞" },
+      { word: "der Apfel", translation: "tofaa", pronunciation: "dair AP-fel", emoji: "🍎" },
+      { word: "die Milch", translation: "maziwa", pronunciation: "dee MILKH", emoji: "🥛" },
+      { word: "lecker", translation: "tamu/nzuri", pronunciation: "LEK-er", emoji: "😋" },
     ],
     phrases: [
-      { text: "Ich lerne Deutsch.", translation: "I learn German.", pronunciation: "Ikh LER-nuh DOYTSH." },
-      { text: "Er spricht gut Deutsch.", translation: "He speaks German well.", pronunciation: "Ayr shprikht goot DOYTSH." },
+      { text: "Ich möchte Wasser, bitte.", translation: "Ningependa maji, tafadhali.", pronunciation: "Ikh MERKH-te VAH-ser, BIT-eh." },
+      { text: "Das ist lecker!", translation: "Hii ni tamu!", pronunciation: "Dahs ist LEK-er!" },
     ],
     grammar: {
-      topic: "Basic Sentence Structure (SVO)",
-      explanation: "German basic word order: Subject-Verb-Object, like English",
+      topic: "Kitenzi 'möchten' (kungependa)",
+      explanation: "'möchten' hutumika kuomba kwa upole - kama 'ningependa' kwa Kiswahili.",
       examples: [
-        "Ich lerne Deutsch. (I learn German)",
-        "Du sprichst gut. (You speak well)",
-        "Er ist nett. (He is nice)",
+        "Ich möchte Wasser. (Ningependa maji.)",
+        "Ich möchte Kaffee. (Ningependa kahawa.)",
       ],
-      commonMistakes: ["Verb always in second position in main clauses"],
     },
     activities: [
       {
-        id: "de-a1-5-act-1",
-        type: "order-sentence",
-        instruction: "Ordne die Wörter zu einem korrekten Satz",
-        correctOrder: ["Ich", "lerne", "Deutsch"],
-        scrambled: ["Deutsch", "Ich", "lerne"],
-        hint: "Das Verb kommt an Position 2",
+        id: "de-a1-5-mc1",
+        type: "multiple-choice",
+        question: "'Maji' kwa Kijerumani ni nini?",
+        options: ["Kaffee", "Wasser", "Milch", "Brot"],
+        correctAnswer: "Wasser",
       },
       {
-        id: "de-a1-5-act-2",
-        type: "grammar-drill",
-        rule: "Das Verb steht an zweiter Position im Satz",
-        examples: ["Ich lerne Deutsch.", "Heute lerne ich Deutsch (Heute is at position 1)"],
-        exercises: [
-          {
-            prompt: "___ (lernen) ich Deutsch.",
-            correctAnswer: "Lerne",
-            hint: "Verb an Position 2",
-          },
+        id: "de-a1-5-match1",
+        type: "match",
+        instruction: "Unganisha neno la Kijerumani na maana yake ya Kiswahili",
+        pairs: [
+          { id: "1", left: "Wasser", right: "maji" },
+          { id: "2", left: "Kaffee", right: "kahawa" },
+          { id: "3", left: "Brot", right: "mkate" },
+          { id: "4", left: "Apfel", right: "tofaa" },
         ],
-      },
-      {
-        id: "de-a1-5-act-3",
-        type: "translate",
-        question: "Übersetze: 'I also learn German'",
-        correctAnswer: "Ich lerne auch Deutsch",
-        hint: "'auch' kommt nach dem Verb",
       },
     ],
     aiTeacherPrompt: {
-      systemPrompt: `You are teaching German A1 - Basic Sentence Structure.
-Current lesson vocabulary: und, aber, oder, nicht, auch
-Current lesson phrases: Ich lerne Deutsch. / Er spricht gut Deutsch.
-
-TEACHING MODE:
-1. Teach basic SVO word order
-2. Show how 'und'/'aber'/'oder' connect ideas
-3. Ask student to build a sentence
-STOP after the question.
-
-Stay STRICTLY within lesson vocabulary.`,
-      introMessage: "Lass uns Sätze bauen! Das Verb kommt immer an zweiter Stelle.",
-      topics: ["sentence structure", "word order", "conjunctions"],
-      fallbackResponses: ["Gut versucht!", "Denk an die Verb-Position!", "Perfekt gebaut!"],
+      systemPrompt: "Fundisha chakula na vinywaji vya Kijerumani kwa Kiswahili. Mfano wa mazungumzo ya mgahawa.",
+      introMessage: "Habari! Leo tutajifunza kuagiza chakula kwa Kijerumani!",
+      topics: ["chakula", "vinywaji", "mgahawa"],
     },
   },
 ];
 
-// ============ A2 - ELEMENTARY (4 Lessons) ============
+// ═══════════════════════════════════════════════════════════
+// 🇩🇪 A2 - ELEMENTARY (MSINGI) - 3 Lessons
+// ═══════════════════════════════════════════════════════════
+
 export const GERMAN_A2_LESSONS: Lesson[] = [
   {
     id: "de-a2-lesson-1",
     unitId: "de-a2-unit-1",
-    title: "Im Restaurant",
-    description: "Bestelle Essen und Getränke im Restaurant",
+    title: "Im Restaurant - Mgahawani",
+    description: "Agiza chakula na vinywaji kwa urahisi",
     icon: "🍽️",
     level: "A2",
-    xpReward: 25,
+    xpReward: 30,
     estimatedMinutes: 12,
     goals: [
-      { description: "Essen bestellen können", xpReward: 15 },
-      { description: "Nach der Rechnung fragen", xpReward: 10 },
+      { description: "Kuagiza chakula kwa ujasiri", xpReward: 15 },
+      { description: "Kulipa bili kwa Kijerumani", xpReward: 15 },
     ],
     vocabulary: [
-      { word: "die Speisekarte", translation: "menu", pronunciation: "dee SHPEYE-zuh-kar-tuh", emoji: "📖", example: "Kann ich die Speisekarte haben?" },
-      { word: "bestellen", translation: "to order", pronunciation: "buh-SHTEL-en", emoji: "📝", example: "Ich möchte bestellen." },
-      { word: "der Kellner", translation: "waiter", pronunciation: "dair KEL-ner", emoji: "👨‍🍳" },
-      { word: "die Rechnung", translation: "bill/check", pronunciation: "dee REKH-noong", emoji: "💰", example: "Die Rechnung, bitte." },
-      { word: "lecker", translation: "delicious", pronunciation: "LEK-er", emoji: "😋", example: "Das Essen ist lecker!" },
-      { word: "Ich hätte gern", translation: "I would like", pronunciation: "ikh HET-uh gairn", emoji: "🙋" },
+      { word: "die Speisekarte", translation: "menyu", pronunciation: "dee SHPEYE-zuh-kar-tuh", emoji: "📖" },
+      { word: "bestellen", translation: "kuagiza", pronunciation: "buh-SHTEL-en", emoji: "📝" },
+      { word: "der Kellner", translation: "mhudumu", pronunciation: "dair KEL-ner", emoji: "👨‍🍳" },
+      { word: "die Rechnung", translation: "bili", pronunciation: "dee REKH-noong", emoji: "💰" },
+      { word: "Ich hätte gern", translation: "Ningependa (polite)", pronunciation: "ikh HET-uh gairn", emoji: "🙋" },
     ],
     phrases: [
-      { text: "Ich hätte gern ein Wasser, bitte.", translation: "I would like a water, please.", pronunciation: "Ikh HET-uh gairn ayn VAH-ser, BIT-uh." },
-      { text: "Die Speisekarte, bitte.", translation: "The menu, please.", pronunciation: "Dee SHPEYE-zuh-kar-tuh, BIT-uh." },
-      { text: "Die Rechnung, bitte.", translation: "The bill, please.", pronunciation: "Dee REKH-noong, BIT-uh." },
+      { text: "Die Speisekarte, bitte.", translation: "Menyu, tafadhali.", pronunciation: "Dee SHPEYE-zuh-kar-tuh, BIT-eh." },
+      { text: "Die Rechnung, bitte.", translation: "Bili, tafadhali.", pronunciation: "Dee REKH-noong, BIT-eh." },
     ],
     grammar: {
-      topic: "Modal Verbs: möchten (would like)",
-      explanation: "'möchten' is used to politely express what you want. It's the subjunctive form of 'mögen'",
+      topic: "Kitenzi 'möchten' (kungependa) - A2",
+      explanation: "'möchten' hutumika kuomba kwa upole - kama 'ningependa' kwa Kiswahili.",
       examples: [
-        "Ich möchte ein Wasser. (I would like a water)",
-        "Möchten Sie bestellen? (Would you like to order?)",
-        "Er möchte zahlen. (He would like to pay)",
+        "Ich möchte Wasser. (Ningependa maji.)",
+        "Möchten Sie bestellen? (Ungependa kuagiza?)",
       ],
     },
     culturalNote: {
-      title: "Restaurant Etiquette in Germany",
-      content: "In Germany, it's polite to say 'Prost!' before drinking. Wait for the bill - it's not brought automatically.",
+      title: "Desturi ya Mgahawa Ujerumani 🇩🇪",
+      content: "Ujerumani, mhudumu hakupeleki bili moja kwa moja - lazima uombe 'Die Rechnung, bitte'. Tofauti na Tanzania ambapo bili huletwa mara moja!",
     },
     activities: [
       {
-        id: "de-a2-1-act-1",
-        type: "multiple-choice",
-        question: "Wie bestellt man höflich ein Wasser?",
-        correctAnswer: "Ich möchte ein Wasser, bitte",
-        options: [
-          "Ich will Wasser",
-          "Ich möchte ein Wasser, bitte",
-          "Gib mir Wasser",
-          "Wasser jetzt",
-        ],
-        hint: "Benutze die höfliche Form mit 'möchte'",
-        explanation: "'möchte' is more polite than 'will'",
-      },
-      {
-        id: "de-a2-1-act-2",
-        type: "translate",
-        question: "Übersetze: 'The bill, please'",
-        correctAnswer: "Die Rechnung, bitte",
-        hint: "'Rechnung' bedeutet bill",
-      },
-      {
-        id: "de-a2-1-act-3",
+        id: "de-a2-1-dialogue1",
         type: "dialogue",
-        context: "Du bist im Restaurant und möchtest bestellen",
+        context: "Uko mgahawani na ungependa kuagiza",
         lines: [
           { speaker: "ai", text: "Guten Abend! Haben Sie schon gewählt?" },
-          { speaker: "user", text: "", isBlank: true, options: ["Ja, ich hätte gern die Suppe", "Nein, ich gehe", "Das ist teuer"], correctAnswer: "Ja, ich hätte gern die Suppe" },
-          { speaker: "ai", text: "Sehr gerne. Möchten Sie etwas zu trinken?" },
-          { speaker: "user", text: "", isBlank: true, options: ["Ja, ein Wasser, bitte", "Nein, danke", "Ich bin satt"], correctAnswer: "Ja, ein Wasser, bitte" },
-          { speaker: "ai", text: "Kommt sofort!" },
+          { speaker: "user", text: "", isBlank: true, options: ["Ja, ich hätte gern die Suppe", "Nein", "Das ist teuer"], correctAnswer: "Ja, ich hätte gern die Suppe" },
+          { speaker: "ai", text: "Möchten Sie etwas zu trinken?" },
+          { speaker: "user", text: "", isBlank: true, options: ["Ja, ein Wasser, bitte", "Nein, danke"], correctAnswer: "Ja, ein Wasser, bitte" },
         ],
-      },
-      {
-        id: "de-a2-1-act-4",
-        type: "flashcard",
-        question: "Was bedeutet 'lecker'?",
-        correctAnswer: "delicious",
-        options: ["expensive", "delicious", "cheap", "spicy"],
-        hint: "Es beschreibt gutes Essen",
-        front: "lecker",
-        back: "delicious",
       },
     ],
     aiTeacherPrompt: {
-      systemPrompt: `You are teaching German A2 - At the Restaurant.
-Current lesson vocabulary: die Speisekarte, bestellen, der Kellner, die Rechnung, lecker, Ich hätte gern
-Current lesson phrases: Ich hätte gern ein Wasser, bitte. / Die Speisekarte, bitte. / Die Rechnung, bitte.
-
-TEACHING MODE:
-1. Teach ONE restaurant phrase
-2. Explain when to use it
-3. Ask student to practice ordering something
-STOP after the question.
-
-REACTING MODE:
-1. React to their order (praise politeness)
-2. Correct grammar gently if needed
-3. Continue with next phrase or practice with dialogue
-STOP after one sentence.
-
-Stay STRICTLY within restaurant vocabulary.`,
-      introMessage: "Willkommen im Restaurant! Ich bin dein Kellner. Was möchtest du bestellen?",
-      topics: ["restaurant", "ordering", "polite requests", "dialogue"],
-      fallbackResponses: ["Sehr höflich!", "Fast perfekt!", "Ausgezeichnet!"],
+      systemPrompt: "Jifanya ni mhudumu wa Kijerumani. Mwanafunzi aagize chakula. Fundisha maneno ya mgahawa kwa Kiswahili.",
+      introMessage: "Karibu mgahawani! Ningependa kukusaidia kuagiza. Umechagua?",
+      topics: ["mgahawa", "kuagiza", "polite"],
     },
   },
   {
     id: "de-a2-lesson-2",
     unitId: "de-a2-unit-1",
-    title: "Einkaufen & Preise",
-    description: "Lerne, auf dem Markt und im Geschäft zu sprechen",
-    icon: "🛒",
+    title: "Einkaufen - Ununuzi",
+    description: "Nunua vitu sokoni na dukani",
+    icon: "🛍️",
     level: "A2",
-    xpReward: 25,
-    estimatedMinutes: 10,
+    xpReward: 30,
+    estimatedMinutes: 12,
     goals: [
-      { description: "Nach Preisen fragen", xpReward: 12 },
-      { description: "Einkaufsgespräche führen", xpReward: 13 },
+      { description: "Kuuliza bei kwa Kijerumani", xpReward: 15 },
+      { description: "Kununua vitu sokoni", xpReward: 15 },
     ],
     vocabulary: [
-      { word: "der Markt", translation: "market", pronunciation: "dair MARKT", emoji: "🏪" },
-      { word: "kaufen", translation: "to buy", pronunciation: "KOW-fen", emoji: "🛍️" },
-      { word: "teuer", translation: "expensive", pronunciation: "TOY-er", emoji: "💰" },
-      { word: "billig", translation: "cheap", pronunciation: "BILL-ikh", emoji: "🏷️" },
-      { word: "Wie viel kostet das?", translation: "How much does this cost?", pronunciation: "vee feel KOS-tet dahs", emoji: "❓" },
-      { word: "das Geld", translation: "money", pronunciation: "dahs GELT", emoji: "💵" },
+      { word: "der Markt", translation: "soko", pronunciation: "dair MARKT", emoji: "🏪" },
+      { word: "kaufen", translation: "kununua", pronunciation: "KOW-fen", emoji: "🛒" },
+      { word: "teuer", translation: "ghali", pronunciation: "TOY-er", emoji: "💸" },
+      { word: "billig", translation: "rahisi", pronunciation: "BILL-ikh", emoji: "💰" },
+      { word: "Wie viel kostet das?", translation: "Hii inagharimu kiasi gani?", pronunciation: "vee feel KOS-tet dahs", emoji: "❓" },
     ],
     phrases: [
-      { text: "Wie viel kostet dieser Apfel?", translation: "How much does this apple cost?", pronunciation: "Vee feel KOS-tet DEE-zer AP-fel?" },
-      { text: "Das ist aber teuer!", translation: "That's expensive!", pronunciation: "Dahs ist ah-ber TOY-er!" },
+      { text: "Wie viel kostet das?", translation: "Hii inagharimu kiasi gani?", pronunciation: "Vee feel KOS-tet dahs?" },
+      { text: "Das ist zu teuer!", translation: "Hii ni ghali sana!", pronunciation: "Dahs ist tsoo TOY-er!" },
     ],
     activities: [
       {
-        id: "de-a2-2-act-1",
-        type: "multiple-choice",
-        question: "Was bedeutet 'teuer'?",
-        correctAnswer: "expensive",
-        options: ["cheap", "expensive", "free", "on sale"],
-        hint: "Das Gegenteil von billig",
-      },
-      {
-        id: "de-a2-2-act-2",
+        id: "de-a2-2-tr1",
         type: "translate",
-        question: "Übersetze: 'How much does this cost?'",
+        question: "Tafsiri: 'Hii inagharimu kiasi gani?'",
         correctAnswer: "Wie viel kostet das?",
-        hint: "Frage nach dem Preis",
       },
       {
-        id: "de-a2-2-act-3",
-        type: "dialogue",
-        context: "Du bist auf dem Markt und kaufst Obst",
-        lines: [
-          { speaker: "ai", text: "Guten Morgen! Kann ich dir helfen?" },
-          { speaker: "user", text: "", isBlank: true, options: ["Ja, wie viel kosten diese Äpfel?", "Nein, danke", "Ich mag Bananen"], correctAnswer: "Ja, wie viel kosten diese Äpfel?" },
-          { speaker: "ai", text: "Drei Euro pro Kilo. Möchtest du?" },
-          { speaker: "user", text: "", isBlank: true, options: ["Ja, ich möchte ein Kilo, bitte", "Das ist teuer", "Ich habe kein Geld"], correctAnswer: "Ja, ich möchte ein Kilo, bitte" },
-        ],
+        id: "de-a2-2-mc1",
+        type: "multiple-choice",
+        question: "'Soko' kwa Kijerumani ni nini?",
+        options: ["der Laden", "der Markt", "das Geschäft", "die Straße"],
+        correctAnswer: "der Markt",
       },
     ],
     aiTeacherPrompt: {
-      systemPrompt: `You are teaching German A2 - Shopping & Prices.
-Current lesson vocabulary: der Markt, kaufen, teuer, billig, Wie viel kostet das?, das Geld
-Current lesson phrases: Wie viel kostet dieser Apfel? / Das ist aber teuer!
-
-TEACHING MODE:
-1. Teach ONE shopping phrase
-2. Practice numbers with prices
-3. Role-play a shopping scenario
-STOP after the question.
-
-Stay STRICTLY within shopping vocabulary.`,
-      introMessage: "Willkommen auf dem Markt! Was möchtest du kaufen?",
-      topics: ["shopping", "prices", "numbers", "currency"],
-      fallbackResponses: ["Guter Preis!", "Versuche zu verhandeln!", "Perfekt gefragt!"],
+      systemPrompt: "Fundisha ununuzi kwa Kijerumani. Linganisha na soko la Tanzania.",
+      introMessage: "Karibu sokoni! Leo tutajifunza kununua kwa Kijerumani.",
+      topics: ["ununuzi", "bei", "soko"],
     },
   },
   {
     id: "de-a2-lesson-3",
     unitId: "de-a2-unit-1",
-    title: "Tagesablauf & Uhrzeit",
-    description: "Sprich über deine tägliche Routine und die Uhrzeit",
-    icon: "⏰",
+    title: "Tagesablauf - Mazoea ya Kila Siku",
+    description: "Eleza siku yako kwa Kijerumani",
+    icon: "🌅",
     level: "A2",
     xpReward: 30,
     estimatedMinutes: 12,
     goals: [
-      { description: "Uhrzeit verstehen und sagen", xpReward: 15 },
-      { description: "Tagesablauf beschreiben", xpReward: 15 },
+      { description: "Kueleza mazoea ya kila siku", xpReward: 15 },
+      { description: "Kutumia vitenzi vinavyotenganishwa", xpReward: 15 },
     ],
     vocabulary: [
-      { word: "aufstehen", translation: "to get up", pronunciation: "OWF-shtay-en", emoji: "🛏️", example: "Ich stehe um 7 Uhr auf." },
-      { word: "frühstücken", translation: "to have breakfast", pronunciation: "FRUE-shtue-ken", emoji: "🥐" },
-      { word: "arbeiten", translation: "to work", pronunciation: "AR-bite-en", emoji: "💼" },
-      { word: "essen", translation: "to eat", pronunciation: "ES-en", emoji: "🍽️" },
-      { word: "schlafen", translation: "to sleep", pronunciation: "SHLAH-fen", emoji: "😴" },
-      { word: "um ... Uhr", translation: "at ... o'clock", pronunciation: "oom ... OOR", emoji: "🕐" },
+      { word: "aufstehen", translation: "kuamka", pronunciation: "OWF-shtay-en", emoji: "⏰" },
+      { word: "arbeiten", translation: "kufanya kazi", pronunciation: "AR-bite-en", emoji: "💼" },
+      { word: "essen", translation: "kula", pronunciation: "ES-en", emoji: "🍽️" },
+      { word: "schlafen", translation: "kulala", pronunciation: "SHLAH-fen", emoji: "😴" },
     ],
     phrases: [
-      { text: "Ich stehe um 7 Uhr auf.", translation: "I get up at 7 o'clock.", pronunciation: "Ikh SHTAY-uh oom ZEE-ben OOR OWF." },
-      { text: "Um 12 Uhr esse ich zu Mittag.", translation: "At 12 I have lunch.", pronunciation: "Oom TSWELF OOR ES-uh ikh tsoo MIT-ahk." },
+      { text: "Ich stehe um 7 Uhr auf.", translation: "Naamka saa 7.", pronunciation: "Ikh SHTEY-uh oom ZEE-ben OOR owf." },
+      { text: "Er arbeitet bis 17 Uhr.", translation: "Anafanya kazi hadi saa 5 jioni.", pronunciation: "Air AR-bite-et bis zeek-tsayn OOR." },
     ],
     grammar: {
-      topic: "Separable Verbs",
-      explanation: "Some German verbs split: prefix goes to end in main clause",
+      topic: "Vitenzi vinavyotenganishwa (Trennbare Verben)",
+      explanation: "Baadhi ya vitenzi vya Kijerumani vinatenganishwa: sehemu moja mwanzo, sehemu nyingine mwisho!",
       examples: [
-        "Ich stehe um 7 Uhr auf. (I get up at 7)",
-        "Er ruft mich an. (He calls me)",
-        "Wir machen das Licht aus. (We turn off the light)",
+        "Ich stehe um 7 Uhr auf. (Naamka saa 7.)",
+        "Er ruft mich an. (Ananipigia simu.)",
       ],
+      commonMistakes: ["Usisahau sehemu ya mwisho ya kitenzi!"],
     },
     activities: [
       {
-        id: "de-a2-3-act-1",
+        id: "de-a2-3-order1",
         type: "order-sentence",
-        instruction: "Ordne die Wörter zu einem Satz mit trennbarem Verb",
+        instruction: "Panga sentensi hii kwa mpangilio sahihi",
         correctOrder: ["Ich", "stehe", "um sieben Uhr", "auf"],
         scrambled: ["auf", "Ich", "um sieben Uhr", "stehe"],
-        hint: "Das trennbare Verb 'aufstehen' - 'auf' geht ans Ende",
-      },
-      {
-        id: "de-a2-3-act-2",
-        type: "multiple-choice",
-        question: "Wann stehst du auf?",
-        correctAnswer: "Ich stehe um 7 Uhr auf",
-        options: [
-          "Ich aufstehe um 7 Uhr",
-          "Ich stehe um 7 Uhr auf",
-          "Ich stehe auf um 7 Uhr",
-          "Auf ich stehe um 7 Uhr",
-        ],
-        hint: "Separable prefix 'auf' goes to end of clause",
-        explanation: "Separable prefix 'auf' goes to end of clause",
-      },
-      {
-        id: "de-a2-3-act-3",
-        type: "dialogue",
-        context: "Du sprichst über deinen Tagesablauf mit einem Freund",
-        lines: [
-          { speaker: "ai", text: "Wann stehst du normalerweise auf?" },
-          { speaker: "user", text: "", isBlank: true, options: ["Ich stehe um 6 Uhr auf", "Ich arbeite", "Ich esse Frühstück"], correctAnswer: "Ich stehe um 6 Uhr auf" },
-          { speaker: "ai", text: "Und wann gehst du schlafen?" },
-          { speaker: "user", text: "", isBlank: true, options: ["Ich schlafe um 22 Uhr", "Ich esse Abendessen", "Ich sehe fern"], correctAnswer: "Ich schlafe um 22 Uhr" },
-        ],
       },
     ],
     aiTeacherPrompt: {
-      systemPrompt: `You are teaching German A2 - Daily Routine & Time.
-Current lesson vocabulary: aufstehen, frühstücken, arbeiten, essen, schlafen, um ... Uhr
-Current lesson phrases: Ich stehe um 7 Uhr auf. / Um 12 Uhr esse ich zu Mittag.
-
-TEACHING MODE:
-1. Teach separable verb with time
-2. Practice daily routine sentences
-3. Ask student about their day
-STOP after the question.
-
-Stay STRICTLY within lesson vocabulary.`,
-      introMessage: "Erzähl mir von deinem Tag! Wann stehst du auf?",
-      topics: ["daily routine", "time", "separable verbs"],
-      fallbackResponses: ["Guter Zeitplan!", "Denk an das trennbare Verb!", "Perfekt erzählt!"],
-    },
-  },
-  {
-    id: "de-a2-lesson-4",
-    unitId: "de-a2-unit-1",
-    title: "Wetter & Jahreszeiten",
-    description: "Sprich über das Wetter und die vier Jahreszeiten",
-    icon: "🌤️",
-    level: "A2",
-    xpReward: 25,
-    estimatedMinutes: 10,
-    goals: [
-      { description: "Wetter beschreiben", xpReward: 12 },
-      { description: "Jahreszeiten benennen", xpReward: 13 },
-    ],
-    vocabulary: [
-      { word: "die Sonne", translation: "sun", pronunciation: "dee ZON-eh", emoji: "☀️" },
-      { word: "der Regen", translation: "rain", pronunciation: "dair REH-gen", emoji: "🌧️" },
-      { word: "der Schnee", translation: "snow", pronunciation: "dair SHNAY", emoji: "❄️" },
-      { word: "der Wind", translation: "wind", pronunciation: "dair VINT", emoji: "💨" },
-      { word: "warm", translation: "warm", pronunciation: "varm", emoji: "🌡️" },
-      { word: "kalt", translation: "cold", pronunciation: "kahlt", emoji: "🥶" },
-      { word: "der Frühling", translation: "spring", pronunciation: "dair FRUE-ling", emoji: "🌸" },
-      { word: "der Sommer", translation: "summer", pronunciation: "dair ZOM-mer", emoji: "🏖️" },
-      { word: "der Herbst", translation: "autumn", pronunciation: "dair HAIRBST", emoji: "🍂" },
-      { word: "der Winter", translation: "winter", pronunciation: "dair VIN-ter", emoji: "⛄" },
-    ],
-    phrases: [
-      { text: "Heute scheint die Sonne.", translation: "The sun is shining today.", pronunciation: "HOY-teh shaynt dee ZON-eh." },
-      { text: "Im Winter ist es kalt.", translation: "In winter it is cold.", pronunciation: "Im VIN-ter ist es kahlt." },
-    ],
-    activities: [
-      {
-        id: "de-a2-4-act-1",
-        type: "match",
-        instruction: "Verbinde die Jahreszeit mit dem typischen Wetter",
-        pairs: [
-          { id: "1", left: "Frühling", right: "blühende Blumen" },
-          { id: "2", left: "Sommer", right: "heiß und sonnig" },
-          { id: "3", left: "Herbst", right: "bunte Blätter" },
-          { id: "4", left: "Winter", right: "Schnee und Kälte" },
-        ],
-      },
-      {
-        id: "de-a2-4-act-2",
-        type: "translate",
-        question: "Übersetze: 'In winter it is cold'",
-        correctAnswer: "Im Winter ist es kalt",
-        hint: "'im' = in dem (in the)",
-      },
-      {
-        id: "de-a2-4-act-3",
-        type: "multiple-choice",
-        question: "Welche Jahreszeit kommt nach dem Sommer?",
-        correctAnswer: "der Herbst",
-        options: ["der Winter", "der Frühling", "der Herbst", "der Sommer"],
-        hint: "Es ist die dritte Jahreszeit",
-      },
-    ],
-    aiTeacherPrompt: {
-      systemPrompt: `You are teaching German A2 - Weather & Seasons.
-Current lesson vocabulary: die Sonne, der Regen, der Schnee, der Wind, warm, kalt, der Frühling, der Sommer, der Herbst, der Winter
-Current lesson phrases: Heute scheint die Sonne. / Im Winter ist es kalt.
-
-TEACHING MODE:
-1. Teach weather vocabulary
-2. Practice describing current weather
-3. Ask about favorite season
-STOP after the question.
-
-Stay STRICTLY within weather vocabulary.`,
-      introMessage: "Wie ist das Wetter heute bei dir? Ist es sonnig?",
-      topics: ["weather", "seasons", "adjectives", "preferences"],
-      fallbackResponses: ["Schönes Wetter!", "Ich mag auch den Sommer!", "Gut beschrieben!"],
+      systemPrompt: "Fundisha mazoea ya kila siku kwa Kijerumani kwa Kiswahili.",
+      introMessage: "Habari za asubuhi! Eleza siku yako kwa Kijerumani.",
+      topics: ["mazoea", "saa", "kila siku"],
     },
   },
 ];
 
-// ============ B1 - INTERMEDIATE (4 Lessons) ============
+// ═══════════════════════════════════════════════════════════
+// 🇩🇪 B1 - INTERMEDIATE (WASTANI) - 2 Lessons
+// ═══════════════════════════════════════════════════════════
+
 export const GERMAN_B1_LESSONS: Lesson[] = [
   {
     id: "de-b1-lesson-1",
     unitId: "de-b1-unit-1",
-    title: "Reisen und Urlaub",
-    description: "Sprich über Reisen und Urlaubspläne",
+    title: "Reisen und Urlaub - Kusafiri",
+    description: "Zungumzia safari na likizo",
     icon: "✈️",
     level: "B1",
-    xpReward: 30,
+    xpReward: 35,
     estimatedMinutes: 15,
     goals: [
-      { description: "Über vergangene Reisen sprechen", xpReward: 15 },
-      { description: "Zukünftige Pläne beschreiben", xpReward: 15 },
+      { description: "Kueleza safari zako kwa Kijerumani", xpReward: 20 },
+      { description: "Kutumia wakati uliopita (Perfekt)", xpReward: 15 },
     ],
     vocabulary: [
-      { word: "die Reise", translation: "trip/journey", pronunciation: "dee REYE-zuh", emoji: "🧳", example: "Die Reise war wunderschön." },
-      { word: "der Urlaub", translation: "vacation", pronunciation: "dair OOOR-lowp", emoji: "🏖️", example: "Ich mache Urlaub in Spanien." },
-      { word: "buchen", translation: "to book", pronunciation: "BOO-khen", emoji: "📅", example: "Ich habe ein Hotel gebucht." },
-      { word: "das Flugzeug", translation: "airplane", pronunciation: "dahs FLOOK-tsoyk", emoji: "✈️", example: "Das Flugzeug landet um 15 Uhr." },
-      { word: "das Hotel", translation: "hotel", pronunciation: "dahs ho-TEL", emoji: "🏨", example: "Das Hotel war sehr komfortabel." },
-      { word: "die Sehenswürdigkeit", translation: "sight/attraction", pronunciation: "dee ZAY-ens-voord-ish-kite", emoji: "🏛️", example: "Wir besuchen viele Sehenswürdigkeiten." },
+      { word: "die Reise", translation: "safari", pronunciation: "dee REYE-zuh", emoji: "🧳" },
+      { word: "der Urlaub", translation: "likizo", pronunciation: "dair OOOR-lowp", emoji: "🏖️" },
+      { word: "buchen", translation: "kuhifadhi", pronunciation: "BOO-khen", emoji: "📅" },
+      { word: "das Flugzeug", translation: "ndege", pronunciation: "dahs FLOOK-tsoyk", emoji: "✈️" },
+      { word: "das Hotel", translation: "hoteli", pronunciation: "dahs ho-TEL", emoji: "🏨" },
     ],
     phrases: [
-      { text: "Ich bin letztes Jahr nach Spanien gereist.", translation: "I traveled to Spain last year.", pronunciation: "Ikh bin LET-stes Yahr nahkh SHPAH-nyen guh-REYST." },
-      { text: "Wir haben ein Hotel gebucht.", translation: "We booked a hotel.", pronunciation: "Veer HAH-ben ayn ho-TEL guh-BOKHT." },
-      { text: "Nächsten Sommer möchte ich nach Italien fahren.", translation: "Next summer I would like to go to Italy.", pronunciation: "NEKH-sten ZOM-er MERKH-te ikh nahkh ee-TAHL-yen FAH-ren." },
+      { text: "Ich bin nach Berlin gereist.", translation: "Nimesafiri kwenda Berlin.", pronunciation: "Ikh bin nakh BER-leen guh-REYST." },
+      { text: "Wir haben ein Hotel gebucht.", translation: "Tumehifadhi hoteli.", pronunciation: "Veer HAH-ben ayn ho-TEL guh-BOOKHT." },
     ],
     grammar: {
-      topic: "Perfekt Tense (Past)",
-      explanation: "German uses 'haben' or 'sein' + past participle for past tense",
+      topic: "Wakati Uliopita (Perfekt)",
+      explanation: "Kijerumani hutumia 'haben' au 'sein' + kitenzi kwa wakati uliopita.",
       examples: [
-        "Ich bin nach Berlin gereist. (I traveled to Berlin)",
-        "Wir haben ein Hotel gebucht. (We booked a hotel)",
-        "Er ist mit dem Zug gefahren. (He traveled by train)",
+        "Ich bin nach Berlin gereist. (Nimesafiri kwenda Berlin.)",
+        "Wir haben ein Hotel gebucht. (Tumehifadhi hoteli.)",
       ],
-      commonMistakes: ["Verbs of movement use 'sein', most others use 'haben'"],
     },
     culturalNote: {
-      title: "Travel Culture in German-Speaking Countries",
-      content: "Germans love to travel! 'Reisefieber' (travel fever) is the excitement before a trip. Always validate your train ticket before boarding.",
+      title: "Utamaduni wa Kusafiri 🇩🇪",
+      content: "Wajerumani wanapenda kusafiri sana! 'Reisefieber' (homa ya safari) ni msisimko kabla ya safari. Kumbuka: lazima uthibitishe tiketi ya treni kabla ya kupanda!",
     },
     activities: [
       {
-        id: "de-b1-1-act-1",
-        type: "multiple-choice",
-        question: "Welche Vergangenheitsform ist korrekt?",
-        correctAnswer: "Ich bin gereist",
-        options: [
-          "Ich habe gereist",
-          "Ich bin gereist",
-          "Ich reiste",
-          "Ich war gereist",
-        ],
-        hint: "Reisen benutzt 'sein' im Perfekt",
-        explanation: "'reisen' uses 'sein' in Perfekt tense because it's a verb of movement",
-      },
-      {
-        id: "de-b1-1-act-2",
+        id: "de-b1-1-tr1",
         type: "translate",
-        question: "Übersetze: 'We booked a hotel'",
+        question: "Tafsiri: 'Tumehifadhi hoteli'",
         correctAnswer: "Wir haben ein Hotel gebucht",
-        hint: "Perfekt mit 'haben' + Partizip II",
-      },
-      {
-        id: "de-b1-1-act-3",
-        type: "flashcard",
-        question: "Was ist 'die Sehenswürdigkeit'?",
-        correctAnswer: "sight/attraction",
-        options: ["airport", "sight/attraction", "train station", "beach"],
-        hint: "Touristische Orte",
-        front: "die Sehenswürdigkeit",
-        back: "sight/attraction",
-        example: "Der Eiffelturm ist eine berühmte Sehenswürdigkeit.",
-      },
-      {
-        id: "de-b1-1-act-4",
-        type: "order-sentence",
-        instruction: "Ordne die Wörter zu einem Satz im Perfekt",
-        correctOrder: ["Ich", "bin", "nach", "Berlin", "gereist"],
-        scrambled: ["gereist", "Ich", "Berlin", "nach", "bin"],
-        hint: "Perfekt mit 'sein' + Partizip",
       },
     ],
     aiTeacherPrompt: {
-      systemPrompt: `You are teaching German B1 - Travel and Vacation.
-Current lesson vocabulary: die Reise, der Urlaub, buchen, das Flugzeug, das Hotel, die Sehenswürdigkeit
-Current lesson phrases: Ich bin letztes Jahr nach Spanien gereist. / Wir haben ein Hotel gebucht. / Nächsten Sommer möchte ich nach Italien fahren.
-
-TEACHING MODE:
-1. Teach travel vocabulary with example sentence
-2. Explain grammar (Perfekt with sein/haben)
-3. Ask student about their travel experiences
-STOP after the question.
-
-REACTING MODE:
-1. React to their travel story
-2. Correct verb forms gently
-3. Ask follow-up questions about their trip
-STOP after one sentence.
-
-Stay STRICTLY within travel vocabulary.`,
-      introMessage: "Hallo! Erzähl mir von deinem letzten Urlaub! Wo warst du?",
-      topics: ["travel", "past tense", "future plans", "Perfekt"],
-      fallbackResponses: ["Tolle Reise!", "Erzähl mehr!", "Das klingt spannend!"],
+      systemPrompt: "Fundisha safari za Kijerumani kwa Kiswahili. Linganisha na safari za Tanzania.",
+      introMessage: "Habari! Eleza safari yako ya mwisho kwa Kijerumani!",
+      topics: ["safari", "likizo", "wakati uliopita"],
     },
   },
   {
     id: "de-b1-lesson-2",
     unitId: "de-b1-unit-1",
-    title: "Gesundheit & Körper",
-    description: "Sprich über Gesundheit, Krankheit und den menschlichen Körper",
+    title: "Gesundheit - Afya",
+    description: "Zungumzia afya na mwili",
     icon: "🏥",
     level: "B1",
-    xpReward: 30,
-    estimatedMinutes: 12,
-    goals: [
-      { description: "Körperteile benennen", xpReward: 15 },
-      { description: "Über Gesundheit sprechen", xpReward: 15 },
-    ],
-    vocabulary: [
-      { word: "der Kopf", translation: "head", pronunciation: "dair KOPF", emoji: "🧠" },
-      { word: "der Bauch", translation: "stomach", pronunciation: "dair BOWKH", emoji: "🤰" },
-      { word: "der Arm", translation: "arm", pronunciation: "dair ARM", emoji: "💪" },
-      { word: "das Bein", translation: "leg", pronunciation: "dahs BYNE", emoji: "🦵" },
-      { word: "der Arzt", translation: "doctor", pronunciation: "dair ARTST", emoji: "👨‍⚕️" },
-      { word: "die Apotheke", translation: "pharmacy", pronunciation: "dee ah-po-TAY-keh", emoji: "💊" },
-      { word: "gesund", translation: "healthy", pronunciation: "geh-ZOONT", emoji: "✅" },
-      { word: "krank", translation: "sick", pronunciation: "krahngk", emoji: "🤒" },
-    ],
-    phrases: [
-      { text: "Mir tut der Kopf weh.", translation: "My head hurts.", pronunciation: "Meer toot dair KOPF veh." },
-      { text: "Ich muss zum Arzt gehen.", translation: "I have to go to the doctor.", pronunciation: "Ikh moos tsoom ARTST GAY-en." },
-    ],
-    grammar: {
-      topic: "Dative Case with Body Parts",
-      explanation: "When talking about body parts that hurt, use dative: 'Mir tut der Kopf weh'",
-      examples: [
-        "Mir tut der Kopf weh. (My head hurts)",
-        "Ihm schmerzt der Bauch. (His stomach hurts)",
-        "Wir gehen zum Arzt. (We go to the doctor)",
-      ],
-    },
-    activities: [
-      {
-        id: "de-b1-2-act-1",
-        type: "dialogue",
-        context: "Du fühlst dich nicht wohl und sprichst mit einem Freund",
-        lines: [
-          { speaker: "ai", text: "Hallo! Wie geht es dir heute?" },
-          { speaker: "user", text: "", isBlank: true, options: ["Mir geht es nicht gut", "Ich bin glücklich", "Das Wetter ist schön"], correctAnswer: "Mir geht es nicht gut" },
-          { speaker: "ai", text: "Oh nein! Was fehlt dir?" },
-          { speaker: "user", text: "", isBlank: true, options: ["Mir tut der Kopf weh", "Ich habe Hunger", "Ich möchte reisen"], correctAnswer: "Mir tut der Kopf weh" },
-          { speaker: "ai", text: "Du solltest zum Arzt gehen oder in die Apotheke." },
-        ],
-      },
-      {
-        id: "de-b1-2-act-2",
-        type: "grammar-drill",
-        rule: "Bei Körperteilen im Dativ: 'Mir tut [der Körperteil] weh'",
-        examples: ["Mir tut der Kopf weh.", "Ihm schmerzt der Bauch."],
-        exercises: [
-          {
-            prompt: "___ tut der Bauch weh.",
-            correctAnswer: "Mir",
-            options: ["Mir", "Mich", "Ich", "Mein"],
-            hint: "Dativ für die Person, deren Körperteil schmerzt",
-          },
-        ],
-      },
-      {
-        id: "de-b1-2-act-3",
-        type: "multiple-choice",
-        question: "Was bedeutet 'der Arzt'?",
-        correctAnswer: "doctor",
-        options: ["teacher", "doctor", "lawyer", "nurse"],
-        hint: "Man geht zu ihm, wenn man krank ist",
-      },
-    ],
-    aiTeacherPrompt: {
-      systemPrompt: `You are teaching German B1 - Health & Body.
-Current lesson vocabulary: der Kopf, der Bauch, der Arm, das Bein, der Arzt, die Apotheke, gesund, krank
-Current lesson phrases: Mir tut der Kopf weh. / Ich muss zum Arzt gehen.
-
-TEACHING MODE:
-1. Teach body parts with Dativ
-2. Practice 'Mir tut ... weh' structure
-3. Ask about symptoms
-STOP after the question.
-
-Stay STRICTLY within health vocabulary.`,
-      introMessage: "Wie fühlst du dich heute? Hast du Schmerzen?",
-      topics: ["health", "body parts", "dative case", "giving advice"],
-      fallbackResponses: ["Gute Besserung!", "Das ist wichtig!", "Sehr gut erklärt!"],
-    },
-  },
-  {
-    id: "de-b1-lesson-3",
-    unitId: "de-b1-unit-1",
-    title: "Meinungen & Gefühle ausdrücken",
-    description: "Lerne, deine Meinung und Gefühle auf Deutsch zu äußern",
-    icon: "💬",
-    level: "B1",
     xpReward: 35,
     estimatedMinutes: 15,
     goals: [
-      { description: "Meinungen äußern", xpReward: 18 },
-      { description: "Gefühle beschreiben", xpReward: 17 },
+      { description: "Kueleza sehemu za mwili kwa Kijerumani", xpReward: 15 },
+      { description: "Kuzungumza kuhusu afya", xpReward: 20 },
     ],
     vocabulary: [
-      { word: "meiner Meinung nach", translation: "in my opinion", pronunciation: "MEYE-ner MEYE-noong nakh", emoji: "🗣️" },
-      { word: "ich finde", translation: "I think/find", pronunciation: "ikh FIN-deh", emoji: "💭" },
-      { word: "ich glaube", translation: "I believe", pronunciation: "ikh GLOW-beh", emoji: "🤔" },
-      { word: "glücklich", translation: "happy", pronunciation: "GLUEK-lish", emoji: "😊" },
-      { word: "traurig", translation: "sad", pronunciation: "TROW-rig", emoji: "😢" },
-      { word: "aufgeregt", translation: "excited", pronunciation: "OWF-geh-regt", emoji: "🤩" },
-      { word: "enttäuscht", translation: "disappointed", pronunciation: "ent-TOYSH-t", emoji: "😞" },
+      { word: "der Kopf", translation: "kichwa", pronunciation: "dair KOPF", emoji: "🗣️" },
+      { word: "der Bauch", translation: "tumbo", pronunciation: "dair BOWKH", emoji: "🤢" },
+      { word: "schmerzen", translation: "kuuma", pronunciation: "SHMERTS-en", emoji: "😣" },
+      { word: "der Arzt", translation: "daktari", pronunciation: "dair ARTST", emoji: "👨‍⚕️" },
+      { word: "die Apotheke", translation: "duka la dawa", pronunciation: "dee ah-po-TAY-keh", emoji: "💊" },
     ],
     phrases: [
-      { text: "Meiner Meinung nach ist Deutsch interessant.", translation: "In my opinion, German is interesting.", pronunciation: "MEYE-ner MEYE-noong nakh ist DOYTSH in-te-reh-SANT." },
-      { text: "Ich finde, dass Lernen Spaß macht.", translation: "I think learning is fun.", pronunciation: "Ikh FIN-deh, dahs LER-nen shpahs makht." },
+      { text: "Mir tut der Kopf weh.", translation: "Kichwa kinauma.", pronunciation: "Meer toot dair KOPF vay." },
+      { text: "Ich muss zum Arzt.", translation: "Lazima niende kwa daktari.", pronunciation: "Ikh moos tsoom ARTST." },
     ],
     grammar: {
-      topic: "Subordinate Clauses with 'dass'",
-      explanation: "'dass' introduces a subordinate clause - verb goes to end",
+      topic: "Sehemu ya tatu (Dativ) na sehemu za mwili",
+      explanation: "Unapozungumzia sehemu ya mwili inayouma, tumia 'Mir tut der Kopf weh' (Kichwa kinauma).",
       examples: [
-        "Ich finde, dass Deutsch interessant ist. (I think that German is interesting)",
-        "Er glaubt, dass es regnen wird. (He believes that it will rain)",
-        "Wir hoffen, dass du kommst. (We hope that you come)",
+        "Mir tut der Kopf weh. (Kichwa kinauma.)",
+        "Ihm schmerzt der Bauch. (Tumbo linamuuma.)",
       ],
     },
     activities: [
       {
-        id: "de-b1-3-act-1",
-        type: "order-sentence",
-        instruction: "Ordne die Wörter zu einem Satz mit 'dass'",
-        correctOrder: ["Ich", "finde", "dass", "Deutsch", "interessant", "ist"],
-        scrambled: ["ist", "Ich", "dass", "interessant", "finde", "Deutsch"],
-        hint: "Nach 'dass' geht das Verb ans Ende",
-      },
-      {
-        id: "de-b1-3-act-2",
-        type: "multiple-choice",
-        question: "Welcher Satz ist korrekt?",
-        correctAnswer: "Ich finde, dass Deutsch interessant ist",
-        options: [
-          "Ich finde dass Deutsch ist interessant",
-          "Ich finde, dass Deutsch interessant ist",
-          "Ich finde dass interessant Deutsch ist",
-          "Ich finde, ist Deutsch interessant dass",
-        ],
-        hint: "Comma before 'dass', verb at end of subordinate clause",
-        explanation: "Comma before 'dass', verb at end of subordinate clause",
-      },
-      {
-        id: "de-b1-3-act-3",
+        id: "de-b1-2-dialogue1",
         type: "dialogue",
-        context: "Du diskutierst mit einem Freund über ein Thema",
+        context: "Unajisikia vibaya na unazungumza na rafiki",
         lines: [
-          { speaker: "ai", text: "Was denkst du über das Lernen von Sprachen?" },
-          { speaker: "user", text: "", isBlank: true, options: [
-            "Ich finde, dass Sprachen lernen wichtig ist",
-            "Ich esse gern",
-            "Das Wetter ist schön"
-          ], correctAnswer: "Ich finde, dass Sprachen lernen wichtig ist" },
-          { speaker: "ai", text: "Warum glaubst du das?" },
-          { speaker: "user", text: "", isBlank: true, options: [
-            "Weil man neue Kulturen verstehen kann",
-            "Weil ich müde bin",
-            "Weil es regnet"
-          ], correctAnswer: "Weil man neue Kulturen verstehen kann" },
+          { speaker: "ai", text: "Wie geht es dir heute?" },
+          { speaker: "user", text: "", isBlank: true, options: ["Mir geht es nicht gut", "Ich bin glücklich"], correctAnswer: "Mir geht es nicht gut" },
+          { speaker: "ai", text: "Was fehlt dir?" },
+          { speaker: "user", text: "", isBlank: true, options: ["Mir tut der Kopf weh", "Ich habe Hunger"], correctAnswer: "Mir tut der Kopf weh" },
         ],
       },
     ],
     aiTeacherPrompt: {
-      systemPrompt: `You are teaching German B1 - Expressing Opinions & Feelings.
-Current lesson vocabulary: meiner Meinung nach, ich finde, ich glaube, glücklich, traurig, aufgeregt, enttäuscht
-Current lesson phrases: Meiner Meinung nach ist Deutsch interessant. / Ich finde, dass Lernen Spaß macht.
-
-TEACHING MODE:
-1. Teach opinion phrases
-2. Explain 'dass' clause structure
-3. Ask student's opinion on a topic
-STOP after the question.
-
-Stay STRICTLY within lesson vocabulary.`,
-      introMessage: "Was denkst du über das Deutschlernen? Ich finde es spannend!",
-      topics: ["opinions", "feelings", "subordinate clauses", "discussion"],
-      fallbackResponses: ["Interessante Meinung!", "Das verstehe ich!", "Sehr gut ausgedrückt!"],
-    },
-  },
-  {
-    id: "de-b1-lesson-4",
-    unitId: "de-b1-unit-1",
-    title: "Arbeit & Beruf",
-    description: "Sprich über Berufe, Arbeitsplätze und Karriere",
-    icon: "💼",
-    level: "B1",
-    xpReward: 35,
-    estimatedMinutes: 15,
-    goals: [
-      { description: "Berufe benennen", xpReward: 18 },
-      { description: "Über Arbeit sprechen", xpReward: 17 },
-    ],
-    vocabulary: [
-      { word: "der Beruf", translation: "profession/job", pronunciation: "dair beh-ROOF", emoji: "💼" },
-      { word: "die Arbeit", translation: "work", pronunciation: "dee AR-bite", emoji: "🏢" },
-      { word: "der Chef", translation: "boss", pronunciation: "dair SHEF", emoji: "👔" },
-      { word: "der Kollege", translation: "colleague", pronunciation: "dair ko-LEH-geh", emoji: "👥" },
-      { word: "die Pause", translation: "break", pronunciation: "dee POW-zeh", emoji: "☕" },
-      { word: "verdienen", translation: "to earn", pronunciation: "fer-DEE-nen", emoji: "💰" },
-    ],
-    phrases: [
-      { text: "Was ist dein Beruf?", translation: "What is your profession?", pronunciation: "Vas ist dine beh-ROOF?" },
-      { text: "Ich arbeite als Lehrer.", translation: "I work as a teacher.", pronunciation: "Ikh AR-bite-te ahls LAY-rer." },
-    ],
-    grammar: {
-      topic: "Genitive Case (Possession)",
-      explanation: "Genitive shows possession: 'das Auto meines Vaters' (my father's car)",
-      examples: [
-        "Das ist das Büro meines Chefs. (That's my boss's office)",
-        "Die Idee meines Kollegen ist gut. (My colleague's idea is good)",
-      ],
-    },
-    activities: [
-      {
-        id: "de-b1-4-act-1",
-        type: "grammar-drill",
-        rule: "Genitiv für Besitz: 'das [Ding] des/der [Person]'",
-        examples: ["das Auto meines Vaters", "die Tasche meiner Mutter"],
-        exercises: [
-          {
-            prompt: "Das ist das Büro ___ Chefs.",
-            correctAnswer: "meines",
-            options: ["meines", "meiner", "mein", "mich"],
-            hint: "Chef ist maskulin -> Genitiv: meines",
-          },
-        ],
-      },
-      {
-        id: "de-b1-4-act-2",
-        type: "multiple-choice",
-        question: "Was bedeutet 'der Kollege'?",
-        correctAnswer: "colleague",
-        options: ["boss", "colleague", "employee", "customer"],
-        hint: "Jemand, mit dem man arbeitet",
-      },
-      {
-        id: "de-b1-4-act-3",
-        type: "translate",
-        question: "Übersetze: 'I work as a teacher'",
-        correctAnswer: "Ich arbeite als Lehrer",
-        hint: "'als' = as",
-      },
-    ],
-    aiTeacherPrompt: {
-      systemPrompt: `You are teaching German B1 - Work & Profession.
-Current lesson vocabulary: der Beruf, die Arbeit, der Chef, der Kollege, die Pause, verdienen
-Current lesson phrases: Was ist dein Beruf? / Ich arbeite als Lehrer.
-
-TEACHING MODE:
-1. Teach job vocabulary
-2. Practice Genitiv for possession
-3. Ask about student's profession
-STOP after the question.
-
-Stay STRICTLY within work vocabulary.`,
-      introMessage: "Was ist dein Beruf? Oder was möchtest du werden?",
-      topics: ["work", "professions", "genitive case", "workplace"],
-      fallbackResponses: ["Toller Beruf!", "Das ist interessant!", "Sehr gut beschrieben!"],
+      systemPrompt: "Fundisha afya ya Kijerumani kwa Kiswahili. Eleza Dativ na sehemu za mwili.",
+      introMessage: "Habari! U hali gani leo?",
+      topics: ["afya", "mwili", "daktari"],
     },
   },
 ];
 
-// ============ B2 - UPPER INTERMEDIATE (3 Lessons) ============
+// ═══════════════════════════════════════════════════════════
+// 🇩🇪 B2 - UPPER INTERMEDIATE (JUULI) - 1 Lesson
+// ═══════════════════════════════════════════════════════════
+
 export const GERMAN_B2_LESSONS: Lesson[] = [
   {
     id: "de-b2-lesson-1",
     unitId: "de-b2-unit-1",
-    title: "Beruf und Karriere",
-    description: "Sprich über Berufserfahrung und Karriereziele",
-    icon: "🏆",
-    level: "B2",
-    xpReward: 35,
-    estimatedMinutes: 18,
-    goals: [
-      { description: "Berufserfahrung beschreiben", xpReward: 20 },
-      { description: "In Bewerbungsgesprächen sprechen", xpReward: 15 },
-    ],
-    vocabulary: [
-      { word: "die Erfahrung", translation: "experience", pronunciation: "dee air-FAH-roong", emoji: "📊", example: "Ich habe fünf Jahre Erfahrung." },
-      { word: "die Bewerbung", translation: "application", pronunciation: "dee buh-VER-boong", emoji: "📄", example: "Ich schicke meine Bewerbung." },
-      { word: "das Vorstellungsgespräch", translation: "job interview", pronunciation: "dahs FOR-shtel-oongs-guh-shprekh", emoji: "🤝", example: "Morgen habe ich ein Vorstellungsgespräch." },
-      { word: "die Karriere", translation: "career", pronunciation: "dee ka-REE-uh", emoji: "📈", example: "Sie macht Karriere im Marketing." },
-      { word: "sich bewerben", translation: "to apply", pronunciation: "zikh buh-VER-ben", emoji: "✉️", example: "Ich bewerbe mich um die Stelle." },
-      { word: "die Fähigkeit", translation: "skill/ability", pronunciation: "dee FAY-ig-kite", emoji: "💪", example: "Teamarbeit ist eine wichtige Fähigkeit." },
-    ],
-    phrases: [
-      { text: "Ich bewerbe mich um die Stelle als Manager.", translation: "I am applying for the position as manager.", pronunciation: "Ikh buh-VER-buh mikh oom dee SHTEL-uh ahls MAH-nay-jer." },
-      { text: "Meine Stärken sind Teamarbeit und Kommunikation.", translation: "My strengths are teamwork and communication.", pronunciation: "MEYE-nuh SHTER-ken zint TEEM-ar-bite oont ko-moo-nee-ka-TSYOHN." },
-    ],
-    grammar: {
-      topic: "Reflexive Verbs",
-      explanation: "Some German verbs require a reflexive pronoun (mich, dich, sich)",
-      examples: [
-        "Ich bewerbe mich. (I apply)",
-        "Er interessiert sich für Technik. (He is interested in technology)",
-        "Wir freuen uns auf das Wochenende. (We look forward to the weekend)",
-      ],
-      commonMistakes: ["Don't forget the reflexive pronoun! 'Ich bewerbe' is incomplete"],
-    },
-    culturalNote: {
-      title: "Job Applications in Germany",
-      content: "German applications often include a 'Lebenslauf' (CV) and 'Anschreiben' (cover letter). Photos on CVs are still common but becoming optional.",
-    },
-    activities: [
-      {
-        id: "de-b2-1-act-1",
-        type: "multiple-choice",
-        question: "Wie sagt man 'I am applying for the job'?",
-        correctAnswer: "Ich bewerbe mich um die Stelle",
-        options: [
-          "Ich apply für den Job",
-          "Ich bewerbe mich um die Stelle",
-          "Ich will den Job haben",
-          "Ich nehme die Stelle",
-        ],
-        hint: "Reflexives Verb 'sich bewerben'",
-        explanation: "'sich bewerben' is a reflexive verb requiring 'mich'",
-      },
-      {
-        id: "de-b2-1-act-2",
-        type: "translate",
-        question: "Übersetze: 'My strengths are teamwork'",
-        correctAnswer: "Meine Stärken sind Teamarbeit",
-        hint: "'Stärken' = strengths",
-      },
-      {
-        id: "de-b2-1-act-3",
-        type: "dialogue",
-        context: "Vorstellungsgespräch - Du bewirbst dich auf eine Stelle",
-        lines: [
-          { speaker: "ai", text: "Guten Tag! Erzählen Sie mir von Ihrer Berufserfahrung." },
-          { speaker: "user", text: "", isBlank: true, options: [
-            "Ich habe fünf Jahre Erfahrung im Marketing",
-            "Ich mag Pizza",
-            "Das Wetter ist schön"
-          ], correctAnswer: "Ich habe fünf Jahre Erfahrung im Marketing" },
-          { speaker: "ai", text: "Warum möchten Sie bei uns arbeiten?" },
-          { speaker: "user", text: "", isBlank: true, options: [
-            "Weil ich mich für Ihre Firma interessiere",
-            "Weil ich hungrig bin",
-            "Weil es regnet"
-          ], correctAnswer: "Weil ich mich für Ihre Firma interessiere" },
-        ],
-      },
-    ],
-    aiTeacherPrompt: {
-      systemPrompt: `You are teaching German B2 - Career & Profession.
-Current lesson vocabulary: die Erfahrung, die Bewerbung, das Vorstellungsgespräch, die Karriere, sich bewerben, die Fähigkeit
-Current lesson phrases: Ich bewerbe mich um die Stelle als Manager. / Meine Stärken sind Teamarbeit und Kommunikation.
-
-TEACHING MODE:
-1. Teach professional vocabulary
-2. Explain reflexive verbs
-3. Practice job interview questions
-STOP after the question.
-
-REACTING MODE:
-1. React to their career description
-2. Correct formal/informal usage
-3. Ask about professional goals
-STOP after one sentence.
-
-Stay STRICTLY within career vocabulary.`,
-      introMessage: "Guten Tag! Willkommen zum Vorstellungsgespräch. Erzählen Sie mir von Ihrer Berufserfahrung.",
-      topics: ["career", "job interviews", "professional language", "reflexive verbs"],
-      fallbackResponses: ["Sehr professionell!", "Gute Antwort!", "Ausgezeichnet formuliert!"],
-    },
-  },
-  {
-    id: "de-b2-lesson-2",
-    unitId: "de-b2-unit-1",
-    title: "Medien & Technologie",
-    description: "Diskutiere über soziale Medien, Nachrichten und Technologie",
-    icon: "📱",
+    title: "Beruf - Kazi",
+    description: "Zungumzia kazi na taaluma",
+    icon: "💼",
     level: "B2",
     xpReward: 40,
     estimatedMinutes: 15,
     goals: [
-      { description: "Über Medien sprechen", xpReward: 20 },
-      { description: "Technologie diskutieren", xpReward: 20 },
+      { description: "Kuzungumza kuhusu kazi kwa Kijerumani", xpReward: 20 },
+      { description: "Kuandika maombi ya kazi", xpReward: 20 },
     ],
     vocabulary: [
-      { word: "das soziale Netzwerk", translation: "social network", pronunciation: "dahs so-TSYAH-leh NETS-verk", emoji: "🌐" },
-      { word: "die Nachricht", translation: "news/message", pronunciation: "dee NAHKH-rikht", emoji: "📰" },
-      { word: "der Algorithmus", translation: "algorithm", pronunciation: "dair al-go-RIT-moos", emoji: "🔢" },
-      { word: "die Privatsphäre", translation: "privacy", pronunciation: "dee pree-vaht-SFAY-reh", emoji: "🔒" },
-      { word: "verbreiten", translation: "to spread", pronunciation: "fer-BRY-ten", emoji: "📡" },
-      { word: "die Meinung", translation: "opinion", pronunciation: "dee MEYE-noong", emoji: "💭" },
+      { word: "die Erfahrung", translation: "uzoefu", pronunciation: "dee air-FAH-roong", emoji: "📊" },
+      { word: "die Bewerbung", translation: "maombi ya kazi", pronunciation: "dee buh-VER-boong", emoji: "📄" },
+      { word: "das Vorstellungsgespräch", translation: "mahojiano ya kazi", pronunciation: "dahs FOR-shtel-oongs-guh-shprekh", emoji: "🤝" },
+      { word: "sich bewerben", translation: "kuomba kazi", pronunciation: "zikh buh-VER-ben", emoji: "✉️" },
     ],
     phrases: [
-      { text: "Soziale Medien verbreiten Nachrichten schnell.", translation: "Social media spreads news quickly.", pronunciation: "Zo-TSYAH-leh MEH-dee-en fer-BRY-ten NAHKH-rikh-ten shnel." },
-      { text: "Technologie verändert unsere Welt.", translation: "Technology is changing our world.", pronunciation: "TEKH-no-lo-gee fer-EN-dert OON-zeh-re VELT." },
+      { text: "Ich habe fünf Jahre Erfahrung.", translation: "Nina uzoefu wa miaka mitano.", pronunciation: "Ikh HAH-beh fuenf YAH-reh air-FAH-roong." },
+      { text: "Ich möchte mich bewerben.", translation: "Ningependa kuomba kazi.", pronunciation: "Ikh MERKH-te mikh buh-VER-ben." },
     ],
     grammar: {
-      topic: "Passive Voice",
-      explanation: "Passive: 'werden' + past participle. Focus on action, not actor",
+      topic: "Vitenzi vya kujirejelea (Reflexive Verben)",
+      explanation: "Baadhi ya vitenzi huhitaji kivumishi cha kujirejelea (mich, dich, sich).",
       examples: [
-        "Das Buch wird gelesen. (The book is being read)",
-        "Die Nachrichten werden verbreitet. (The news is spread)",
-        "Hier wird Deutsch gesprochen. (German is spoken here)",
+        "Ich bewerbe mich. (Ninaomba kazi.)",
+        "Er interessiert sich für Technik. (Anavutiwa na teknolojia.)",
       ],
+    },
+    culturalNote: {
+      title: "Maombi ya Kazi Ujerumani 🇩🇪",
+      content: "Maombi ya Kijerumani huhitaji 'Lebenslauf' (CV) na 'Anschreiben' (barua ya maombi). Picha kwenye CV bado ni za kawaida!",
     },
     activities: [
       {
-        id: "de-b2-2-act-1",
-        type: "grammar-drill",
-        rule: "Passiv: 'werden' + Partizip II",
-        examples: ["Das Buch wird gelesen.", "Die Tür wird geöffnet."],
-        exercises: [
-          {
-            prompt: "Die Nachricht ___ (verbreiten) im Internet.",
-            correctAnswer: "wird verbreitet",
-            hint: "Passiv Präsens: wird + Partizip II",
-          },
-        ],
-      },
-      {
-        id: "de-b2-2-act-2",
-        type: "multiple-choice",
-        question: "Welcher Satz ist im Passiv?",
-        correctAnswer: "Das Buch wird gelesen",
-        options: [
-          "Ich lese das Buch",
-          "Das Buch wird gelesen",
-          "Ich habe das Buch gelesen",
-          "Das Buch ist interessant",
-        ],
-        hint: "Passiv uses 'werden' + past participle",
-        explanation: "Passiv uses 'werden' + past participle",
-      },
-      {
-        id: "de-b2-2-act-3",
-        type: "translate",
-        question: "Übersetze: 'German is spoken here'",
-        correctAnswer: "Hier wird Deutsch gesprochen",
-        hint: "Passiv: wird + gesprochen",
-      },
-    ],
-    aiTeacherPrompt: {
-      systemPrompt: `You are teaching German B2 - Media & Technology.
-Current lesson vocabulary: das soziale Netzwerk, die Nachricht, der Algorithmus, die Privatsphäre, verbreiten, die Meinung
-Current lesson phrases: Soziale Medien verbreiten Nachrichten schnell. / Technologie verändert unsere Welt.
-
-TEACHING MODE:
-1. Teach media vocabulary
-2. Explain Passiv (werden + Partizip)
-3. Ask student's opinion on technology
-STOP after the question.
-
-Stay STRICTLY within lesson vocabulary.`,
-      introMessage: "Was denkst du über soziale Medien? Sind sie nützlich oder gefährlich?",
-      topics: ["media", "technology", "passive voice", "digital society"],
-      fallbackResponses: ["Guter Punkt!", "Das ist eine wichtige Frage!", "Sehr differenziert!"],
-    },
-  },
-  {
-    id: "de-b2-lesson-3",
-    unitId: "de-b2-unit-1",
-    title: "Umwelt & Nachhaltigkeit",
-    description: "Sprich über Umweltschutz, Klimawandel und nachhaltiges Leben",
-    icon: "🌍",
-    level: "B2",
-    xpReward: 40,
-    estimatedMinutes: 18,
-    goals: [
-      { description: "Umweltthemen diskutieren", xpReward: 20 },
-      { description: "Nachhaltigkeit beschreiben", xpReward: 20 },
-    ],
-    vocabulary: [
-      { word: "die Umwelt", translation: "environment", pronunciation: "dee OOM-velt", emoji: "🌿", example: "Wir müssen die Umwelt schützen." },
-      { word: "der Klimawandel", translation: "climate change", pronunciation: "dair KLEE-mah-van-del", emoji: "🌡️" },
-      { word: "nachhaltig", translation: "sustainable", pronunciation: "NAHKH-hal-tikh", emoji: "♻️" },
-      { word: "recyceln", translation: "to recycle", pronunciation: "ree-TSY-keln", emoji: "🔄" },
-      { word: "der Müll", translation: "trash/garbage", pronunciation: "dair MUEL", emoji: "🗑️" },
-      { word: "die Energie", translation: "energy", pronunciation: "dee eh-ner-GEE", emoji: "⚡" },
-      { word: "schützen", translation: "to protect", pronunciation: "SHUET-zen", emoji: "🛡️" },
-    ],
-    phrases: [
-      { text: "Wir müssen die Umwelt schützen.", translation: "We must protect the environment.", pronunciation: "Veer MUES-en dee OOM-velt SHUET-sen." },
-      { text: "Ich würde gerne mehr recyceln.", translation: "I would like to recycle more.", pronunciation: "Ikh VUUR-deh GAYR-neh mayr ree-TSY-keln." },
-    ],
-    grammar: {
-      topic: "Subjunctive II (Konjunktiv II) for Hypotheticals",
-      explanation: "Used for hypothetical situations, polite requests, and wishes",
-      examples: [
-        "Ich würde mehr recyceln, wenn ich könnte. (I would recycle more if I could)",
-        "Könntest du das bitte erklären? (Could you please explain that?)",
-      ],
-    },
-    activities: [
-      {
-        id: "de-b2-3-act-1",
-        type: "multiple-choice",
-        question: "Welcher Satz verwendet Konjunktiv II korrekt?",
-        correctAnswer: "Ich würde mehr recyceln, wenn ich könnte",
-        options: [
-          "Ich recycel mehr",
-          "Ich würde mehr recyceln, wenn ich könnte",
-          "Ich habe mehr recycelt",
-          "Ich recycle mehr",
-        ],
-        hint: "'würde' + infinitive expresses hypothetical action",
-        explanation: "'würde' + infinitive expresses hypothetical action",
-      },
-      {
-        id: "de-b2-3-act-2",
-        type: "translate",
-        question: "Übersetze: 'We must protect the environment'",
-        correctAnswer: "Wir müssen die Umwelt schützen",
-        hint: "'müssen' = must, 'schützen' = protect",
-      },
-      {
-        id: "de-b2-3-act-3",
+        id: "de-b2-1-dialogue1",
         type: "dialogue",
-        context: "Du diskutierst mit einem Freund über Umweltschutz",
+        context: "Mahojiano ya kazi",
         lines: [
-          { speaker: "ai", text: "Was würdest du tun, um die Umwelt zu schützen?" },
-          { speaker: "user", text: "", isBlank: true, options: [
-            "Ich würde weniger Plastik verwenden",
-            "Ich würde mehr essen",
-            "Ich würde schlafen"
-          ], correctAnswer: "Ich würde weniger Plastik verwenden" },
-          { speaker: "ai", text: "Gute Idee! Was könnten wir noch machen?" },
-          { speaker: "user", text: "", isBlank: true, options: [
-            "Wir könnten mehr recyceln",
-            "Wir könnten fernsehen",
-            "Wir könnten einkaufen"
-          ], correctAnswer: "Wir könnten mehr recyceln" },
+          { speaker: "ai", text: "Erzählen Sie mir von Ihrer Berufserfahrung." },
+          { speaker: "user", text: "", isBlank: true, options: ["Ich habe fünf Jahre Erfahrung im Marketing", "Ich mag Pizza"], correctAnswer: "Ich habe fünf Jahre Erfahrung im Marketing" },
         ],
       },
     ],
     aiTeacherPrompt: {
-      systemPrompt: `You are teaching German B2 - Environment & Sustainability.
-Current lesson vocabulary: die Umwelt, der Klimawandel, nachhaltig, recyceln, der Müll, die Energie, schützen
-Current lesson phrases: Wir müssen die Umwelt schützen. / Ich würde gerne mehr recyceln.
-
-TEACHING MODE:
-1. Teach environment vocabulary
-2. Explain Konjunktiv II for hypotheticals
-3. Ask student what they would do for the environment
-STOP after the question.
-
-Stay STRICTLY within lesson vocabulary.`,
-      introMessage: "Was würdest du tun, um unsere Umwelt zu schützen? Ich habe einige Ideen...",
-      topics: ["environment", "sustainability", "Konjunktiv II", "problem-solving"],
-      fallbackResponses: ["Tolle Idee!", "Das würde wirklich helfen!", "Sehr durchdacht!"],
+      systemPrompt: "Fundisha lugha ya kazi ya Kijerumani kwa Kiswahili. Jifanya ni mwajiri.",
+      introMessage: "Guten Tag! Karibu kwenye mahojiano. Eleza uzoefu wako.",
+      topics: ["kazi", "taaluma", "mahojiano"],
     },
   },
 ];
 
-// ============ C1 - ADVANCED (3 Lessons) ============
+// ═══════════════════════════════════════════════════════════
+// 🇩🇪 C1 - ADVANCED (MAHARI) - 1 Lesson
+// ═══════════════════════════════════════════════════════════
+
 export const GERMAN_C1_LESSONS: Lesson[] = [
   {
     id: "de-c1-lesson-1",
     unitId: "de-c1-unit-1",
-    title: "Aktuelle Ereignisse diskutieren",
-    description: "Diskutiere komplexe Themen und aktuelle Ereignisse",
+    title: "Aktuelle Ereignisse - Matukio ya Sasa",
+    description: "Jadili mada changamano kwa Kijerumani",
     icon: "📰",
     level: "C1",
-    xpReward: 40,
-    estimatedMinutes: 20,
+    xpReward: 45,
+    estimatedMinutes: 18,
     goals: [
-      { description: "Komplexe Meinungen ausdrücken", xpReward: 20 },
-      { description: "Argumente strukturiert präsentieren", xpReward: 20 },
+      { description: "Kujadili mada za sasa kwa Kijerumani", xpReward: 25 },
+      { description: "Kutumia viunganishi vya hali ya juu", xpReward: 20 },
     ],
     vocabulary: [
-      { word: "die Debatte", translation: "debate", pronunciation: "dee deh-BAH-tuh", emoji: "🗣️", example: "Die Debatte war sehr kontrovers." },
-      { word: "kontrovers", translation: "controversial", pronunciation: "kon-tro-VERS", emoji: "⚖️", example: "Das ist ein kontroverses Thema." },
-      { word: "befürworten", translation: "to support/advocate", pronunciation: "buh-FUUR-vor-ten", emoji: "👍", example: "Ich befürworte diese Maßnahme." },
-      { word: "ablehnen", translation: "to reject", pronunciation: "AP-lay-nen", emoji: "👎", example: "Er lehnt den Vorschlag ab." },
-      { word: "die Perspektive", translation: "perspective", pronunciation: "dee per-spek-TEE-vuh", emoji: "👁️", example: "Aus meiner Perspektive ist das richtig." },
-      { word: "argumentieren", translation: "to argue/reason", pronunciation: "ar-goo-men-TEE-ren", emoji: "💭", example: "Sie argumentiert sehr überzeugend." },
+      { word: "die Debatte", translation: "mdahalo", pronunciation: "dee deh-BAH-tuh", emoji: "🗣️" },
+      { word: "kontrovers", translation: "mzozo", pronunciation: "kon-tro-VERS", emoji: "⚖️" },
+      { word: "befürworten", translation: "kuunga mkono", pronunciation: "buh-FUUR-vor-ten", emoji: "👍" },
+      { word: "ablehnen", translation: "kukataa", pronunciation: "AP-lay-nen", emoji: "👎" },
+      { word: "die Perspektive", translation: "mtazamo", pronunciation: "dee per-spek-TEE-vuh", emoji: "👁️" },
     ],
     phrases: [
-      { text: "Meiner Meinung nach ist das ein kontroverses Thema.", translation: "In my opinion, this is a controversial topic.", pronunciation: "MEYE-ner MEYE-noong nakh ist dahs ayn kon-tro-VER-zes TOH-mah." },
-      { text: "Ich befürworte diese Maßnahme, weil sie notwendig ist.", translation: "I support this measure because it is necessary.", pronunciation: "Ikh buh-FUUR-vor-te DEE-zuh MAHS-nah-me, vail zee NOT-ven-dikh ist." },
+      { text: "Meiner Meinung nach ist das wichtig.", translation: "Kwa mtazamo wangu, hili ni muhimu.", pronunciation: "MEYE-ner MEYE-noong nakh ist dahs VIKH-tikh." },
+      { text: "Einerseits... andererseits...", translation: "Kwa upande mmoja... kwa upande mwingine...", pronunciation: "EYE-ner-zyts... AN-der-zyts..." },
     ],
     grammar: {
-      topic: "Advanced Connectors & Discourse Markers",
-      explanation: "Use sophisticated connectors for nuanced argumentation",
+      topic: "Viunganishi vya hali ya juu",
+      explanation: "Tumia viunganishi changamano kwa hoja bora.",
       examples: [
-        "Einerseits... andererseits... (On one hand... on the other hand...)",
-        "Zwar... aber... (Admittedly... but...)",
-        "Nicht nur..., sondern auch... (Not only..., but also...)",
+        "Einerseits... andererseits... (Kwa upande mmoja... kwa upande mwingine...)",
+        "Angesichts der Tatsache, dass... (Kwa kuzingatia ukweli kwamba...)",
       ],
     },
     culturalNote: {
-      title: "Debate Culture in German",
-      content: "German discourse values precision and thoroughness. 'Sachlichkeit' (objectivity) is prized over emotional appeals.",
+      title: "Utamaduni wa Mdahalo Ujerumani 🇩🇪",
+      content: "Wajerumani wanathamini usahihi na hoja nzito. 'Sachlichkeit' (usawa) ni muhimu zaidi kuliko hisia. Ukosoaji wa moja kwa moja ni wa kawaida!",
     },
     activities: [
       {
-        id: "de-c1-1-act-1",
-        type: "multiple-choice",
-        question: "Welcher Ausdruck zeigt differenzierte Argumentation?",
-        correctAnswer: "Einerseits hat er recht, andererseits übersieht er wichtige Aspekte",
-        options: [
-          "Das ist einfach falsch",
-          "Einerseits hat er recht, andererseits übersieht er wichtige Aspekte",
-          "Ich stimme nicht zu",
-          "Das ist meine Meinung",
-        ],
-        hint: "Shows nuanced thinking",
-        explanation: "Shows nuanced thinking by acknowledging multiple perspectives",
-      },
-      {
-        id: "de-c1-1-act-2",
+        id: "de-c1-1-tr1",
         type: "translate",
-        question: "Übersetze: 'In my opinion, this is a controversial topic'",
+        question: "Tafsiri: 'Kwa mtazamo wangu, hili ni suala la mzozo'",
         correctAnswer: "Meiner Meinung nach ist das ein kontroverses Thema",
-        hint: "Use formal opinion phrases",
-      },
-      {
-        id: "de-c1-1-act-3",
-        type: "dialogue",
-        context: "Du diskutierst ein kontroverses Thema in einer Debatte",
-        lines: [
-          { speaker: "ai", text: "Was ist Ihre Perspektive zu diesem Thema?" },
-          { speaker: "user", text: "", isBlank: true, options: [
-            "Meiner Meinung nach ist das ein komplexes Thema mit verschiedenen Perspektiven",
-            "Ich weiß nicht",
-            "Das ist langweilig"
-          ], correctAnswer: "Meiner Meinung nach ist das ein komplexes Thema mit verschiedenen Perspektiven" },
-          { speaker: "ai", text: "Könnten Sie Ihre Argumente etwas differenzierter darlegen?" },
-          { speaker: "user", text: "", isBlank: true, options: [
-            "Einerseits... andererseits...",
-            "Ich mag Pizza",
-            "Es regnet"
-          ], correctAnswer: "Einerseits... andererseits..." },
-        ],
       },
     ],
     aiTeacherPrompt: {
-      systemPrompt: `You are teaching German C1 - Discussing Current Events.
-Current lesson vocabulary: die Debatte, kontrovers, befürworten, ablehnen, die Perspektive, argumentieren
-Current lesson phrases: Meiner Meinung nach ist das ein kontroverses Thema. / Ich befürworte diese Maßnahme, weil sie notwendig ist.
-
-TEACHING MODE:
-1. Teach debate vocabulary
-2. Explain discourse markers
-3. Practice nuanced argumentation
-STOP after the question.
-
-REACTING MODE:
-1. Engage with their argument
-2. Challenge their perspective respectfully
-3. Ask for counterarguments
-STOP after one sentence.
-
-Stay STRICTLY within lesson vocabulary.`,
-      introMessage: "Willkommen! Heute diskutieren wir ein aktuelles Thema. Bist du bereit zu argumentieren?",
-      topics: ["debate", "current events", "argumentation", "nuanced language"],
-      fallbackResponses: ["Sehr differenziert!", "Das ist ein wichtiger Aspekt!", "Ausgezeichnete Argumentation!"],
-    },
-  },
-  {
-    id: "de-c1-lesson-2",
-    unitId: "de-c1-unit-1",
-    title: "Literatur & Kultur verstehen",
-    description: "Analysiere deutsche Literatur, Kunst und kulturelle Themen",
-    icon: "📚",
-    level: "C1",
-    xpReward: 45,
-    estimatedMinutes: 20,
-    goals: [
-      { description: "Literarische Texte analysieren", xpReward: 22 },
-      { description: "Kulturelle Kontexte verstehen", xpReward: 23 },
-    ],
-    vocabulary: [
-      { word: "das Werk", translation: "work (of art/literature)", pronunciation: "dahs VERK", emoji: "📖" },
-      { word: "interpretieren", translation: "to interpret", pronunciation: "in-ter-pre-TEE-ren", emoji: "🔍" },
-      { word: "die Symbolik", translation: "symbolism", pronunciation: "dee zym-bo-LEEK", emoji: "🔣" },
-      { word: "der Kontext", translation: "context", pronunciation: "dair KON-tekst", emoji: "🖼️" },
-      { word: "die Epoche", translation: "era/period", pronunciation: "dee eh-POH-kheh", emoji: "📅" },
-      { word: "bedeutsam", translation: "significant", pronunciation: "beh-DOYT-zahm", emoji: "⭐" },
-    ],
-    phrases: [
-      { text: "Die Analyse des Werkes zeigt dessen Bedeutung.", translation: "The analysis of the work shows its significance.", pronunciation: "Dee ah-nah-LEE-zeh des VER-kes tsaygt DES-en beh-DOY-tsahm-kite." },
-      { text: "Die Symbolik im historischen Kontext interpretieren.", translation: "Interpreting the symbolism in historical context.", pronunciation: "Dee zym-bo-LEEK im his-TOH-ri-shen KON-tekst in-ter-pre-TEE-ren." },
-    ],
-    grammar: {
-      topic: "Nominalization & Academic Style",
-      explanation: "German academic writing often nominalizes verbs for formal tone",
-      examples: [
-        "Die Analyse des Werkes zeigt... (The analysis of the work shows...)",
-        "Die Interpretation der Symbolik ist bedeutsam. (The interpretation of the symbolism is significant)",
-      ],
-    },
-    activities: [
-      {
-        id: "de-c1-2-act-1",
-        type: "grammar-drill",
-        rule: "Nominalisierung: Verb -> Substantiv für formellen Stil",
-        examples: ["analysieren -> die Analyse", "interpretieren -> die Interpretation"],
-        exercises: [
-          {
-            prompt: "___ (analysieren) des Textes zeigt wichtige Muster.",
-            correctAnswer: "Die Analyse",
-            hint: "Nominalisiere das Verb für akademischen Stil",
-          },
-        ],
-      },
-      {
-        id: "de-c1-2-act-2",
-        type: "multiple-choice",
-        question: "Welcher Ausdruck ist akademisch/formell?",
-        correctAnswer: "Die Analyse des Werkes zeigt dessen Bedeutung",
-        options: [
-          "Ich denke, das Buch ist gut",
-          "Die Analyse des Werkes zeigt dessen Bedeutung",
-          "Das Buch ist cool",
-          "Ich mag die Geschichte",
-        ],
-        hint: "Uses nominalization and formal structure",
-        explanation: "Uses nominalization and formal structure",
-      },
-      {
-        id: "de-c1-2-act-3",
-        type: "translate",
-        question: "Übersetze: 'The interpretation of the symbolism is significant'",
-        correctAnswer: "Die Interpretation der Symbolik ist bedeutsam",
-        hint: "Use nominalized forms",
-      },
-    ],
-    aiTeacherPrompt: {
-      systemPrompt: `You are teaching German C1 - Literature & Culture.
-Current lesson vocabulary: das Werk, interpretieren, die Symbolik, der Kontext, die Epoche, bedeutsam
-Current lesson phrases: Die Analyse des Werkes zeigt dessen Bedeutung. / Die Symbolik im historischen Kontext interpretieren.
-
-TEACHING MODE:
-1. Teach literary analysis vocabulary
-2. Explain nominalization
-3. Ask student to interpret a work
-STOP after the question.
-
-Stay STRICTLY within lesson vocabulary.`,
-      introMessage: "Lass uns ein deutsches literarisches Werk analysieren. Welche Epoche interessiert dich?",
-      topics: ["literature", "culture", "academic language", "analysis"],
-      fallbackResponses: ["Sehr insightful!", "Das ist eine tiefgründige Beobachtung!", "Ausgezeichnete Analyse!"],
-    },
-  },
-  {
-    id: "de-c1-lesson-3",
-    unitId: "de-c1-unit-1",
-    title: "Wissenschaft & Forschung",
-    description: "Diskutiere wissenschaftliche Themen und Forschungsergebnisse",
-    icon: "🔬",
-    level: "C1",
-    xpReward: 45,
-    estimatedMinutes: 22,
-    goals: [
-      { description: "Wissenschaftliche Sprache verstehen", xpReward: 22 },
-      { description: "Forschung diskutieren", xpReward: 23 },
-    ],
-    vocabulary: [
-      { word: "die Hypothese", translation: "hypothesis", pronunciation: "dee hoo-po-TEH-zeh", emoji: "🔬" },
-      { word: "die Methode", translation: "method", pronunciation: "dee meh-TOH-deh", emoji: "📋" },
-      { word: "empirisch", translation: "empirical", pronunciation: "em-PEE-rish", emoji: "📊" },
-      { word: "die Evidenz", translation: "evidence", pronunciation: "dee eh-vee-DENTS", emoji: "📄" },
-      { word: "validieren", translation: "to validate", pronunciation: "va-lee-DEE-ren", emoji: "✅" },
-      { word: "replizieren", translation: "to replicate", pronunciation: "reh-plee-TSEE-ren", emoji: "🔄" },
-    ],
-    phrases: [
-      { text: "Die Hypothese wurde durch empirische Methoden validiert.", translation: "The hypothesis was validated through empirical methods.", pronunciation: "Dee hoo-po-TEH-zeh VUUR-deh doorch em-PEE-ree-sheh meh-TOH-den va-lee-DEERT." },
-      { text: "Die Evidenz deutet auf eine Korrelation hin.", translation: "The evidence points to a correlation.", pronunciation: "Dee eh-vee-DENTS DOY-tet owf EYE-neh ko-reh-la-TSYOHN hin." },
-    ],
-    grammar: {
-      topic: "Complex Sentence Structures & Parentheticals",
-      explanation: "Use subordinate clauses, parenthetical phrases, and precise modifiers",
-      examples: [
-        "Die Studie, die 2023 veröffentlicht wurde, zeigt einen Zusammenhang...",
-        "Die Evidenz (obwohl begrenzt) deutet darauf hin, dass...",
-      ],
-    },
-    activities: [
-      {
-        id: "de-c1-3-act-1",
-        type: "order-sentence",
-        instruction: "Ordne die komplexen Satzteile logisch",
-        correctOrder: [
-          "Die Studie,",
-          "die 2023 veröffentlicht wurde,",
-          "zeigt einen kausalen Zusammenhang,",
-          "obwohl weitere Replikation nötig ist."
-        ],
-        scrambled: [
-          "obwohl weitere Replikation nötig ist.",
-          "zeigt einen kausalen Zusammenhang,",
-          "die 2023 veröffentlicht wurde,",
-          "Die Studie,"
-        ],
-        hint: "Relativsatz nach Komma, Hauptsatz dann Nebensatz",
-      },
-      {
-        id: "de-c1-3-act-2",
-        type: "multiple-choice",
-        question: "Welcher Satz verwendet wissenschaftliche Sprache korrekt?",
-        correctAnswer: "Die empirische Evidenz deutet auf eine Korrelation hin",
-        options: [
-          "Die Studie zeigt, dass es vielleicht einen Zusammenhang gibt",
-          "Die empirische Evidenz deutet auf eine Korrelation hin",
-          "Ich glaube, das ist so",
-          "Das ist wahrscheinlich richtig",
-        ],
-        hint: "Uses precise scientific terminology",
-        explanation: "Uses precise scientific terminology and hedging language",
-      },
-      {
-        id: "de-c1-3-act-3",
-        type: "translate",
-        question: "Übersetze: 'The hypothesis was validated through empirical methods'",
-        correctAnswer: "Die Hypothese wurde durch empirische Methoden validiert",
-        hint: "Use passive voice + scientific connectors",
-      },
-    ],
-    aiTeacherPrompt: {
-      systemPrompt: `You are teaching German C1 - Science & Research.
-Current lesson vocabulary: die Hypothese, die Methode, empirisch, die Evidenz, validieren, replizieren
-Current lesson phrases: Die Hypothese wurde durch empirische Methoden validiert. / Die Evidenz deutet auf eine Korrelation hin.
-
-TEACHING MODE:
-1. Teach scientific vocabulary
-2. Explain complex sentence structures
-3. Ask about research methods
-STOP after the question.
-
-Stay STRICTLY within lesson vocabulary.`,
-      introMessage: "Lass uns über ein wissenschaftliches Thema diskutieren. Welche Forschung interessiert dich?",
-      topics: ["science", "research", "academic writing", "critical thinking"],
-      fallbackResponses: ["Sehr präzise formuliert!", "Das ist eine wichtige methodische Überlegung!", "Ausgezeichnete wissenschaftliche Argumentation!"],
+      systemPrompt: "Jadili mada changamano za sasa kwa Kijerumani. Tumia lugha ya kitaalamu.",
+      introMessage: "Karibu! Leo tutajadili suala la sasa. Uko tayari?",
+      topics: ["mdahalo", "siasa", "jamii"],
     },
   },
 ];
 
-// Combine all German lessons
+// Export all German lessons
 export const ALL_GERMAN_LESSONS: Lesson[] = [
   ...GERMAN_A1_LESSONS,
   ...GERMAN_A2_LESSONS,

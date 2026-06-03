@@ -13,7 +13,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 // Simple admin PIN (in production, use environment variable)
-const ADMIN_PIN = "1234";
+const ADMIN_PIN = "123456";
 
 export default function AdminLoginScreen() {
   const [pin, setPin] = useState("");
@@ -40,20 +40,20 @@ export default function AdminLoginScreen() {
           <TextInput
             value={pin}
             onChangeText={setPin}
-            placeholder="••••"
+            placeholder="••••••"
             placeholderTextColor="#9ca3af"
             secureTextEntry
             keyboardType="number-pad"
-            maxLength={4}
+            maxLength={6}
             style={styles.input}
           />
 
           <TouchableOpacity
             onPress={handleLogin}
-            disabled={pin.length !== 4}
+            disabled={pin.length !== 6}
             style={[
               styles.button,
-              pin.length !== 4 && styles.buttonDisabled,
+              pin.length !== 6 && styles.buttonDisabled,
             ]}
           >
             <Text style={styles.buttonText}>Login</Text>

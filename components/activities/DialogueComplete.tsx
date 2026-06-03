@@ -9,35 +9,60 @@ interface Props {
 }
 
 export function DialogueComplete({ activity, onComplete }: Props) {
-  const [currentIndex, setCurrentIndex] = useState(
-    activity.lines.findIndex(line => line.isBlank)
+  // Map of blank-line index → chosen answer text.
+  const [selectedAnswers, setSelectedAnswers] = useState<Record<number, string>>(
+    {},
   );
-  const [selectedAnswers, setSelectedAnswers] = useState<Record<number, string>>({});
+  // Index of the blank the user is currently answering.
+  const [currentBlankIndex, setCurrentBlankIndex] = useState<number>(
+    activity.lines.findIndex((line) => line.isBlank),
+  );
   const [showResult, setShowResult] = useState(false);
+  const [isCorrect, setIsCorrect] = useState(false);
+
+  // Pre-compute the list of blank line indices so we can navigate and
+  // evaluate them deterministically.
+  const blankIndices = activity.lines
+    .map((line, idx) => (line.isBlank ? idx : -1))
+    .filter((idx) => idx !== -1);
+
+  const allAnswered = blankIndices.every(
+    (idx) => selectedAnswers[idx] !== undefined,
+  );
 
   const handleSelect = (answer: string) => {
     if (showResult) return;
 
-    setSelectedAnswers({ ...selectedAnswers, [currentIndex]: answer });
+    // Build the next answer map for the CURRENT blank. Use a function form
+    // to avoid stale-state issues and to keep the value immediately
+    // available for the completion check.
+    const nextAnswers = { ...selectedAnswers, [currentBlankIndex]: answer };
+    setSelectedAnswers(nextAnswers);
 
-    // Move to next blank or finish
-    const nextBlank = activity.lines.findIndex(
-      (line, i) => i > currentIndex && line.isBlank
+    // Find the next blank that hasn't been answered yet.
+    const nextBlank = blankIndices.find(
+      (idx) => idx > currentBlankIndex && nextAnswers[idx] === undefined,
     );
 
-    if (nextBlank !== -1) {
-      setCurrentIndex(nextBlank);
-    } else {
-      // Check all answers
-      const allCorrect = activity.lines
-        .filter(line => line.isBlank && line.correctAnswer)
-        .every(line => selectedAnswers[activity.lines.indexOf(line)] === line.correctAnswer);
-
-      setShowResult(true);
-      setTimeout(() => {
-        onComplete(allCorrect);
-      }, 2000);
+    if (nextBlank !== undefined) {
+      setCurrentBlankIndex(nextBlank);
+      return;
     }
+
+    // No more blanks to fill — evaluate every answer against the
+    // activity's correctAnswer for that line.
+    const allCorrect = blankIndices.every((idx) => {
+      const line = activity.lines[idx];
+      return line?.correctAnswer
+        ? nextAnswers[idx] === line.correctAnswer
+        : true;
+    });
+
+    setIsCorrect(allCorrect);
+    setShowResult(true);
+    setTimeout(() => {
+      onComplete(allCorrect);
+    }, 2000);
   };
 
   return (
@@ -47,14 +72,23 @@ export function DialogueComplete({ activity, onComplete }: Props) {
         <Text className="text-lg font-semibold text-[#001328] text-center mt-3">
           {activity.context}
         </Text>
+        {allAnswered && (
+          <Text className="text-sm text-gray-500 text-center mt-2">
+            Umejaza majibu yote — bofya chaguo la mwisho kuangalia matokeo.
+          </Text>
+        )}
       </View>
 
       {/* Dialogue */}
       <View className="gap-4 mb-6">
         {activity.lines.map((line, index) => {
-          const isSelected = selectedAnswers[index];
-          const isCurrent = index === currentIndex && line.isBlank;
-          const isCorrect = line.correctAnswer && isSelected === line.correctAnswer;
+          const isBlank = line.isBlank;
+          const chosen = isBlank ? selectedAnswers[index] : undefined;
+          const isCurrent = isBlank && index === currentBlankIndex && !showResult;
+          const lineIsCorrect =
+            isBlank && line.correctAnswer
+              ? chosen === line.correctAnswer
+              : false;
 
           return (
             <View
@@ -67,15 +101,21 @@ export function DialogueComplete({ activity, onComplete }: Props) {
                 {line.speaker === "ai" ? "🤖 Lehrer" : "👤 Du"}
               </Text>
 
-              {line.isBlank ? (
-                isSelected ? (
-                  <View className={`p-3 rounded-xl ${
-                    showResult && isCorrect ? "bg-green-100" :
-                    showResult && !isCorrect ? "bg-red-100" :
-                    "bg-purple-100"
-                  }`}>
-                    <Text className="text-base font-medium text-[#001328]">{isSelected}</Text>
-                    {showResult && !isCorrect && line.correctAnswer && (
+              {isBlank ? (
+                chosen ? (
+                  <View
+                    className={`p-3 rounded-xl ${
+                      showResult && lineIsCorrect
+                        ? "bg-green-100"
+                        : showResult && !lineIsCorrect
+                          ? "bg-red-100"
+                          : "bg-purple-100"
+                    }`}
+                  >
+                    <Text className="text-base font-medium text-[#001328]">
+                      {chosen}
+                    </Text>
+                    {showResult && !lineIsCorrect && line.correctAnswer && (
                       <Text className="text-sm text-green-600 mt-1">
                         ✓ {line.correctAnswer}
                       </Text>
@@ -89,7 +129,9 @@ export function DialogueComplete({ activity, onComplete }: Props) {
                         onPress={() => handleSelect(option)}
                         className="p-3 bg-white border-2 border-gray-200 rounded-xl"
                       >
-                        <Text className="text-base font-medium text-[#001328]">{option}</Text>
+                        <Text className="text-base font-medium text-[#001328]">
+                          {option}
+                        </Text>
                       </TouchableOpacity>
                     ))}
                   </View>
@@ -110,9 +152,19 @@ export function DialogueComplete({ activity, onComplete }: Props) {
 
       {showResult && (
         <View className="items-center mt-6 mb-8">
-          <Ionicons name="checkmark-circle" size={48} color="#21c16b" />
-          <Text className="text-lg font-semibold text-green-500 mt-3">
-            Gespräch abgeschlossen! 🎉
+          <Ionicons
+            name={isCorrect ? "checkmark-circle" : "close-circle"}
+            size={48}
+            color={isCorrect ? "#21c16b" : "#ff4d4f"}
+          />
+          <Text
+            className={`text-lg font-semibold mt-3 ${
+              isCorrect ? "text-green-500" : "text-red-500"
+            }`}
+          >
+            {isCorrect
+              ? "Gespräch abgeschlossen! 🎉"
+              : "Fast! Soma mazungumzo tena."}
           </Text>
         </View>
       )}

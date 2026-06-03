@@ -1,13 +1,12 @@
-import { useAuth } from "@clerk/expo";
+import { useAuth } from "@/hooks/useAuth";
+import { useLanguageStore } from "@/store/languageStore";
 import { Redirect } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 
-import { useLanguageStore } from "@/store/languageStore";
-
 export default function Index() {
   const { isSignedIn, isLoaded } = useAuth();
-  const { selectedLanguage } = useLanguageStore();
+  const { selectedLanguage, setSelectedLanguage } = useLanguageStore();
   const [languageHydrated, setLanguageHydrated] = useState(
     useLanguageStore.persist.hasHydrated()
   );
@@ -19,6 +18,13 @@ export default function Index() {
     );
   }, [languageHydrated]);
 
+  // Auto-select German for Swahili speakers
+  useEffect(() => {
+    if (languageHydrated && !selectedLanguage) {
+      setSelectedLanguage("de");
+    }
+  }, [languageHydrated, selectedLanguage, setSelectedLanguage]);
+
   if (!isLoaded || !languageHydrated) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -29,10 +35,6 @@ export default function Index() {
 
   if (!isSignedIn) {
     return <Redirect href="/onboarding" />;
-  }
-
-  if (!selectedLanguage) {
-    return <Redirect href="/language-select" />;
   }
 
   return <Redirect href="/(tabs)" />;

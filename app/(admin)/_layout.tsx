@@ -1,10 +1,11 @@
-import { useAuth } from "@clerk/clerk-expo";
+import { useAuth } from "@/hooks/useAuth";
 import { Redirect, Stack } from "expo-router";
 
 const ADMIN_USER_ID = process.env.EXPO_PUBLIC_ADMIN_USER_ID || "";
 
 export default function AdminLayout() {
-  const { isSignedIn, isLoaded, userId } = useAuth();
+  const { isSignedIn, isLoaded, user } = useAuth();
+  const userId = user?.id ?? null;
 
   if (!isLoaded) return null;
 

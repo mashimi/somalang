@@ -5,6 +5,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { DialogueComplete } from "./activities/DialogueComplete";
 import { MatchPairs } from "./activities/MatchPairs";
 import { OrderSentence } from "./activities/OrderSentence";
+import { ListeningComprehension } from "./activities/ListeningComprehension";
 
 interface ActivityRendererProps {
   activity: Activity;
@@ -22,7 +23,6 @@ export function ActivityRenderer({
   const [isCorrect, setIsCorrect] = useState(false);
 
   // For fill-blank and grammar-drill
-  const [inputValue, setInputValue] = useState("");
   const [currentExercise, setCurrentExercise] = useState(0);
 
   // Handle activities that have their own dedicated components
@@ -36,6 +36,16 @@ export function ActivityRenderer({
 
   if (activity.type === "dialogue") {
     return <DialogueComplete activity={activity} onComplete={onComplete} />;
+  }
+
+  if (activity.type === "listening-comprehension") {
+    return (
+      <ListeningComprehension
+        activity={activity}
+        onComplete={onComplete}
+        onSpeak={onSpeak}
+      />
+    );
   }
 
   // Generic answer handler for activities with correctAnswer + options
@@ -58,7 +68,7 @@ export function ActivityRenderer({
         const isSelected = selectedAnswer === option;
         const isCorrectAnswer = option === correctAnswer;
 
-        let optionStyle = [styles.optionButton];
+        let optionStyle: any[] = [styles.optionButton];
         if (showResult) {
           if (isCorrectAnswer) {
             optionStyle.push(styles.optionCorrect);
@@ -160,7 +170,7 @@ export function ActivityRenderer({
             <>
               <View style={styles.infoBox}>
                 <Text style={styles.infoText}>
-                  Sieh dir die Karte an. Tippe auf "Weiter" um fortzufahren.
+                  Sieh dir die Karte an. Tippe auf &quot;Weiter&quot; um fortzufahren.
                 </Text>
               </View>
               <TouchableOpacity
@@ -335,7 +345,7 @@ export function ActivityRenderer({
                       const optIsSelected = selectedAnswer === option;
                       const optIsCorrect = option === exercise.correctAnswer;
 
-                      let optStyle = [styles.optionButton];
+                      let optStyle: any[] = [styles.optionButton];
                       if (showResult) {
                         if (optIsCorrect) {
                           optStyle.push(styles.optionCorrect);
@@ -388,7 +398,7 @@ export function ActivityRenderer({
             : (
               <TouchableOpacity
                 style={styles.confirmTranslateButton}
-                onPress={() => handleDrillAnswer(inputValue || exercise.correctAnswer)}
+                onPress={() => handleDrillAnswer(exercise.correctAnswer)}
               >
                 <Text style={styles.confirmTranslateButtonText}>Prüfen</Text>
               </TouchableOpacity>
@@ -417,149 +427,13 @@ export function ActivityRenderer({
       );
     }
 
-    case "listening-comprehension": {
-      const a = activity;
-      const [questionIndex, setQuestionIndex] = useState(0);
-      const currentQ = a.questions[questionIndex];
-
-      if (!currentQ) {
-        return (
-          <View style={styles.activityContainer}>
-            <View style={styles.resultContainer}>
-              <Ionicons name="checkmark-circle" size={64} color="#21c16b" />
-              <Text
-                style={[styles.resultText, styles.correctText]}
-              >
-                Alle Fragen beantwortet! 🎉
-              </Text>
-            </View>
-          </View>
-        );
-      }
-
-      const handleListeningAnswer = (answer: string) => {
-        const correct = answer === currentQ.correctAnswer;
-        setIsCorrect(correct);
-        setShowResult(true);
-
-        setTimeout(() => {
-          setShowResult(false);
-          setSelectedAnswer(null);
-          if (questionIndex < a.questions.length - 1) {
-            setQuestionIndex(questionIndex + 1);
-          } else {
-            onComplete(correct);
-          }
-        }, 1500);
-      };
-
-      return (
-        <View style={styles.activityContainer}>
-          <View style={styles.questionCard}>
-            <Ionicons name="musical-notes" size={32} color="#6c4ef5" />
-            <Text style={styles.questionText}>Höre zu und beantworte</Text>
-            <TouchableOpacity
-              style={[styles.speakButton, { marginTop: 16 }]}
-              onPress={() => onSpeak(a.transcript)}
-            >
-              <Ionicons name="play" size={28} color="#6c4ef5" />
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.exerciseProgress}>
-            <Text style={styles.progressText}>
-              Frage {questionIndex + 1} von {a.questions.length}
-            </Text>
-          </View>
-
-          <View style={styles.questionCard}>
-            <Text style={styles.questionText}>{currentQ.question}</Text>
-          </View>
-
-          <View style={styles.optionsContainer}>
-            {currentQ.options.map((option, index) => {
-              const optIsSelected = selectedAnswer === option;
-              const optIsCorrect = option === currentQ.correctAnswer;
-
-              let optStyle = [styles.optionButton];
-              if (showResult) {
-                if (optIsCorrect) {
-                  optStyle.push(styles.optionCorrect);
-                } else if (optIsSelected && !optIsCorrect) {
-                  optStyle.push(styles.optionWrong);
-                }
-              } else if (optIsSelected) {
-                optStyle.push(styles.optionSelected);
-              }
-
-              return (
-                <TouchableOpacity
-                  key={index}
-                  style={optStyle}
-                  onPress={() =>
-                    !showResult && handleListeningAnswer(option)
-                  }
-                  disabled={showResult}
-                >
-                  <Text
-                    style={[
-                      styles.optionText,
-                      showResult &&
-                        optIsCorrect &&
-                        styles.optionTextCorrect,
-                    ]}
-                  >
-                    {option}
-                  </Text>
-                  {showResult && optIsCorrect && (
-                    <Ionicons
-                      name="checkmark-circle"
-                      size={24}
-                      color="#21c16b"
-                    />
-                  )}
-                  {showResult && optIsSelected && !optIsCorrect && (
-                    <Ionicons
-                      name="close-circle"
-                      size={24}
-                      color="#ef4444"
-                    />
-                  )}
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-
-          {showResult && (
-            <View style={styles.resultContainer}>
-              <Ionicons
-                name={isCorrect ? "checkmark-circle" : "close-circle"}
-                size={48}
-                color={isCorrect ? "#21c16b" : "#ef4444"}
-              />
-              <Text
-                style={[
-                  styles.resultText,
-                  isCorrect ? styles.correctText : styles.wrongText,
-                ]}
-              >
-                {isCorrect
-                  ? "Richtig! 🎉"
-                  : `Die richtige Antwort ist: ${currentQ.correctAnswer}`}
-              </Text>
-            </View>
-          )}
-        </View>
-      );
-    }
-
     default:
       return (
         <View style={styles.activityContainer}>
           <View style={styles.questionCard}>
             <Ionicons name="construct" size={32} color="#6c4ef5" />
             <Text style={styles.questionText}>
-              Activity type "{activity.type}" is being built
+              Activity type &quot;{activity.type}&quot; is being built
             </Text>
             <Text style={styles.hintText}>Coming soon!</Text>
           </View>

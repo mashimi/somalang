@@ -1,15 +1,18 @@
-import SocialButton from "@/components/SocialButton";
-import VerificationModal from "@/components/VerificationModal";
 import { images } from "@/constants/images";
 import { posthog } from "@/lib/posthog";
-import { useLanguageStore } from "@/store/languageStore";
-import { useSignUp, useSSO } from "@clerk/expo";
-import { AntDesign, FontAwesome, Ionicons } from "@expo/vector-icons";
-import * as Linking from "expo-linking";
-import { type Href, router } from "expo-router";
-import * as WebBrowser from "expo-web-browser";
+import {
+  formatTanzaniaPhone,
+  generateReferralCode,
+  isValidPin,
+  isValidTanzaniaPhone,
+  supabase,
+  type Database,
+} from "@/lib/supabase";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { useState } from "react";
 import {
+  Alert,
   Image,
   KeyboardAvoidingView,
   Platform,
@@ -22,117 +25,167 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-WebBrowser.maybeCompleteAuthSession();
-
-type SSOStrategy = "oauth_google" | "oauth_facebook" | "oauth_apple";
-
 export default function SignUpScreen() {
-  const { signUp, errors, fetchStatus } = useSignUp();
-  const { startSSOFlow } = useSSO();
-  const { selectedLanguage } = useLanguageStore();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showVerification, setShowVerification] = useState(false);
-  const [authError, setAuthError] = useState("");
-
-  const isLoading = fetchStatus === "fetching";
+  const [phone, setPhone] = useState("");
+  const [pin, setPin] = useState("");
+  const [confirmPin, setConfirmPin] = useState("");
+  const [referralCode, setReferralCode] = useState("");
+  const [showPin, setShowPin] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSignUp = async () => {
-    setAuthError("");
-    posthog.capture("sign_up_submitted", { method: "password" });
-    const { error } = await signUp.password({ emailAddress: email, password });
-    if (error) {
-      posthog.capture("$exception", {
-        $exception_list: [
-          {
-            type: error.name ?? "SignUpError",
-            value: error.message,
-          },
-        ],
-        $exception_source: "sign-up",
-      });
-      setAuthError("We couldn't create your account. Please try again.");
-      return;
-    }
-    try {
-      await signUp.verifications.sendEmailCode();
-      setShowVerification(true);
-    } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Email code send failed";
-      posthog.capture("$exception", {
-        $exception_list: [
-          {
-            type: err instanceof Error ? err.name : "SignUpEmailCodeError",
-            value: message,
-          },
-        ],
-        $exception_source: "sign-up-email-code",
-      });
-      setAuthError(
-        "We couldn't send your verification code. Please try again.",
-      );
-    }
-  };
+    setError("");
 
-  const handleVerify = async (code: string) => {
-    const { error } = await signUp.verifications.verifyEmailCode({ code });
-    if (error) {
-      posthog.capture("$exception", {
-        $exception_list: [
-          {
-            type: error.name ?? "VerificationError",
-            value: error.message,
-          },
-        ],
-        $exception_source: "sign-up-verification",
-      });
+    // Validate phone
+    const formattedPhone = formatTanzaniaPhone(phone);
+    if (!formattedPhone || !isValidTanzaniaPhone(phone)) {
+      setError(
+        "Tafadhali weka namba sahihi ya Tanzania (mfano: 0712345678)"
+      );
       return;
     }
-    if (signUp.status === "complete") {
-      posthog.capture("sign_up_completed", { method: "password" });
-      if (signUp.createdUserId) {
-        posthog.identify(signUp.createdUserId, {
-          $set_once: { signup_date: new Date().toISOString() },
-          $set: { preferred_language: selectedLanguage ?? null },
+
+    // Validate PIN
+    if (!isValidPin(pin)) {
+      setError("PIN lazima iwe na tarakimu 6");
+      return;
+    }
+
+    if (pin !== confirmPin) {
+      setError("PIN hazifanani");
+      return;
+    }
+
+    // Validate referral code format if provided
+    if (referralCode && !/^TZA-[A-Z0-9]{6}$/i.test(referralCode)) {
+      setError("Msimbo wa rufaa si sahihi (mfano: TZA-ABC123)");
+      return;
+    }
+
+    setIsLoading(true);
+    posthog.capture("sign_up_submitted", {
+      method: "phone_pin",
+      has_referral: !!referralCode,
+    });
+
+    try {
+      // Step 1: Check if referral code is valid.
+      // Use the SECURITY DEFINER RPC so the signup flow can validate a
+      // referral code before the user is signed in (RLS would otherwise
+      // block the lookup since the user has no session yet).
+      let referrerId: string | null = null;
+      if (referralCode) {
+        const { data: referrerIdResult, error: referrerError } =
+          await supabase.rpc("get_referrer_id_by_code", {
+            code: referralCode.toUpperCase(),
+          });
+
+        if (referrerError || !referrerIdResult) {
+          setError("Msimbo wa rufaa haupo. Tafadhali angalia tena.");
+          setIsLoading(false);
+          return;
+        }
+        referrerId = referrerIdResult as string;
+      }
+
+      // Step 2: Create Supabase auth user
+      // We use email format "phone@lingua.local" as workaround (no SMS costs)
+      // PIN is used as the password
+      // Strip the "+" prefix from formattedPhone because "+" is invalid in email local-part
+      const authEmail = `${formattedPhone.replace("+", "")}@lingua.local`;
+
+      const { data: authData, error: signUpError } =
+        await supabase.auth.signUp({
+          email: authEmail,
+          password: pin,
+          options: {
+            data: {
+              phone: formattedPhone,
+              referral_code_input: referralCode.toUpperCase() || null,
+            },
+          },
+        });
+
+      if (signUpError) {
+        if (signUpError.message.includes("already registered")) {
+          setError("Namba hii tayari imesajiliwa. Tafadhali ingia.");
+        } else {
+          setError(signUpError.message);
+        }
+        posthog.capture("$exception", {
+          $exception_list: [
+            { type: "SignUpError", value: signUpError.message },
+          ],
+          $exception_source: "sign-up",
+        });
+        setIsLoading(false);
+        return;
+      }
+
+      if (!authData.user) {
+        setError("Hitilafu imetokea. Tafadhali jaribu tena.");
+        setIsLoading(false);
+        return;
+      }
+
+      // Step 3: Create user profile
+      const newReferralCode = generateReferralCode();
+
+      const { error: profileError } = await supabase
+        .from("user_profiles")
+        .insert({
+          id: authData.user.id,
+          phone: formattedPhone,
+          referral_code: newReferralCode,
+          referred_by: referrerId,
+        } satisfies Database["public"]["Tables"]["user_profiles"]["Insert"]);
+
+      if (profileError) {
+        // If profile creation fails (e.g., duplicate phone), clean up auth user
+        console.error("Profile creation error:", profileError);
+        setError("Hitilafu ya kuunda wasifu. Tafadhali jaribu tena.");
+        setIsLoading(false);
+        return;
+      }
+
+      // Step 4: Create referral record if referred
+      if (referrerId) {
+        await supabase.from("referrals").insert({
+          referrer_id: referrerId,
+          referee_id: authData.user.id,
+          reward_xp: 500,
+          status: "pending",
         });
       }
-      await signUp.finalize({
-        navigate: ({ decorateUrl }) => {
-          router.replace(decorateUrl("/") as Href);
-        },
-      });
-    }
-  };
 
-  const handleResend = async () => {
-    await signUp.verifications.sendEmailCode();
-  };
-
-  const handleSSO = async (strategy: SSOStrategy) => {
-    posthog.capture("sign_up_sso_started", { strategy });
-    setAuthError("");
-    try {
-      const { createdSessionId, setActive } = await startSSOFlow({
-        strategy,
-        redirectUrl: Linking.createURL("/"),
+      // Step 5: Identify in PostHog
+      posthog.capture("sign_up_completed", {
+        method: "phone_pin",
+        has_referral: !!referralCode,
       });
-      if (createdSessionId && setActive) {
-        posthog.capture("sign_up_completed", { method: strategy });
-        await setActive({ session: createdSessionId });
-        router.replace("/");
-      }
+      posthog.identify(authData.user.id, {
+        $set_once: { signup_date: new Date().toISOString() },
+        $set: { phone: formattedPhone },
+      });
+
+      Alert.alert(
+        "Karibu! 🎉",
+        "Akaunti yako imeundwa. Anza kujifunza Kijerumani sasa!",
+        [
+          {
+            text: "Twende!",
+            onPress: () => router.replace("/language-select"),
+          },
+        ]
+      );
     } catch (err) {
       const message =
-        err instanceof Error ? err.message : "Unknown SSO sign-up error";
-      console.error("SSO sign-up failed", err);
-      posthog.capture("sign_up_sso_failed", {
-        strategy,
-        error: message,
-      });
-      setAuthError("Couldn't continue with social sign up. Please try again.");
+        err instanceof Error ? err.message : "Hitilafu isiyojulikana";
+      setError(message);
+      console.error("Sign up error:", err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -157,9 +210,9 @@ export default function SignUpScreen() {
             </TouchableOpacity>
 
             {/* Header */}
-            <Text className="h1 mt-4">Create your account</Text>
+            <Text className="h1 mt-4">Karibu! 🇹🇿</Text>
             <Text className="body-md text-text-secondary mt-2">
-              Start your language journey today ✨
+              Anza safari yako ya Kijerumani leo
             </Text>
 
             {/* Mascot */}
@@ -171,61 +224,81 @@ export default function SignUpScreen() {
               />
             </View>
 
-            {/* Email */}
+            {/* Phone */}
             <View style={styles.inputContainer}>
-              <Text style={styles.inputLabel}>Email</Text>
+              <Text style={styles.inputLabel}>Namba ya Simu</Text>
               <TextInput
-                value={email}
-                onChangeText={setEmail}
-                placeholder="alex@gmail.com"
+                value={phone}
+                onChangeText={setPhone}
+                placeholder="0712 345 678"
                 placeholderTextColor="#9ca3af"
-                keyboardType="email-address"
-                autoCapitalize="none"
+                keyboardType="phone-pad"
                 style={styles.input}
               />
             </View>
-            {errors.fields.emailAddress ? (
-              <Text className="body-sm text-error -mt-2 mb-2">
-                {errors.fields.emailAddress.message}
-              </Text>
-            ) : null}
 
-            {/* Password */}
+            {/* PIN */}
             <View style={[styles.inputContainer, { flexDirection: "column" }]}>
-              <Text style={styles.inputLabel}>Password</Text>
+              <Text style={styles.inputLabel}>Unda PIN ya tarakimu 6</Text>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <TextInput
-                  value={password}
-                  onChangeText={setPassword}
-                  placeholder="••••••••"
+                  value={pin}
+                  onChangeText={setPin}
+                  placeholder="••••••"
                   placeholderTextColor="#9ca3af"
-                  secureTextEntry={!showPassword}
+                  secureTextEntry={!showPin}
+                  keyboardType="number-pad"
+                  maxLength={6}
                   style={[styles.input, { flex: 1 }]}
                 />
                 <TouchableOpacity
-                  onPress={() => setShowPassword((p) => !p)}
+                  onPress={() => setShowPin((p) => !p)}
                   hitSlop={8}
                 >
                   <Ionicons
-                    name={showPassword ? "eye" : "eye-outline"}
+                    name={showPin ? "eye" : "eye-outline"}
                     size={20}
                     color="#9ca3af"
                   />
                 </TouchableOpacity>
               </View>
             </View>
-            {errors.fields.password ? (
-              <Text className="body-sm text-error -mt-2 mb-2">
-                {errors.fields.password.message}
+
+            {/* Confirm PIN */}
+            <View style={styles.inputContainer}>
+              <Text style={styles.inputLabel}>Thibitisha PIN</Text>
+              <TextInput
+                value={confirmPin}
+                onChangeText={setConfirmPin}
+                placeholder="••••••"
+                placeholderTextColor="#9ca3af"
+                secureTextEntry={!showPin}
+                keyboardType="number-pad"
+                maxLength={6}
+                style={styles.input}
+              />
+            </View>
+
+            {/* Referral Code (Optional) */}
+            <View style={styles.inputContainer}>
+              <Text style={styles.inputLabel}>
+                Msimbo wa Rufaa (Si lazima)
               </Text>
-            ) : null}
-            {errors.global?.[0] ? (
-              <Text className="body-sm text-error mb-2">
-                {errors.global[0].message}
+              <TextInput
+                value={referralCode}
+                onChangeText={setReferralCode}
+                placeholder="TZA-ABC123"
+                placeholderTextColor="#9ca3af"
+                autoCapitalize="characters"
+                style={styles.input}
+              />
+              <Text className="body-sm text-text-secondary mt-1">
+                Pata XP 500 ya bonasi unapotumia msimbo wa rafiki!
               </Text>
-            ) : null}
-            {authError ? (
-              <Text className="body-sm text-error mb-2">{authError}</Text>
+            </View>
+
+            {error ? (
+              <Text className="body-sm text-error mb-2">{error}</Text>
             ) : null}
 
             {/* Sign Up button */}
@@ -233,69 +306,33 @@ export default function SignUpScreen() {
               className="bg-lingua-purple rounded-2xl py-4 items-center mt-2"
               activeOpacity={0.85}
               onPress={handleSignUp}
-              disabled={!email || !password || isLoading}
-              style={{ opacity: !email || !password || isLoading ? 0.6 : 1 }}
+              disabled={!phone || !pin || !confirmPin || isLoading}
+              style={{
+                opacity: !phone || !pin || !confirmPin || isLoading ? 0.6 : 1,
+              }}
               testID="sign-up-button"
             >
               <Text className="font-poppins-semibold text-base text-white">
-                {isLoading ? "Creating account..." : "Sign Up"}
+                {isLoading ? "Inaunda akaunti..." : "Jisajili"}
               </Text>
             </TouchableOpacity>
-
-            {/* Divider */}
-            <View className="flex-row items-center my-6 gap-3">
-              <View className="flex-1 h-px bg-border" />
-              <Text className="body-sm text-text-secondary">
-                or continue with
-              </Text>
-              <View className="flex-1 h-px bg-border" />
-            </View>
-
-            {/* Social */}
-            <SocialButton
-              icon={<AntDesign name="google" size={20} color="#DB4437" />}
-              label="Continue with Google"
-              onPress={() => handleSSO("oauth_google")}
-            />
-            <SocialButton
-              icon={<FontAwesome name="facebook" size={20} color="#1877F2" />}
-              label="Continue with Facebook"
-              onPress={() => handleSSO("oauth_facebook")}
-            />
-            <SocialButton
-              icon={<AntDesign name="apple" size={20} color="#000" />}
-              label="Continue with Apple"
-              onPress={() => handleSSO("oauth_apple")}
-            />
 
             {/* Sign In link */}
             <View className="flex-row justify-center mt-4 mb-8">
               <Text className="body-md text-text-secondary">
-                Already have an account?{" "}
+                Tayari una akaunti?{" "}
               </Text>
               <TouchableOpacity
                 onPress={() => router.replace("/(auth)/sign-in")}
               >
                 <Text className="body-md text-lingua-purple font-poppins-semibold">
-                  Log in
+                  Ingia
                 </Text>
               </TouchableOpacity>
             </View>
-
-            {/* Required for Clerk bot-protection */}
-            <View nativeID="clerk-captcha" />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-
-      <VerificationModal
-        visible={showVerification}
-        email={email}
-        onClose={() => setShowVerification(false)}
-        onVerify={handleVerify}
-        onResend={handleResend}
-        error={errors.fields.code?.message || errors.global?.[0]?.message || ""}
-      />
     </SafeAreaView>
   );
 }

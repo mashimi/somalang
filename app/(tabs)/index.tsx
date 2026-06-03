@@ -1,5 +1,6 @@
-import { useAuth, useUser } from "@clerk/expo";
+import { useAuth } from "@/hooks/useAuth";
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import {
   Image,
   ScrollView,
@@ -11,27 +12,16 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { images } from "@/constants/images";
+import { SW } from "@/constants/swahili";
 import { colors } from "@/constants/theme";
 import { LANGUAGES } from "@/data/languages";
 import { UNITS } from "@/data/units";
 import { posthog } from "@/lib/posthog";
 import { useLanguageStore } from "@/store/languageStore";
 import { useLearningStore } from "@/store/learningStore";
-import { LanguageCode } from "@/types/learning";
 
-function getGreeting(langCode: LanguageCode | null): string {
-  switch (langCode) {
-    case "es":
-      return "Hola";
-    case "fr":
-      return "Bonjour";
-    case "ja":
-      return "こんにちは";
-    case "de":
-      return "Hallo";
-    default:
-      return "Hello";
-  }
+function getGreeting(): string {
+  return SW.greeting; // Always "Habari" for Swahili speakers
 }
 
 const PLAN_ITEMS = [
@@ -65,17 +55,30 @@ const PLAN_ITEMS = [
 ];
 
 export default function HomeScreen() {
-  const { user } = useUser();
-  const { signOut } = useAuth();
+  const router = useRouter();
+  const { user, signOut } = useAuth();
   const { selectedLanguage } = useLanguageStore();
   const { xpToday, dailyGoal, streak } = useLearningStore();
 
   const language = LANGUAGES.find((l) => l.code === selectedLanguage);
   const unit = UNITS.find((u) => u.languageCode === selectedLanguage);
-  const firstName = user?.firstName ?? "Learner";
-  const greeting = getGreeting(selectedLanguage);
+  // Extract phone from email (phone@lingua.local format) or use user ID
+  const phone = user?.email?.replace("@lingua.local", "") ?? "";
+  const displayName = phone ? phone.slice(-4) : "Learner"; // Show last 4 digits
+  const greeting = getGreeting();
   const xpProgress =
     dailyGoal > 0 ? Math.min((xpToday / dailyGoal) * 100, 100) : 0;
+
+  const handlePlanItemPress = (itemId: string) => {
+    posthog.capture("plan_item_tapped", { item_id: itemId });
+    if (itemId === "lesson") {
+      router.navigate("/learn");
+    } else if (itemId === "ai-conversation") {
+      router.navigate("/ai-teacher");
+    } else {
+      router.navigate("/learn");
+    }
+  };
 
   return (
     <SafeAreaView
@@ -97,7 +100,7 @@ export default function HomeScreen() {
               <View className="w-[34px] h-[34px] rounded-full bg-surface" />
             )}
             <Text className="font-poppins-semibold text-base text-text-primary">
-              {greeting}, {firstName}! 👋
+              {greeting}, ...{displayName}! 👋
             </Text>
           </View>
 
@@ -142,7 +145,7 @@ export default function HomeScreen() {
             <View className="h-2 bg-border rounded mt-[10px] overflow-hidden">
               <View
                 className="h-2 bg-streak rounded"
-                style={{ width: `${Math.round(xpProgress)}%` as `${number}%` }}
+                style={{ width: `${Math.round(xpProgress)}%` }}
               />
             </View>
           </View>
@@ -178,6 +181,7 @@ export default function HomeScreen() {
                   xp_today: xpToday,
                   streak,
                 });
+                router.navigate("/learn");
               }}
             >
               <Text className="font-poppins-semibold text-[13px] text-lingua-purple">
@@ -210,7 +214,11 @@ export default function HomeScreen() {
           style={styles.planCardShadow}
         >
           {PLAN_ITEMS.map((item, index) => (
-            <View key={item.id}>
+            <TouchableOpacity
+              key={item.id}
+              activeOpacity={0.7}
+              onPress={() => handlePlanItemPress(item.id)}
+            >
               {index > 0 && <View className="h-px bg-border mx-4" />}
               <View className="flex-row items-center px-4 py-[14px]">
                 <View
@@ -235,7 +243,7 @@ export default function HomeScreen() {
                   <View className="w-[26px] h-[26px] rounded-full border-2 border-border" />
                 )}
               </View>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
       </ScrollView>

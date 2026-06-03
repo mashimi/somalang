@@ -1,0 +1,217 @@
+# Fix Instructions: App-Wide Bugs & Security Issues
+
+This document captures the bugs, broken logic, and security issues that were
+identified during a full audit of the app, plus the fixes that were applied.
+
+---
+
+## 1. `components/activities/MatchPairs.tsx` — broken matching logic
+
+### Problem
+The "is the right item a match for the left item" check was comparing the
+`right` field of the left pair to the `right` field of the right pair — i.e.
+it was comparing a value to itself, so it was effectively always `true`.
+Combined with the matched `Set` getting the same id pushed twice and an
+incorrect completion threshold, the activity could not be won or lost
+deterministically.
+
+```ts
+// BEFORE (broken)
+const leftPair  = activity.pairs.find(p => p.id === leftSelected);
+const rightPair = activity.pairs.find(p => p.id === id);
+const isCorrect = leftPair?.right === rightPair?.right; // always true
+```
+
+### Fix
+- Match is now determined by `rightPair.id === leftSelected` (the data model
+  uses the same `id` for both items in a pair).
+- `matched` set still tracks ids, but the `newMatched.size >= totalPairs * 2`
+  check is now correct.
+- Added a `wrongPair` state that highlights incorrect pairings in red for
+  1.2 s, then resets, so the user gets feedback when they make a mistake.
+- Added a small "X / N matched" progress line at the top of the activity.
+
+### Files modified
+- `components/activities/MatchPairs.tsx` (rewritten)
+
+---
+
+## 2. `components/activities/OrderSentence.tsx` — broken word removal
+
+### Problem
+`handleAddWord` called `setAvailable` twice. The first call used a confusing
+filter (`w !== word || indexOf(w) !== lastIndexOf(w)`) that did not produce
+the right result. The second call immediately overwrote it, so the first
+call had no effect and the overall logic was fragile and hard to reason
+about. The completion / result UI also recomputed `JSON.stringify` four
+times on every render.
+
+### Fix
+- `handleAddWord` and `handleRemoveWord` now use a single, clean
+  `indexOf` / `slice` operation each.
+- The result is computed once (`isCorrectResult`) and reused for the
+  icon, color, and message.
+- Added an empty-state hint when all words have been used from the bank.
+
+### Files modified
+- `components/activities/OrderSentence.tsx` (rewritten)
+
+---
+
+## 3. `components/activities/DialogueComplete.tsx` — answer checking read stale state
+
+### Problem
+The completion check ran after the final answer was selected, but used the
+OLD `selectedAnswers` state — the latest answer had not been committed yet
+because React state updates are asynchronous. As a result, the check could
+evaluate `undefined === correctAnswer` for the very last blank.
+
+```ts
+// BEFORE (broken — uses stale state)
+const allCorrect = activity.lines
+  .filter(line => line.isBlank && line.correctAnswer)
+  .every(line => selectedAnswers[activity.lines.indexOf(line)] === line.correctAnswer);
+```
+
+### Fix
+- `handleSelect` now builds `nextAnswers` locally, includes the just-picked
+  answer, and uses that for both the "next blank" lookup and the final
+  "all correct" evaluation.
+- The result message and icon now correctly reflect whether the user got
+  every blank right.
+- A small hint is shown once all blanks have been answered.
+
+### Files modified
+- `components/activities/DialogueComplete.tsx` (rewritten)
+
+---
+
+## 4. `app/admin/dashboard.tsx` — broken join + missing authorization
+
+### Problem
+- The PostgREST select string
+  `.select("*, user_profiles(id, phone, referral_code)")` does not
+  disambiguate which foreign key to use for the join, so the query can fail
+  or return unexpected shapes. The correct hint is the FK column name.
+- The dashboard had **no authorization check at all** — any signed-in user
+  (and the route was even reachable by navigation) could see every pending
+  payment and approve / reject them.
+
+### Fix
+- Query now uses the explicit FK hint:
+  `.select("*, user_profiles!user_id(id, phone, referral_code)")`.
+- Added an authorization gate: the screen reads
+  `EXPO_PUBLIC_ADMIN_USER_ID` and only renders the payment list when
+  `user.id === ADMIN_USER_ID`. Non-admin users are redirected to `/`.
+- The render `item` type was updated to `PaymentWithProfile` so the typed
+  shape matches what the join returns.
+
+### Files modified
+- `app/admin/dashboard.tsx` (rewritten)
+
+---
+
+## 5. `app/(admin)/referrals.tsx` — broken join
+
+### Problem
+`.select("*, referrer(*), referee(*)")` does not disambiguate the FK
+columns on the `referrals` table — it has two FKs to `auth.users.id`
+(`referrer_id` and `referee_id`). The query was either failing or returning
+both relations under the same key.
+
+### Fix
+- Renamed the join relations explicitly and added FK hints:
+  `.select("*, referrer:user_profiles!referrer_id(*), referee:user_profiles!referee_id(*)")`.
+- Cast the response to the existing `Referral` type.
+
+### Files modified
+- `app/(admin)/referrals.tsx` (loadReferrals updated)
+
+---
+
+## 6. Supabase RLS — overly permissive "Public read referral codes" policy
+
+### Problem
+The original migration created a SELECT policy on `user_profiles` with
+`USING (true)`. PostgreSQL ORs multiple SELECT policies together, so the
+combination of the user-specific policy and the public-true policy meant
+that **anyone, including unauthenticated visitors, could read every
+column of every profile** (phone number, premium_until, referred_by, etc.).
+This is a serious privacy / security regression.
+
+### Fix
+A new migration
+`supabase/migrations/20260603150000_fix_rls_policies.sql` does the
+following:
+
+1. Drops the overly broad "Public read referral codes" policy.
+2. Creates a `SECURITY DEFINER` RPC
+   `public.get_referrer_id_by_code(code TEXT) RETURNS UUID` that the
+   signup screen can call to look up a referrer without exposing the
+   table itself. The function is granted to `anon` and `authenticated`.
+3. Re-declares the `users view own profile`, `users view own payments`,
+   and `users view own referrals` policies so the access model is
+   explicit and idempotent.
+
+The signup screen was updated to call the new RPC instead of doing a
+direct table read.
+
+### Files added / modified
+- **New:** `supabase/migrations/20260603150000_fix_rls_policies.sql`
+- **Modified:** `app/(auth)/sign-up.tsx` (Step 1 now uses `supabase.rpc`)
+
+### Apply with
+```bash
+# From the project root, with the Supabase CLI configured:
+supabase db push
+# or run the SQL file directly in the Supabase SQL editor.
+```
+
+---
+
+## 7. `app/(tabs)/index.tsx` — suspicious template-literal type cast
+
+### Problem
+The progress bar style used
+`style={{ width: \`${Math.round(xpProgress)}%\` as \`${number}%\` }}`,
+which mixes a `width` numeric-style template literal assertion with
+NativeWind className styling. While it may compile, the assertion is
+unnecessary and obscures intent.
+
+### Fix
+Removed the cast — the template literal already satisfies the
+`DimensionValue` type accepted by React Native.
+
+### Files modified
+- `app/(tabs)/index.tsx` (Daily Goal progress bar)
+
+---
+
+## Verification
+
+After applying the changes above, the project passes `tsc --noEmit`
+cleanly (no TypeScript errors) and all the activities / admin / auth
+flows should now work end-to-end.
+
+```bash
+cd c:\Glang\react-native-lingua
+npx tsc --noEmit
+```
+
+Expected output: no errors.
+
+---
+
+## Notes / Out of scope
+
+- The admin `/admin/login` screen still uses a hardcoded PIN
+  (`123456`). This is documented in the code as a placeholder; in
+  production it should be replaced with a real admin credential flow
+  (e.g. an env-var-loaded PIN, or a Supabase-backed admin role).
+- The home screen `PLAN_ITEMS` array is still hardcoded; it could be
+  derived from real lessons / progress, but that is a feature concern
+  and is left as a follow-up.
+- The lesson screen uses Stream Video for AI teacher calls. The Stream
+  service must be running (or `STREAM_API_KEY` / `STREAM_API_SECRET`
+  set) for that screen to function; the rest of the app does not
+  depend on it.

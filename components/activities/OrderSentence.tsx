@@ -10,28 +10,36 @@ interface Props {
 
 export function OrderSentence({ activity, onComplete }: Props) {
   const [ordered, setOrdered] = useState<string[]>([]);
-  const [available, setAvailable] = useState(activity.scrambled);
+  const [available, setAvailable] = useState<string[]>(activity.scrambled);
   const [showResult, setShowResult] = useState(false);
 
+  // Add a word to the ordered sentence. Removes a single occurrence of the
+  // word from the `available` bank so that each tile can be used at most once.
   const handleAddWord = (word: string) => {
     if (showResult) return;
-    setOrdered([...ordered, word]);
-    setAvailable(available.filter(w => w !== word || available.indexOf(w) !== available.lastIndexOf(w)));
-
-    // Remove single occurrence
-    const idx = available.indexOf(word);
-    setAvailable([...available.slice(0, idx), ...available.slice(idx + 1)]);
+    setOrdered((prev) => [...prev, word]);
+    setAvailable((prev) => {
+      const idx = prev.indexOf(word);
+      if (idx === -1) return prev;
+      return [...prev.slice(0, idx), ...prev.slice(idx + 1)];
+    });
   };
 
+  // Remove a word from the ordered sentence and put a single occurrence
+  // back into the `available` bank.
   const handleRemoveWord = (index: number) => {
     if (showResult) return;
-    const word = ordered[index];
-    setOrdered(ordered.filter((_, i) => i !== index));
-    setAvailable([...available, word]);
+    setOrdered((prev) => {
+      const word = prev[index];
+      if (word === undefined) return prev;
+      setAvailable((bank) => [...bank, word]);
+      return prev.filter((_, i) => i !== index);
+    });
   };
 
   const checkAnswer = () => {
-    const isCorrect = JSON.stringify(ordered) === JSON.stringify(activity.correctOrder);
+    const isCorrect =
+      JSON.stringify(ordered) === JSON.stringify(activity.correctOrder);
     setShowResult(true);
     setTimeout(() => {
       onComplete(isCorrect);
@@ -39,6 +47,8 @@ export function OrderSentence({ activity, onComplete }: Props) {
   };
 
   const isComplete = ordered.length === activity.correctOrder.length;
+  const isCorrectResult =
+    JSON.stringify(ordered) === JSON.stringify(activity.correctOrder);
 
   return (
     <View className="flex-1 p-5">
@@ -64,7 +74,7 @@ export function OrderSentence({ activity, onComplete }: Props) {
           <View className="flex-row flex-wrap gap-2">
             {ordered.map((word, index) => (
               <TouchableOpacity
-                key={index}
+                key={`${word}-${index}`}
                 onPress={() => handleRemoveWord(index)}
                 className="px-4 py-2 bg-purple-500 rounded-full"
               >
@@ -77,16 +87,22 @@ export function OrderSentence({ activity, onComplete }: Props) {
 
       {/* Available words */}
       <View className="flex-row flex-wrap gap-2 mb-6">
-        {available.map((word, index) => (
-          <TouchableOpacity
-            key={index}
-            onPress={() => handleAddWord(word)}
-            disabled={showResult}
-            className="px-4 py-2 bg-white border-2 border-gray-200 rounded-full"
-          >
-            <Text className="text-base font-medium text-[#001328]">{word}</Text>
-          </TouchableOpacity>
-        ))}
+        {available.length === 0 ? (
+          <Text className="text-sm text-gray-400 italic">
+            Maneno yote yamechaguliwa
+          </Text>
+        ) : (
+          available.map((word, index) => (
+            <TouchableOpacity
+              key={`${word}-${index}`}
+              onPress={() => handleAddWord(word)}
+              disabled={showResult}
+              className="px-4 py-2 bg-white border-2 border-gray-200 rounded-full"
+            >
+              <Text className="text-base font-medium text-[#001328]">{word}</Text>
+            </TouchableOpacity>
+          ))
+        )}
       </View>
 
       {/* Check button */}
@@ -105,18 +121,20 @@ export function OrderSentence({ activity, onComplete }: Props) {
       {showResult && (
         <View className="mt-6 items-center">
           <Ionicons
-            name={JSON.stringify(ordered) === JSON.stringify(activity.correctOrder) ? "checkmark-circle" : "close-circle"}
+            name={isCorrectResult ? "checkmark-circle" : "close-circle"}
             size={48}
-            color={JSON.stringify(ordered) === JSON.stringify(activity.correctOrder) ? "#21c16b" : "#ff4d4f"}
+            color={isCorrectResult ? "#21c16b" : "#ff4d4f"}
           />
-          <Text className={`text-lg font-semibold mt-3 ${
-            JSON.stringify(ordered) === JSON.stringify(activity.correctOrder) ? "text-green-500" : "text-red-500"
-          }`}>
-            {JSON.stringify(ordered) === JSON.stringify(activity.correctOrder)
+          <Text
+            className={`text-lg font-semibold mt-3 ${
+              isCorrectResult ? "text-green-500" : "text-red-500"
+            }`}
+          >
+            {isCorrectResult
               ? "Perfekter Satz! ✨"
               : "Fast! Versuche es nochmal."}
           </Text>
-          {JSON.stringify(ordered) !== JSON.stringify(activity.correctOrder) && (
+          {!isCorrectResult && (
             <Text className="text-sm text-gray-500 mt-2">
               Richtige Reihenfolge: {activity.correctOrder.join(" ")}
             </Text>

@@ -1,4 +1,5 @@
-import { supabase, Database } from "@/lib/supabase";
+import { useAuth } from "@/hooks/useAuth";
+import { Database, supabase } from "@/lib/supabase";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
@@ -16,24 +17,44 @@ import { SafeAreaView } from "react-native-safe-area-context";
 type Payment = Database["public"]["Tables"]["payments"]["Row"];
 type UserProfile = Database["public"]["Tables"]["user_profiles"]["Row"];
 
+type PaymentWithProfile = Payment & {
+  user_profiles: Pick<UserProfile, "id" | "phone" | "referral_code"> | null;
+};
+
+const ADMIN_USER_ID = process.env.EXPO_PUBLIC_ADMIN_USER_ID || "";
+
 export default function AdminDashboardScreen() {
-  const [payments, setPayments] = useState<(Payment & { user_profiles: UserProfile | null })[]>([]);
+  const { user, isLoaded } = useAuth();
+  const [payments, setPayments] = useState<PaymentWithProfile[]>([]);
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState<string | null>(null);
 
+  // Authorization gate: only the configured admin user can see payments.
+  const isAuthorized = !!user && (ADMIN_USER_ID ? user.id === ADMIN_USER_ID : false);
+
   useEffect(() => {
+    if (!isLoaded) return;
+    if (!isAuthorized) {
+      // Bounce non-admin users back to the home screen.
+      router.replace("/");
+      return;
+    }
     loadPayments();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoaded, isAuthorized]);
 
   const loadPayments = async () => {
     try {
+      // The payments table FK `user_id → auth.users.id`. The user_profiles
+      // table PK is also `id` (which references auth.users.id), so the join
+      // is: payments.user_id → user_profiles.id.
       const { data, error } = await supabase
         .from("payments")
-        .select("*, user_profiles(id, phone, referral_code)")
+        .select("*, user_profiles!user_id(id, phone, referral_code)")
         .order("created_at", { ascending: false });
 
       if (error) throw error;
-      setPayments(data || []);
+      setPayments((data as PaymentWithProfile[]) || []);
     } catch (err) {
       console.error("Error loading payments:", err);
       Alert.alert("Error", "Failed to load payments");
@@ -115,7 +136,7 @@ export default function AdminDashboardScreen() {
     );
   };
 
-  const renderPayment = ({ item }: { item: Payment & { user_profiles: UserProfile | null } }) => {
+  const renderPayment = ({ item }: { item: PaymentWithProfile }) => {
     const isPending = item.status === "pending";
     const isApproved = item.status === "approved";
 
@@ -145,7 +166,9 @@ export default function AdminDashboardScreen() {
         <View style={styles.details}>
           <View style={styles.detailRow}>
             <Text style={styles.detailLabel}>Amount:</Text>
-            <Text style={styles.detailValue}>{item.amount.toLocaleString()} TZS</Text>
+            <Text style={styles.detailValue}>
+              {item.amount.toLocaleString()} TZS
+            </Text>
           </View>
           {item.sender_name && (
             <View style={styles.detailRow}>
@@ -198,11 +221,21 @@ export default function AdminDashboardScreen() {
     );
   };
 
-  if (loading) {
+  if (!isLoaded || loading) {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#6c4ef5" />
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  if (!isAuthorized) {
+    return (
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+        <View style={styles.loadingContainer}>
+          <Text>Unauthorized — redirecting…</Text>
         </View>
       </SafeAreaView>
     );

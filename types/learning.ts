@@ -1,4 +1,5 @@
-export type LanguageCode = "es" | "fr" | "ja" | "ko" | "de" | "zh";
+export type LanguageCode = "de";
+export type InstructionLanguage = "sw" | "en"; // Swahili primary, English backup
 
 export interface Language {
   code: LanguageCode;

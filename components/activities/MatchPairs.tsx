@@ -8,34 +8,59 @@ interface Props {
   onComplete: (correct: boolean) => void;
 }
 
+type AttemptResult = "correct" | "wrong" | null;
+
 export function MatchPairs({ activity, onComplete }: Props) {
   const [leftSelected, setLeftSelected] = useState<string | null>(null);
   const [matched, setMatched] = useState<Set<string>>(new Set());
+  const [wrongPair, setWrongPair] = useState<{
+    leftId: string;
+    rightId: string;
+  } | null>(null);
   const [showResult, setShowResult] = useState(false);
 
+  const totalPairs = activity.pairs.length;
+
   const handleLeftSelect = (id: string) => {
-    if (showResult || matched.has(id)) return;
+    if (showResult || matched.has(id) || wrongPair?.leftId === id) return;
     setLeftSelected(id);
   };
 
-  const handleRightSelect = (id: string) => {
-    if (showResult || !leftSelected || matched.has(id)) return;
+  const handleRightSelect = (rightId: string) => {
+    if (showResult || !leftSelected || matched.has(rightId)) return;
 
-    const leftPair = activity.pairs.find(p => p.id === leftSelected);
-    const rightPair = activity.pairs.find(p => p.id === id);
-    const isCorrect = leftPair?.right === rightPair?.right;
-
-    if (isCorrect) {
-      setMatched(prev => new Set([...prev, leftSelected, id]));
+    // Find the right-side pair object by id
+    const rightPair = activity.pairs.find((p) => p.id === rightId);
+    if (!rightPair) {
+      setLeftSelected(null);
+      return;
     }
 
-    setLeftSelected(null);
+    // Correct only if the right-side clicked item belongs to the same pair
+    // as the previously selected left item (i.e. they share the same `id`).
+    const isCorrect = rightPair.id === leftSelected;
 
-    if (matched.size + (isCorrect ? 2 : 0) + 2 >= activity.pairs.length * 2) {
-      setShowResult(true);
-      setTimeout(() => {
-        onComplete(matched.size + (isCorrect ? 2 : 0) + 2 >= activity.pairs.length * 2);
-      }, 1500);
+    if (isCorrect) {
+      const newMatched = new Set(matched);
+      newMatched.add(leftSelected);
+      newMatched.add(rightId);
+      setMatched(newMatched);
+      setWrongPair(null);
+
+      if (newMatched.size >= totalPairs * 2) {
+        setShowResult(true);
+        setLeftSelected(null);
+        setTimeout(() => {
+          onComplete(true);
+        }, 1500);
+      } else {
+        setLeftSelected(null);
+      }
+    } else {
+      // Visual feedback for the wrong pairing; let the user try again.
+      setWrongPair({ leftId: leftSelected, rightId });
+      setLeftSelected(null);
+      setTimeout(() => setWrongPair(null), 1200);
     }
   };
 
@@ -46,6 +71,9 @@ export function MatchPairs({ activity, onComplete }: Props) {
         <Text className="text-lg font-semibold text-[#001328] text-center mt-3">
           {activity.instruction}
         </Text>
+        <Text className="text-sm text-gray-500 text-center mt-2">
+          {matched.size / 2} / {totalPairs} imelinganishwa
+        </Text>
       </View>
 
       <View className="flex-row gap-4">
@@ -54,6 +82,7 @@ export function MatchPairs({ activity, onComplete }: Props) {
           {activity.pairs.map((pair) => {
             const isMatched = matched.has(pair.id);
             const isSelected = leftSelected === pair.id;
+            const isWrongHighlight = wrongPair?.leftId === pair.id;
 
             return (
               <TouchableOpacity
@@ -63,9 +92,11 @@ export function MatchPairs({ activity, onComplete }: Props) {
                 className={`p-4 rounded-xl border-2 ${
                   isMatched
                     ? "bg-green-50 border-green-500"
-                    : isSelected
-                    ? "bg-purple-50 border-purple-500"
-                    : "bg-white border-gray-200"
+                    : isWrongHighlight
+                      ? "bg-red-50 border-red-500"
+                      : isSelected
+                        ? "bg-purple-50 border-purple-500"
+                        : "bg-white border-gray-200"
                 }`}
               >
                 <Text className="text-base font-medium text-[#001328] text-center">
@@ -80,7 +111,7 @@ export function MatchPairs({ activity, onComplete }: Props) {
         <View className="flex-1 gap-3">
           {activity.pairs.map((pair) => {
             const isMatched = matched.has(pair.id);
-            const isSelected = leftSelected === activity.pairs.find(p => p.right === pair.right)?.id;
+            const isWrongHighlight = wrongPair?.rightId === pair.id;
 
             return (
               <TouchableOpacity
@@ -90,9 +121,9 @@ export function MatchPairs({ activity, onComplete }: Props) {
                 className={`p-4 rounded-xl border-2 ${
                   isMatched
                     ? "bg-green-50 border-green-500"
-                    : isSelected
-                    ? "bg-purple-50 border-purple-500"
-                    : "bg-white border-gray-200"
+                    : isWrongHighlight
+                      ? "bg-red-50 border-red-500"
+                      : "bg-white border-gray-200"
                 }`}
               >
                 <Text className="text-base font-medium text-[#001328] text-center">

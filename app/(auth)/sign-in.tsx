@@ -1,13 +1,8 @@
-import SocialButton from "@/components/SocialButton";
-import VerificationModal from "@/components/VerificationModal";
 import { images } from "@/constants/images";
 import { posthog } from "@/lib/posthog";
-import { useLanguageStore } from "@/store/languageStore";
-import { useSignIn, useSSO } from "@clerk/expo";
-import { AntDesign, FontAwesome, Ionicons } from "@expo/vector-icons";
-import * as Linking from "expo-linking";
-import { type Href, router } from "expo-router";
-import * as WebBrowser from "expo-web-browser";
+import { formatTanzaniaPhone, isValidTanzaniaPhone, supabase } from "@/lib/supabase";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { useState } from "react";
 import {
   Image,
@@ -22,111 +17,70 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-WebBrowser.maybeCompleteAuthSession();
-
-type SSOStrategy = "oauth_google" | "oauth_facebook" | "oauth_apple";
-
 export default function SignInScreen() {
-  const { signIn, errors, fetchStatus } = useSignIn();
-  const { startSSOFlow } = useSSO();
-  const { selectedLanguage } = useLanguageStore();
-
-  const [email, setEmail] = useState("");
-  const [showVerification, setShowVerification] = useState(false);
-  const [authError, setAuthError] = useState("");
-
-  const isLoading = fetchStatus === "fetching";
+  const [phone, setPhone] = useState("");
+  const [pin, setPin] = useState("");
+  const [showPin, setShowPin] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSignIn = async () => {
-    setAuthError("");
-    posthog.capture("sign_in_submitted", { method: "code" });
-    const { error: createError } = await signIn.create({ identifier: email });
-    if (createError) {
-      posthog.capture("$exception", {
-        $exception_list: [
-          {
-            type: createError.name ?? "SignInCreateError",
-            value: createError.message,
-          },
-        ],
-        $exception_source: "sign-in-create",
-      });
-      setAuthError("We couldn't start sign in. Please try again.");
+    setError("");
+
+    // Validate phone
+    const formattedPhone = formatTanzaniaPhone(phone);
+    if (!formattedPhone || !isValidTanzaniaPhone(phone)) {
+      setError(
+        "Tafadhali weka namba sahihi ya Tanzania (mfano: 0712345678)"
+      );
       return;
     }
 
-    const { error } = await signIn.emailCode.sendCode({ emailAddress: email });
-    if (error) {
-      posthog.capture("$exception", {
-        $exception_list: [
-          {
-            type: error.name ?? "SignInError",
-            value: error.message,
-          },
-        ],
-        $exception_source: "sign-in",
-      });
-      setAuthError("We couldn't send your code. Please try again.");
+    if (pin.length !== 6) {
+      setError("PIN lazima iwe na tarakimu 6");
       return;
     }
-    setShowVerification(true);
-  };
 
-  const handleVerify = async (code: string) => {
-    const { error } = await signIn.emailCode.verifyCode({ code });
-    if (error) {
-      posthog.capture("$exception", {
-        $exception_list: [
-          {
-            type: error.name ?? "VerificationError",
-            value: error.message,
-          },
-        ],
-        $exception_source: "sign-in-verification",
-      });
-      return;
-    }
-    if (signIn.status === "complete") {
-      posthog.capture("sign_in_completed", { method: "code" });
-      if (signIn.createdUserId) {
-        posthog.identify(signIn.createdUserId, {
-          $set: { preferred_language: selectedLanguage ?? null },
+    setIsLoading(true);
+    posthog.capture("sign_in_submitted", { method: "phone_pin" });
+
+    try {
+      const authEmail = `${formattedPhone.replace("+", "")}@lingua.local`;
+
+      const { data, error: signInError } =
+        await supabase.auth.signInWithPassword({
+          email: authEmail,
+          password: pin,
+        });
+
+      if (signInError) {
+        setError("Namba ya simu au PIN si sahihi");
+        posthog.capture("$exception", {
+          $exception_list: [
+            { type: "SignInError", value: signInError.message },
+          ],
+          $exception_source: "sign-in",
+        });
+        setIsLoading(false);
+        return;
+      }
+
+      posthog.capture("sign_in_completed", { method: "phone_pin" });
+
+      if (data.user) {
+        posthog.identify(data.user.id, {
+          $set: { phone: formattedPhone },
         });
       }
-      await signIn.finalize({
-        navigate: ({ decorateUrl }) => {
-          router.replace(decorateUrl("/") as Href);
-        },
-      });
-    }
-  };
 
-  const handleResend = async () => {
-    await signIn.emailCode.sendCode({ emailAddress: email });
-  };
-
-  const handleSSO = async (strategy: SSOStrategy) => {
-    posthog.capture("sign_in_sso_started", { strategy });
-    setAuthError("");
-    try {
-      const { createdSessionId, setActive } = await startSSOFlow({
-        strategy,
-        redirectUrl: Linking.createURL("/"),
-      });
-      if (createdSessionId && setActive) {
-        posthog.capture("sign_in_completed", { method: strategy });
-        await setActive({ session: createdSessionId });
-        router.replace("/");
-      }
+      router.replace("/");
     } catch (err) {
       const message =
-        err instanceof Error ? err.message : "Unknown SSO sign-in error";
-      console.error("SSO sign-in failed", err);
-      posthog.capture("sign_in_sso_failed", {
-        strategy,
-        error: message,
-      });
-      setAuthError("Couldn't continue with social sign in. Please try again.");
+        err instanceof Error ? err.message : "Hitilafu isiyojulikana";
+      setError(message);
+      console.error("Sign in error:", err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -151,9 +105,9 @@ export default function SignInScreen() {
             </TouchableOpacity>
 
             {/* Header */}
-            <Text className="h1 mt-4">Welcome back!</Text>
+            <Text className="h1 mt-4">Karibu tena! 👋</Text>
             <Text className="body-md text-text-secondary mt-2">
-              Continue your language journey ✨
+              Endelea na safari yako ya Kijerumani
             </Text>
 
             {/* Mascot */}
@@ -165,31 +119,48 @@ export default function SignInScreen() {
               />
             </View>
 
-            {/* Email */}
+            {/* Phone */}
             <View style={styles.inputContainer}>
-              <Text style={styles.inputLabel}>Email</Text>
+              <Text style={styles.inputLabel}>Namba ya Simu</Text>
               <TextInput
-                value={email}
-                onChangeText={setEmail}
-                placeholder="alex@gmail.com"
+                value={phone}
+                onChangeText={setPhone}
+                placeholder="0712 345 678"
                 placeholderTextColor="#9ca3af"
-                keyboardType="email-address"
-                autoCapitalize="none"
+                keyboardType="phone-pad"
                 style={styles.input}
               />
             </View>
-            {errors.fields.identifier ? (
-              <Text className="body-sm text-error -mt-2 mb-2">
-                {errors.fields.identifier.message}
-              </Text>
-            ) : null}
-            {errors.global?.[0] ? (
-              <Text className="body-sm text-error mb-2">
-                {errors.global[0].message}
-              </Text>
-            ) : null}
-            {authError ? (
-              <Text className="body-sm text-error mb-2">{authError}</Text>
+
+            {/* PIN */}
+            <View style={[styles.inputContainer, { flexDirection: "column" }]}>
+              <Text style={styles.inputLabel}>PIN ya tarakimu 6</Text>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TextInput
+                  value={pin}
+                  onChangeText={setPin}
+                  placeholder="••••••"
+                  placeholderTextColor="#9ca3af"
+                  secureTextEntry={!showPin}
+                  keyboardType="number-pad"
+                  maxLength={6}
+                  style={[styles.input, { flex: 1 }]}
+                />
+                <TouchableOpacity
+                  onPress={() => setShowPin((p) => !p)}
+                  hitSlop={8}
+                >
+                  <Ionicons
+                    name={showPin ? "eye" : "eye-outline"}
+                    size={20}
+                    color="#9ca3af"
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            {error ? (
+              <Text className="body-sm text-error mb-2">{error}</Text>
             ) : null}
 
             {/* Sign In button */}
@@ -197,66 +168,33 @@ export default function SignInScreen() {
               className="bg-lingua-purple rounded-2xl py-4 items-center mt-2"
               activeOpacity={0.85}
               onPress={handleSignIn}
-              disabled={!email || isLoading}
-              style={{ opacity: !email || isLoading ? 0.6 : 1 }}
+              disabled={!phone || pin.length !== 6 || isLoading}
+              style={{
+                opacity: !phone || pin.length !== 6 || isLoading ? 0.6 : 1,
+              }}
               testID="sign-in-button"
             >
               <Text className="font-poppins-semibold text-base text-white">
-                {isLoading ? "Sending code..." : "Sign In"}
+                {isLoading ? "Inaingia..." : "Ingia"}
               </Text>
             </TouchableOpacity>
-
-            {/* Divider */}
-            <View className="flex-row items-center my-6 gap-3">
-              <View className="flex-1 h-px bg-border" />
-              <Text className="body-sm text-text-secondary">
-                or continue with
-              </Text>
-              <View className="flex-1 h-px bg-border" />
-            </View>
-
-            {/* Social */}
-            <SocialButton
-              icon={<AntDesign name="google" size={20} color="#DB4437" />}
-              label="Continue with Google"
-              onPress={() => handleSSO("oauth_google")}
-            />
-            <SocialButton
-              icon={<FontAwesome name="facebook" size={20} color="#1877F2" />}
-              label="Continue with Facebook"
-              onPress={() => handleSSO("oauth_facebook")}
-            />
-            <SocialButton
-              icon={<AntDesign name="apple" size={20} color="#000" />}
-              label="Continue with Apple"
-              onPress={() => handleSSO("oauth_apple")}
-            />
 
             {/* Sign Up link */}
             <View className="flex-row justify-center mt-4 mb-8">
               <Text className="body-md text-text-secondary">
-                {"Don't have an account? "}
+                Huna akaunti?{" "}
               </Text>
               <TouchableOpacity
                 onPress={() => router.replace("/(auth)/sign-up")}
               >
                 <Text className="body-md text-lingua-purple font-poppins-semibold">
-                  Sign Up
+                  Jisajili
                 </Text>
               </TouchableOpacity>
             </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-
-      <VerificationModal
-        visible={showVerification}
-        email={email}
-        onClose={() => setShowVerification(false)}
-        onVerify={handleVerify}
-        onResend={handleResend}
-        error={errors.fields.code?.message || errors.global?.[0]?.message || ""}
-      />
     </SafeAreaView>
   );
 }

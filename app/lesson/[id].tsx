@@ -1,5 +1,6 @@
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/lib/supabase";
 import { Lesson } from "@/types/learning";
-import { useAuth, useUser } from "@clerk/expo";
 import { Ionicons } from "@expo/vector-icons";
 import {
   Call,
@@ -36,8 +37,7 @@ const AGENT_USER_ID = "ai-teacher";
 export default function LessonScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
-  const { user, isLoaded } = useUser();
-  const { getToken } = useAuth();
+  const { user, isLoaded } = useAuth();
   const { selectedLanguage } = useLanguageStore();
 
   const lesson = LESSONS.find((l) => l.id === id);
@@ -89,10 +89,11 @@ export default function LessonScreen() {
     setCallStatus("connecting");
 
     try {
-      const clerkToken = await getToken();
-      if (!clerkToken) throw new Error("Not authenticated");
+      const session = await supabase.auth.getSession();
+      const supabaseToken = session?.data?.session?.access_token;
+      if (!supabaseToken) throw new Error("Not authenticated");
       const res = await fetch("/api/stream-token", {
-        headers: { Authorization: `Bearer ${clerkToken}` },
+        headers: { Authorization: `Bearer ${supabaseToken}` },
       });
       if (!res.ok) throw new Error("Token fetch failed");
       const { token, apiKey } = await res.json();
@@ -102,8 +103,8 @@ export default function LessonScreen() {
         token,
         user: {
           id: user.id,
-          name: user.fullName ?? user.id,
-          image: user.imageUrl || undefined,
+          name: user.user_metadata?.full_name ?? user.id,
+          image: user.user_metadata?.avatar_url ?? undefined,
         },
       });
 

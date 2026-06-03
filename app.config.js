@@ -1,19 +1,19 @@
 export default {
   expo: {
-    name: "duolingo-clone",
-    slug: "duolingo-clone",
+    name: "Lingua Tanzania",
+    slug: "lingua-tanzania",
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/images/icon.png",
-    scheme: "duolingoclone",
+    scheme: "linguatanzania",
     userInterfaceStyle: "automatic",
     newArchEnabled: true,
     ios: {
       supportsTablet: true,
-      bundleIdentifier: "com.jsmastery.duolingo-clone",
+      bundleIdentifier: "com.lingua.tanzania",
     },
     android: {
-      package: "com.jsmastery.duolingoclone",
+      package: "com.lingua.tanzania",
       adaptiveIcon: {
         backgroundColor: "#E6F4FE",
         foregroundImage: "./assets/images/android-icon-foreground.png",
@@ -41,7 +41,6 @@ export default {
           },
         },
       ],
-      "@clerk/expo",
       "expo-secure-store",
       "@stream-io/video-react-native-sdk",
       [
@@ -70,6 +69,10 @@ export default {
       posthogProjectToken: process.env.POSTHOG_PROJECT_TOKEN,
       posthogHost: process.env.POSTHOG_HOST,
       streamApiKey: process.env.STREAM_API_KEY,
+      supabaseUrl: process.env.EXPO_PUBLIC_SUPABASE_URL,
+      supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
+      mpesaNumber: process.env.EXPO_PUBLIC_MPESA_NUMBER || "+255 749 696 967",
+      adminUserId: process.env.EXPO_PUBLIC_ADMIN_USER_ID,
     },
   },
 };

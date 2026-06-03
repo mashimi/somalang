@@ -28,13 +28,20 @@ export default function ReferralsScreen() {
 
   const loadReferrals = async () => {
     try {
+      // Both `referrer_id` and `referee_id` are FK columns on the referrals
+      // table that reference `auth.users.id`. Because `user_profiles.id`
+      // also references `auth.users.id`, we can join through it. The
+      // explicit `!referrer_id` / `!referee_id` hint tells PostgREST which
+      // FK column to use for each join.
       const { data, error } = await supabase
         .from("referrals")
-        .select("*, referrer(*), referee(*)")
+        .select(
+          "*, referrer:user_profiles!referrer_id(*), referee:user_profiles!referee_id(*)",
+        )
         .order("created_at", { ascending: false });
 
       if (error) throw error;
-      setReferrals(data || []);
+      setReferrals((data as Referral[]) || []);
     } catch (err) {
       console.error("Error loading referrals:", err);
       Alert.alert("Error", "Failed to load referrals");
