@@ -21,29 +21,27 @@ from vision_agents.plugins import getstream, openai  # noqa: E402
 AGENT_USER_ID = "ai-teacher"
 
 LANGUAGE_NAMES: dict[str, str] = {
-    "es": "Spanish",
-    "fr": "French",
-    "ja": "Japanese",
-    "de": "German",
+    "es": "Kihispania",
+    "fr": "Kifaransa",
+    "ja": "Kijapani",
+    "de": "Kijerumani",
 }
 
 DEFAULT_SYSTEM_PROMPT = (
-    "You are a warm, energetic AI language teacher having a real voice conversation with a student. "
-    "You operate in exactly two modes and NEVER mix them:\n"
-    "TEACHING MODE: Say one word or phrase, its English meaning, and one pronunciation tip. "
-    "End with a single question like 'Can you say that?' or 'Give it a try!'. "
-    "Your turn is OVER at that question mark. Stop speaking. Output nothing else. "
-    "Do NOT imagine what the student will say. Do NOT pre-write your reaction. Just stop.\n"
-    "REACTING MODE: You have just received actual speech from the student in this turn. "
-    "React to what they actually said — one sentence of praise or correction — "
-    "then either ask them to try again or introduce the next word. Stop.\n"
-    "ABSOLUTE RULES:\n"
-    "- Never say 'Nice job', 'Perfect', 'Great', or any praise unless the student has "
-    "ACTUALLY spoken in the current turn and you heard something from them.\n"
-    "- Never continue past a question mark. Every question is a hard stop.\n"
-    "- Never role-play the student's response or write what you imagine they said.\n"
-    "- Keep every reply to one or two short sentences maximum.\n"
-    "- Stay strictly within the current lesson's vocabulary."
+    "Wewe ni mwalimu wa Kijerumani anayezungumza Kiswahili. Kazi yako ni kufundisha mwanafunzi Kijerumani kwa kutumia Kiswahili kama lugha ya maelekezo. "
+    "Unafanya kazi katika hali mbili hasa na USIZICHANGANYE:\n"
+    "1. HALI YA KUFUNDISHA: Sema neno au sentensi moja ya Kijerumani, maana yake kwa Kiswahili, na kidokezo fupi cha matamshi. "
+    "Malizia kwa swali moja rahisi kama 'Unaweza kusema hivyo?' au 'Jaribu kuisema!'. "
+    "Zamu yako INAISHIA pale. Usiseme kitu kingine. USIJIAMBIE mwanafunzi atasema nini. Acha tu.\n"
+    "2. HALI YA KUITIKIA: Umepokea sauti halisi kutoka kwa mwanafunzi. "
+    "Itikia kile alichokisema — sentensi moja ya sifa au kusahihisha kwa upole kwa Kiswahili — "
+    "kisha muulize ajaribu tena au umpe neno jipya la Kijerumani. Acha tu.\n"
+    "SHERIA KAMILI:\n"
+    "- Usiseme 'Vizuri sana', 'Sahihi', au sifa yoyote isipokuwa mwanafunzi AMESEMA kitu katika zamu hii.\n"
+    "- Usiendelee zaidi ya alama ya swali. Kila swali ni kikomo.\n"
+    "- Usiigize majibu ya mwanafunzi au kuandika kile unachofikiria atasema.\n"
+    "- Weka majibu yako yasiwe zaidi ya sentensi mbili fupi.\n"
+    "- Baki ndani ya msamiati wa somo la sasa pekee. Usifundishe maneno yasiyo kwenye somo."
 )
 
 def _require_env(var_name: str) -> None:
@@ -82,7 +80,7 @@ async def create_agent(**kwargs) -> Agent:
                 },
             }
         ),
-        agent_user=User(name="AI Teacher", id=AGENT_USER_ID),
+        agent_user=User(name="Mwalimu wa Kijerumani", id=AGENT_USER_ID),
         instructions=DEFAULT_SYSTEM_PROMPT,
     )
 
@@ -102,7 +100,7 @@ async def join_call(agent: Agent, call_type: str, call_id: str, **kwargs) -> Non
     intro_message  = custom.get("intro_message")
     language_code  = custom.get("language") or ""
     lesson_title   = custom.get("lesson_title") or ""
-    language_name  = LANGUAGE_NAMES.get(language_code) or _language_name_from_call_id(call_id) or "language"
+    language_name  = LANGUAGE_NAMES.get(language_code) or _language_name_from_call_id(call_id) or "lugha"
 
     # Apply lesson-specific instructions before joining so the Realtime LLM receives them
     agent.instructions = Instructions(input_text=system_prompt)
@@ -161,22 +159,22 @@ async def join_call(agent: Agent, call_type: str, call_id: str, **kwargs) -> Non
         await agent.wait_for_participant(timeout=60.0)
 
         if intro_message:
-            context_parts = [f"A student just joined your {language_name} lesson"]
+            context_parts = [f"Mwanafunzi ameanza somo lako la {language_name}"]
             if lesson_title:
                 context_parts[0] += f" — '{lesson_title}'"
             context_parts[0] += "."
             context_parts.append(
-                f"Deliver this greeting and NOTHING else: \"{intro_message}\" "
-                f"After the greeting, ask the student one simple question to get them talking — "
-                f"for example 'Are you ready to get started?' or 'Have you learned any {language_name} before?' "
-                f"Then STOP and wait for the student's reply before teaching anything."
+                f"Toa salamu hii na USISEME kitu kingine: \"{intro_message}\" "
+                f"Baada ya salamu, muulize mwanafunzi swali moja rahisi ili aanze kuzungumza — "
+                f"kwa mfano 'Uko tayari kuanza?' au 'Umewahi kujifunza {language_name} kabla?' "
+                f"Kisha ACHA TU na usubiri jibu la mwanafunzi kabla ya kufundisha kitu chochote."
             )
             await agent.simple_response(" ".join(context_parts))
         else:
             await agent.simple_response(
-                f"A student just joined your {language_name} lesson. "
-                f"Greet them warmly and ask one short question — like 'Ready to learn some {language_name}?' "
-                f"Then STOP and wait for their reply before you teach anything."
+                f"Mwanafunzi ameanza somo lako la {language_name}. "
+                f"Msalamu kwa ukarimu na muulize swali fupi — kama 'Uko tayari kujifunza {language_name}?' "
+                f"Kisha ACHA TU na usubiri jibu lao kabla hujafundisha kitu chochote."
             )
 
         await agent.finish()
