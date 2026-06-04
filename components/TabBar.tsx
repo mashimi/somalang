@@ -1,20 +1,20 @@
+import { colors, fontFamily } from "@/constants/theme";
+import { Ionicons } from "@expo/vector-icons";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { useEffect } from "react";
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withSpring,
-} from "react-native-reanimated";
 import {
+  Dimensions,
+  StyleSheet,
+  Text,
   TouchableOpacity,
   View,
-  Text,
-  StyleSheet,
-  Dimensions,
 } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
-import { colors, fontFamily } from "@/constants/theme";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const CIRCLE_SIZE = 52;
@@ -29,6 +29,7 @@ type TabConfig = {
 const TABS: TabConfig[] = [
   { label: "Home", icon: "home-outline", activeIcon: "home" },
   { label: "Learn", icon: "book-outline", activeIcon: "book" },
+  { label: "Review", icon: "refresh-outline", activeIcon: "refresh" },
   { label: "AI Teacher", icon: "sparkles-outline", activeIcon: "sparkles" },
   { label: "Chat", icon: "chatbubbles-outline", activeIcon: "chatbubbles" },
   { label: "Profile", icon: "person-outline", activeIcon: "person" },

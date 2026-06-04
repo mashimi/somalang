@@ -1,5 +1,5 @@
-import { Tabs } from "expo-router";
 import { TabBar } from "@/components/TabBar";
+import { Tabs } from "expo-router";
 
 export default function TabsLayout() {
   return (
@@ -9,6 +9,7 @@ export default function TabsLayout() {
     >
       <Tabs.Screen name="index" />
       <Tabs.Screen name="learn" />
+      <Tabs.Screen name="review" />
       <Tabs.Screen name="ai-teacher" />
       <Tabs.Screen name="chat" />
       <Tabs.Screen name="profile" />

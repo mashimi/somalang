@@ -381,7 +381,7 @@ export const GERMAN_A1_LESSONS: Lesson[] = [
 ];
 
 // ═══════════════════════════════════════════════════════════
-// 🇩🇪 A2 - ELEMENTARY (MSINGI) - 3 Lessons
+// 🇩🇪 A2 - ELEMENTARY (MSINGI) - 4 Lessons
 // ═══════════════════════════════════════════════════════════
 
 export const GERMAN_A2_LESSONS: Lesson[] = [
@@ -389,49 +389,29 @@ export const GERMAN_A2_LESSONS: Lesson[] = [
     id: "de-a2-lesson-1",
     unitId: "de-a2-unit-1",
     title: "Im Restaurant - Mgahawani",
-    description: "Agiza chakula na vinywaji kwa urahisi",
+    description: "Jifunze kuagiza chakula na vinywaji kwa urahisi",
     icon: "🍽️",
     level: "A2",
-    xpReward: 30,
+    xpReward: 25,
     estimatedMinutes: 12,
-    goals: [
-      { description: "Kuagiza chakula kwa ujasiri", xpReward: 15 },
-      { description: "Kulipa bili kwa Kijerumani", xpReward: 15 },
-    ],
+    goals: [{ description: "Kuagiza chakula kwa Kijerumani", xpReward: 25 }],
     vocabulary: [
       { word: "die Speisekarte", translation: "menyu", pronunciation: "dee SHPEYE-zuh-kar-tuh", emoji: "📖" },
       { word: "bestellen", translation: "kuagiza", pronunciation: "buh-SHTEL-en", emoji: "📝" },
       { word: "der Kellner", translation: "mhudumu", pronunciation: "dair KEL-ner", emoji: "👨‍🍳" },
       { word: "die Rechnung", translation: "bili", pronunciation: "dee REKH-noong", emoji: "💰" },
-      { word: "Ich hätte gern", translation: "Ningependa (polite)", pronunciation: "ikh HET-uh gairn", emoji: "🙋" },
+      { word: "lecker", translation: "tamu/nzuri", pronunciation: "LEK-er", emoji: "😋" },
     ],
     phrases: [
-      { text: "Die Speisekarte, bitte.", translation: "Menyu, tafadhali.", pronunciation: "Dee SHPEYE-zuh-kar-tuh, BIT-eh." },
-      { text: "Die Rechnung, bitte.", translation: "Bili, tafadhali.", pronunciation: "Dee REKH-noong, BIT-eh." },
+      { text: "Ich hätte gern ein Wasser, bitte.", translation: "Ningependa maji, tafadhali.", pronunciation: "Ikh HET-uh gairn ayn VAH-ser, BIT-eh." },
     ],
-    grammar: {
-      topic: "Kitenzi 'möchten' (kungependa) - A2",
-      explanation: "'möchten' hutumika kuomba kwa upole - kama 'ningependa' kwa Kiswahili.",
-      examples: [
-        "Ich möchte Wasser. (Ningependa maji.)",
-        "Möchten Sie bestellen? (Ungependa kuagiza?)",
-      ],
-    },
-    culturalNote: {
-      title: "Desturi ya Mgahawa Ujerumani 🇩🇪",
-      content: "Ujerumani, mhudumu hakupeleki bili moja kwa moja - lazima uombe 'Die Rechnung, bitte'. Tofauti na Tanzania ambapo bili huletwa mara moja!",
-    },
     activities: [
       {
-        id: "de-a2-1-dialogue1",
-        type: "dialogue",
-        context: "Uko mgahawani na ungependa kuagiza",
-        lines: [
-          { speaker: "ai", text: "Guten Abend! Haben Sie schon gewählt?" },
-          { speaker: "user", text: "", isBlank: true, options: ["Ja, ich hätte gern die Suppe", "Nein", "Das ist teuer"], correctAnswer: "Ja, ich hätte gern die Suppe" },
-          { speaker: "ai", text: "Möchten Sie etwas zu trinken?" },
-          { speaker: "user", text: "", isBlank: true, options: ["Ja, ein Wasser, bitte", "Nein, danke"], correctAnswer: "Ja, ein Wasser, bitte" },
-        ],
+        id: "de-a2-1-mc1",
+        type: "multiple-choice",
+        question: "Unasemaje 'Ningependa maji, tafadhali'?",
+        correctAnswer: "Ich hätte gern ein Wasser, bitte",
+        options: ["Ich will Wasser", "Ich hätte gern ein Wasser, bitte", "Gib mir Wasser", "Wasser jetzt"],
       },
     ],
     aiTeacherPrompt: {
@@ -447,12 +427,9 @@ export const GERMAN_A2_LESSONS: Lesson[] = [
     description: "Nunua vitu sokoni na dukani",
     icon: "🛍️",
     level: "A2",
-    xpReward: 30,
-    estimatedMinutes: 12,
-    goals: [
-      { description: "Kuuliza bei kwa Kijerumani", xpReward: 15 },
-      { description: "Kununua vitu sokoni", xpReward: 15 },
-    ],
+    xpReward: 25,
+    estimatedMinutes: 10,
+    goals: [{ description: "Kununuwa vitu dukani", xpReward: 25 }],
     vocabulary: [
       { word: "der Markt", translation: "soko", pronunciation: "dair MARKT", emoji: "🏪" },
       { word: "kaufen", translation: "kununua", pronunciation: "KOW-fen", emoji: "🛒" },
@@ -460,23 +437,13 @@ export const GERMAN_A2_LESSONS: Lesson[] = [
       { word: "billig", translation: "rahisi", pronunciation: "BILL-ikh", emoji: "💰" },
       { word: "Wie viel kostet das?", translation: "Hii inagharimu kiasi gani?", pronunciation: "vee feel KOS-tet dahs", emoji: "❓" },
     ],
-    phrases: [
-      { text: "Wie viel kostet das?", translation: "Hii inagharimu kiasi gani?", pronunciation: "Vee feel KOS-tet dahs?" },
-      { text: "Das ist zu teuer!", translation: "Hii ni ghali sana!", pronunciation: "Dahs ist tsoo TOY-er!" },
-    ],
+    phrases: [],
     activities: [
       {
         id: "de-a2-2-tr1",
         type: "translate",
         question: "Tafsiri: 'Hii inagharimu kiasi gani?'",
         correctAnswer: "Wie viel kostet das?",
-      },
-      {
-        id: "de-a2-2-mc1",
-        type: "multiple-choice",
-        question: "'Soko' kwa Kijerumani ni nini?",
-        options: ["der Laden", "der Markt", "das Geschäft", "die Straße"],
-        correctAnswer: "der Markt",
       },
     ],
     aiTeacherPrompt: {
@@ -494,29 +461,19 @@ export const GERMAN_A2_LESSONS: Lesson[] = [
     level: "A2",
     xpReward: 30,
     estimatedMinutes: 12,
-    goals: [
-      { description: "Kueleza mazoea ya kila siku", xpReward: 15 },
-      { description: "Kutumia vitenzi vinavyotenganishwa", xpReward: 15 },
-    ],
+    goals: [{ description: "Kuelezea mazoea ya kila siku", xpReward: 30 }],
     vocabulary: [
       { word: "aufstehen", translation: "kuamka", pronunciation: "OWF-shtay-en", emoji: "⏰" },
       { word: "arbeiten", translation: "kufanya kazi", pronunciation: "AR-bite-en", emoji: "💼" },
       { word: "essen", translation: "kula", pronunciation: "ES-en", emoji: "🍽️" },
       { word: "schlafen", translation: "kulala", pronunciation: "SHLAH-fen", emoji: "😴" },
     ],
-    phrases: [
-      { text: "Ich stehe um 7 Uhr auf.", translation: "Naamka saa 7.", pronunciation: "Ikh SHTEY-uh oom ZEE-ben OOR owf." },
-      { text: "Er arbeitet bis 17 Uhr.", translation: "Anafanya kazi hadi saa 5 jioni.", pronunciation: "Air AR-bite-et bis zeek-tsayn OOR." },
-    ],
     grammar: {
       topic: "Vitenzi vinavyotenganishwa (Trennbare Verben)",
       explanation: "Baadhi ya vitenzi vya Kijerumani vinatenganishwa: sehemu moja mwanzo, sehemu nyingine mwisho!",
-      examples: [
-        "Ich stehe um 7 Uhr auf. (Naamka saa 7.)",
-        "Er ruft mich an. (Ananipigia simu.)",
-      ],
-      commonMistakes: ["Usisahau sehemu ya mwisho ya kitenzi!"],
+      examples: ["Ich stehe um 7 Uhr auf. (Naamka saa 7.)", "Er ruft mich an. (Ananipigia simu.)"],
     },
+    phrases: [],
     activities: [
       {
         id: "de-a2-3-order1",
@@ -524,6 +481,7 @@ export const GERMAN_A2_LESSONS: Lesson[] = [
         instruction: "Panga sentensi hii kwa mpangilio sahihi",
         correctOrder: ["Ich", "stehe", "um sieben Uhr", "auf"],
         scrambled: ["auf", "Ich", "um sieben Uhr", "stehe"],
+        hint: "Kitenzi 'aufstehen' kinatenganishwa",
       },
     ],
     aiTeacherPrompt: {
@@ -532,10 +490,44 @@ export const GERMAN_A2_LESSONS: Lesson[] = [
       topics: ["mazoea", "saa", "kila siku"],
     },
   },
+  {
+    id: "de-a2-lesson-4",
+    unitId: "de-a2-unit-1",
+    title: "Wetter - Hali ya Hewa",
+    description: "Zungumzia hali ya hewa na misimu",
+    icon: "🌤️",
+    level: "A2",
+    xpReward: 25,
+    estimatedMinutes: 10,
+    goals: [{ description: "Kuelezea hali ya hewa", xpReward: 25 }],
+    vocabulary: [
+      { word: "die Sonne", translation: "jua", pronunciation: "dee ZON-eh", emoji: "☀️" },
+      { word: "der Regen", translation: "mvua", pronunciation: "dair REH-gen", emoji: "🌧️" },
+      { word: "warm", translation: "joto", pronunciation: "varm", emoji: "🌡️" },
+      { word: "kalt", translation: "baridi", pronunciation: "kahlt", emoji: "❄️" },
+      { word: "der Sommer", translation: "kiangazi", pronunciation: "dair ZOM-mer", emoji: "🏖️" },
+      { word: "der Winter", translation: "kibarusi", pronunciation: "dair VIN-ter", emoji: "⛄" },
+    ],
+    phrases: [],
+    activities: [
+      {
+        id: "de-a2-4-mc1",
+        type: "multiple-choice",
+        question: "'Mvua' kwa Kijerumani ni nini?",
+        correctAnswer: "der Regen",
+        options: ["die Sonne", "der Regen", "der Schnee", "der Wind"],
+      },
+    ],
+    aiTeacherPrompt: {
+      systemPrompt: "Fundisha hali ya hewa kwa Kijerumani. Linganisha na hali ya hewa Tanzania.",
+      introMessage: "Habari! Hali ya hewa leo ni gani? 'Warm' inamaanisha 'joto'.",
+      topics: ["hali ya hewa", "misimu", "asili"],
+    },
+  },
 ];
 
 // ═══════════════════════════════════════════════════════════
-// 🇩🇪 B1 - INTERMEDIATE (WASTANI) - 2 Lessons
+// 🇩🇪 B1 - INTERMEDIATE (WASTANI) - 4 Lessons
 // ═══════════════════════════════════════════════════════════
 
 export const GERMAN_B1_LESSONS: Lesson[] = [
@@ -548,10 +540,7 @@ export const GERMAN_B1_LESSONS: Lesson[] = [
     level: "B1",
     xpReward: 35,
     estimatedMinutes: 15,
-    goals: [
-      { description: "Kueleza safari zako kwa Kijerumani", xpReward: 20 },
-      { description: "Kutumia wakati uliopita (Perfekt)", xpReward: 15 },
-    ],
+    goals: [{ description: "Kuelezea safari zilizopita", xpReward: 35 }],
     vocabulary: [
       { word: "die Reise", translation: "safari", pronunciation: "dee REYE-zuh", emoji: "🧳" },
       { word: "der Urlaub", translation: "likizo", pronunciation: "dair OOOR-lowp", emoji: "🏖️" },
@@ -559,28 +548,19 @@ export const GERMAN_B1_LESSONS: Lesson[] = [
       { word: "das Flugzeug", translation: "ndege", pronunciation: "dahs FLOOK-tsoyk", emoji: "✈️" },
       { word: "das Hotel", translation: "hoteli", pronunciation: "dahs ho-TEL", emoji: "🏨" },
     ],
-    phrases: [
-      { text: "Ich bin nach Berlin gereist.", translation: "Nimesafiri kwenda Berlin.", pronunciation: "Ikh bin nakh BER-leen guh-REYST." },
-      { text: "Wir haben ein Hotel gebucht.", translation: "Tumehifadhi hoteli.", pronunciation: "Veer HAH-ben ayn ho-TEL guh-BOOKHT." },
-    ],
     grammar: {
       topic: "Wakati Uliopita (Perfekt)",
       explanation: "Kijerumani hutumia 'haben' au 'sein' + kitenzi kwa wakati uliopita.",
-      examples: [
-        "Ich bin nach Berlin gereist. (Nimesafiri kwenda Berlin.)",
-        "Wir haben ein Hotel gebucht. (Tumehifadhi hoteli.)",
-      ],
+      examples: ["Ich bin nach Berlin gereist. (Nimesafiri kwenda Berlin.)", "Wir haben ein Hotel gebucht. (Tumehifadhi hoteli.)"],
     },
-    culturalNote: {
-      title: "Utamaduni wa Kusafiri 🇩🇪",
-      content: "Wajerumani wanapenda kusafiri sana! 'Reisefieber' (homa ya safari) ni msisimko kabla ya safari. Kumbuka: lazima uthibitishe tiketi ya treni kabla ya kupanda!",
-    },
+    phrases: [],
     activities: [
       {
         id: "de-b1-1-tr1",
         type: "translate",
         question: "Tafsiri: 'Tumehifadhi hoteli'",
         correctAnswer: "Wir haben ein Hotel gebucht",
+        hint: "Perfekt na 'haben'",
       },
     ],
     aiTeacherPrompt: {
@@ -597,11 +577,8 @@ export const GERMAN_B1_LESSONS: Lesson[] = [
     icon: "🏥",
     level: "B1",
     xpReward: 35,
-    estimatedMinutes: 15,
-    goals: [
-      { description: "Kueleza sehemu za mwili kwa Kijerumani", xpReward: 15 },
-      { description: "Kuzungumza kuhusu afya", xpReward: 20 },
-    ],
+    estimatedMinutes: 12,
+    goals: [{ description: "Kuelezea maumivu na afya", xpReward: 35 }],
     vocabulary: [
       { word: "der Kopf", translation: "kichwa", pronunciation: "dair KOPF", emoji: "🗣️" },
       { word: "der Bauch", translation: "tumbo", pronunciation: "dair BOWKH", emoji: "🤢" },
@@ -609,18 +586,7 @@ export const GERMAN_B1_LESSONS: Lesson[] = [
       { word: "der Arzt", translation: "daktari", pronunciation: "dair ARTST", emoji: "👨‍⚕️" },
       { word: "die Apotheke", translation: "duka la dawa", pronunciation: "dee ah-po-TAY-keh", emoji: "💊" },
     ],
-    phrases: [
-      { text: "Mir tut der Kopf weh.", translation: "Kichwa kinauma.", pronunciation: "Meer toot dair KOPF vay." },
-      { text: "Ich muss zum Arzt.", translation: "Lazima niende kwa daktari.", pronunciation: "Ikh moos tsoom ARTST." },
-    ],
-    grammar: {
-      topic: "Sehemu ya tatu (Dativ) na sehemu za mwili",
-      explanation: "Unapozungumzia sehemu ya mwili inayouma, tumia 'Mir tut der Kopf weh' (Kichwa kinauma).",
-      examples: [
-        "Mir tut der Kopf weh. (Kichwa kinauma.)",
-        "Ihm schmerzt der Bauch. (Tumbo linamuuma.)",
-      ],
-    },
+    phrases: [],
     activities: [
       {
         id: "de-b1-2-dialogue1",
@@ -640,48 +606,98 @@ export const GERMAN_B1_LESSONS: Lesson[] = [
       topics: ["afya", "mwili", "daktari"],
     },
   },
+  {
+    id: "de-b1-lesson-3",
+    unitId: "de-b1-unit-1",
+    title: "Meinungen - Maoni",
+    description: "Jifunze kueleza maoni yako kwa Kijerumani",
+    icon: "💭",
+    level: "B1",
+    xpReward: 35,
+    estimatedMinutes: 15,
+    goals: [{ description: "Kueleza maoni kwa ufasaha", xpReward: 35 }],
+    vocabulary: [
+      { word: "meiner Meinung nach", translation: "kwa maoni yangu", pronunciation: "MEYE-ner MEYE-noong nakh", emoji: "🗣️" },
+      { word: "ich finde", translation: "ninaona/nadhani", pronunciation: "ikh FIN-deh", emoji: "🤔" },
+      { word: "wichtig", translation: "muhimu", pronunciation: "VIKH-tikh", emoji: "❗" },
+      { word: "interessant", translation: "kuvutia", pronunciation: "in-teh-res-SANT", emoji: "✨" },
+    ],
+    phrases: [],
+    activities: [
+      {
+        id: "de-b1-3-mc1",
+        type: "multiple-choice",
+        question: "'Kwa maoni yangu' kwa Kijerumani ni nini?",
+        correctAnswer: "meiner Meinung nach",
+        options: ["ich finde", "meiner Meinung nach", "wichtig", "interessant"],
+      },
+    ],
+    aiTeacherPrompt: {
+      systemPrompt: "Fundisha kueleza maoni kwa Kijerumani kwa Kiswahili.",
+      introMessage: "Habari! Unadhani nini kuhusu Kijerumani?",
+      topics: ["maoni", "mjadala", "kufikiri"],
+    },
+  },
+  {
+    id: "de-b1-lesson-4",
+    unitId: "de-b1-unit-1",
+    title: "Arbeit - Kazi",
+    description: "Zungumzia kazi na taaluma",
+    icon: "💼",
+    level: "B1",
+    xpReward: 35,
+    estimatedMinutes: 15,
+    goals: [{ description: "Kuelezea kazi yako", xpReward: 35 }],
+    vocabulary: [
+      { word: "der Beruf", translation: "taaluma/kazi", pronunciation: "dair beh-ROOF", emoji: "👔" },
+      { word: "die Arbeit", translation: "kazi", pronunciation: "dee AR-bite", emoji: "💼" },
+      { word: "der Chef", translation: "meneja/boss", pronunciation: "dair SHEF", emoji: "👨‍💼" },
+      { word: "der Kollege", translation: "mwenzie kazi", pronunciation: "dair ko-LEH-geh", emoji: "🤝" },
+      { word: "verdienen", translation: "kupata (pesa)", pronunciation: "fer-DEE-nen", emoji: "💰" },
+    ],
+    phrases: [],
+    activities: [
+      {
+        id: "de-b1-4-tr1",
+        type: "translate",
+        question: "Tafsiri: 'Mwenzie kazi'",
+        correctAnswer: "der Kollege",
+      },
+    ],
+    aiTeacherPrompt: {
+      systemPrompt: "Fundisha lugha ya kazi ya Kijerumani kwa Kiswahili.",
+      introMessage: "Habari! Unafanya kazi gani?",
+      topics: ["kazi", "taaluma", "ofisi"],
+    },
+  },
 ];
 
 // ═══════════════════════════════════════════════════════════
-// 🇩🇪 B2 - UPPER INTERMEDIATE (JUULI) - 1 Lesson
+// 🇩🇪 B2 - UPPER INTERMEDIATE (JUULI) - 3 Lessons
 // ═══════════════════════════════════════════════════════════
 
 export const GERMAN_B2_LESSONS: Lesson[] = [
   {
     id: "de-b2-lesson-1",
     unitId: "de-b2-unit-1",
-    title: "Beruf - Kazi",
-    description: "Zungumzia kazi na taaluma",
-    icon: "💼",
+    title: "Karriere - Taaluma",
+    description: "Zungumzia uzoefu wa kazi na mahojiano",
+    icon: "📈",
     level: "B2",
     xpReward: 40,
-    estimatedMinutes: 15,
-    goals: [
-      { description: "Kuzungumza kuhusu kazi kwa Kijerumani", xpReward: 20 },
-      { description: "Kuandika maombi ya kazi", xpReward: 20 },
-    ],
+    estimatedMinutes: 18,
+    goals: [{ description: "Kufanya mahojiano ya kazi", xpReward: 40 }],
     vocabulary: [
       { word: "die Erfahrung", translation: "uzoefu", pronunciation: "dee air-FAH-roong", emoji: "📊" },
       { word: "die Bewerbung", translation: "maombi ya kazi", pronunciation: "dee buh-VER-boong", emoji: "📄" },
       { word: "das Vorstellungsgespräch", translation: "mahojiano ya kazi", pronunciation: "dahs FOR-shtel-oongs-guh-shprekh", emoji: "🤝" },
       { word: "sich bewerben", translation: "kuomba kazi", pronunciation: "zikh buh-VER-ben", emoji: "✉️" },
     ],
-    phrases: [
-      { text: "Ich habe fünf Jahre Erfahrung.", translation: "Nina uzoefu wa miaka mitano.", pronunciation: "Ikh HAH-beh fuenf YAH-reh air-FAH-roong." },
-      { text: "Ich möchte mich bewerben.", translation: "Ningependa kuomba kazi.", pronunciation: "Ikh MERKH-te mikh buh-VER-ben." },
-    ],
-    grammar: {
-      topic: "Vitenzi vya kujirejelea (Reflexive Verben)",
-      explanation: "Baadhi ya vitenzi huhitaji kivumishi cha kujirejelea (mich, dich, sich).",
-      examples: [
-        "Ich bewerbe mich. (Ninaomba kazi.)",
-        "Er interessiert sich für Technik. (Anavutiwa na teknolojia.)",
-      ],
-    },
     culturalNote: {
       title: "Maombi ya Kazi Ujerumani 🇩🇪",
       content: "Maombi ya Kijerumani huhitaji 'Lebenslauf' (CV) na 'Anschreiben' (barua ya maombi). Picha kwenye CV bado ni za kawaida!",
     },
+    phrases: [],
     activities: [
       {
         id: "de-b2-1-dialogue1",
@@ -694,9 +710,73 @@ export const GERMAN_B2_LESSONS: Lesson[] = [
       },
     ],
     aiTeacherPrompt: {
-      systemPrompt: "Fundisha lugha ya kazi ya Kijerumani kwa Kiswahili. Jifanya ni mwajiri.",
+      systemPrompt: "Jifanya ni mwajiri wa Kijerumani. Mwanafunzi ajibu maswali ya mahojiano.",
       introMessage: "Guten Tag! Karibu kwenye mahojiano. Eleza uzoefu wako.",
       topics: ["kazi", "taaluma", "mahojiano"],
+    },
+  },
+  {
+    id: "de-b2-lesson-2",
+    unitId: "de-b2-unit-1",
+    title: "Medien - Vyombo vya Habari",
+    description: "Jadili habari, mitandao ya kijamii na teknolojia",
+    icon: "📱",
+    level: "B2",
+    xpReward: 40,
+    estimatedMinutes: 15,
+    goals: [{ description: "Kujadili teknolojia kwa Kijerumani", xpReward: 40 }],
+    vocabulary: [
+      { word: "das soziale Netzwerk", translation: "mtandao wa kijamii", pronunciation: "dahs so-TSYAH-leh NETS-verk", emoji: "🌐" },
+      { word: "die Nachricht", translation: "habari/ujumbe", pronunciation: "dee NAHKH-rikht", emoji: "📰" },
+      { word: "die Privatsphäre", translation: "faragha", pronunciation: "dee pree-vaht-SFAY-reh", emoji: "🔒" },
+      { word: "abhängig sein von", translation: "kutegemea", pronunciation: "AB-heng-ikh zine fon", emoji: "🔗" },
+    ],
+    phrases: [],
+    activities: [
+      {
+        id: "de-b2-2-mc1",
+        type: "multiple-choice",
+        question: "'Mtandao wa kijamii' kwa Kijerumani ni nini?",
+        correctAnswer: "das soziale Netzwerk",
+        options: ["die Nachricht", "das soziale Netzwerk", "die Privatsphäre", "die Technologie"],
+      },
+    ],
+    aiTeacherPrompt: {
+      systemPrompt: "Fundisha maneno ya teknolojia na habari kwa Kijerumani kwa Kiswahili.",
+      introMessage: "Habari! Unatumia mitandao ya kijamii kiasi gani?",
+      topics: ["habari", "teknolojia", "mtandao"],
+    },
+  },
+  {
+    id: "de-b2-lesson-3",
+    unitId: "de-b2-unit-1",
+    title: "Umwelt - Mazingira",
+    description: "Zungumzia uhifadhi wa mazingira na mabadiliko ya tabianchi",
+    icon: "🌍",
+    level: "B2",
+    xpReward: 40,
+    estimatedMinutes: 18,
+    goals: [{ description: "Kujadili mazingira kwa Kijerumani", xpReward: 40 }],
+    vocabulary: [
+      { word: "die Umwelt", translation: "mazingira", pronunciation: "dee OOM-velt", emoji: "🌍" },
+      { word: "der Klimawandel", translation: "mabadiliko ya tabianchi", pronunciation: "dair KLEE-mah-van-del", emoji: "🌡️" },
+      { word: "nachhaltig", translation: "endelevu", pronunciation: "NAHKH-hal-tikh", emoji: "♻️" },
+      { word: "recyceln", translation: "kuchakata tena", pronunciation: "ree-TSY-keln", emoji: "🔄" },
+      { word: "schützen", translation: "kulinda", pronunciation: "SHUET-zen", emoji: "🛡️" },
+    ],
+    phrases: [],
+    activities: [
+      {
+        id: "de-b2-3-tr1",
+        type: "translate",
+        question: "Tafsiri: 'Mabadiliko ya tabianchi'",
+        correctAnswer: "der Klimawandel",
+      },
+    ],
+    aiTeacherPrompt: {
+      systemPrompt: "Fundisha maneno ya mazingira kwa Kijerumani kwa Kiswahili.",
+      introMessage: "Habari! Tunapaswa kulinda mazingira yetu. 'Umwelt' inamaanisha 'mazingira'.",
+      topics: ["mazingira", "uhifadhi", "tabianchi"],
     },
   },
 ];
