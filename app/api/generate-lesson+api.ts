@@ -13,6 +13,18 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 // Free tier limit: 1 lesson per week
+// Local type for AI-generated activities (mirrors frontend's Activity type)
+interface GeneratedActivity {
+  id: string;
+  type: string;
+  question?: string;
+  correctAnswer?: string;
+  options?: string[];
+  hint?: string;
+  front?: string;
+  back?: string;
+}
+
 const FREE_WEEKLY_LIMIT = 1;
 
 interface GenerateLessonRequest {
@@ -153,7 +165,7 @@ Return ONLY valid JSON, no markdown or explanations.`;
   }
 
   // Ensure all activities have IDs
-  lesson.activities = lesson.activities.map((act: any, idx: number) => ({
+  lesson.activities = lesson.activities.map((act: GeneratedActivity, idx: number) => ({
     ...act,
     id: act.id || `activity-${idx + 1}`,
   }));

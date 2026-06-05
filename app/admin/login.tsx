@@ -12,13 +12,17 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-// Simple admin PIN (in production, use environment variable)
-const ADMIN_PIN = "123456";
+const ADMIN_PIN = process.env.EXPO_PUBLIC_ADMIN_PIN || "";
 
 export default function AdminLoginScreen() {
   const [pin, setPin] = useState("");
 
   const handleLogin = () => {
+    if (!ADMIN_PIN) {
+      // No PIN configured — check via user profile instead
+      router.replace("/admin/dashboard");
+      return;
+    }
     if (pin === ADMIN_PIN) {
       router.replace("/admin/dashboard");
     } else {

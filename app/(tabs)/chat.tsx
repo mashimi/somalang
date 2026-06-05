@@ -84,6 +84,79 @@ type Message = {
   timestamp: Date;
 };
 
+// Extracted outside component — avoids function recreation on every render
+function getAIResponse(
+  userText: string,
+  topicId: string,
+  history: Message[],
+): { text: string; translation: string } {
+  const textLower = userText.toLowerCase();
+  const userMessageCount = history.filter((m) => m.sender === "user").length;
+
+  if (topicId === "intro") {
+    if (userMessageCount === 0) {
+      return {
+        text: "Sehr schön! Ich komme aus Deutschland. Wie alt bist du?",
+        translation: "Nzuri sana! Mimi ninatoka Ujerumani. Una umri gani?",
+      };
+    }
+    if (textLower.includes("alt") || /\d+/.test(textLower)) {
+      return {
+        text: "Wunderbar! Ich bin 24 Jahre alt. Lass uns zusammen Deutsch üben!",
+        translation: "Kuvutia sana! Mimi nina miaka 24. Ngoja tujifunze Kijerumani pamoja!",
+      };
+    }
+    return {
+      text: "Freut mich sehr! Deutsch lernen macht Spaß. Was sind deine Hobbys?",
+      translation: "Nafurahi sana kukutana nawe! Kujifunza Kijerumani kunafurahisha. Hobby zako ni gani?",
+    };
+  }
+
+  if (topicId === "cafe") {
+    if (textLower.includes("kaffee") || textLower.includes("kahawa")) {
+      return {
+        text: "Gerne! Möchten Sie auch ein Stück Kuchen dazu? (Brot oder Torte?)",
+        translation: "Karibu! Je, ungependa pia kipande cha keki? (Mkate au Keki?)",
+      };
+    }
+    if (textLower.includes("rechnung") || textLower.includes("bili") || textLower.includes("zahlen")) {
+      return {
+        text: "Natürlich! Das macht zusammen 4,50 Euro. Bar oder mit Karte?",
+        translation: "Bila shaka! Hiyo inakuja Euro 4.50. Taslimu au kwa kadi?",
+      };
+    }
+    return {
+      text: "Kommt sofort! Haben Sie sonst noch einen Wunsch?",
+      translation: "Inakuja sasa hivi! Je, una hitaji lingine lolote?",
+    };
+  }
+
+  if (topicId === "travel") {
+    if (textLower.includes("berlin") || textLower.includes("munich") || textLower.includes("germany")) {
+      return {
+        text: "Klasse! Deutschland hat viele schöne Städte. Reist du alleine?",
+        translation: "Safi sana! Ujerumani ina miji mingi mizuri. Unasafiri peke yako?",
+      };
+    }
+    return {
+      text: "Interessant! Gute Reise! Wann möchtest du fliegen?",
+      translation: "Inavutia! Safari njema! Unataka kusafiri lini?",
+    };
+  }
+
+  // Default shopping response
+  if (textLower.includes("kostet") || textLower.includes("bei") || textLower.includes("presi")) {
+    return {
+      text: "Das Buch kostet 12 Euro. Das ist ein sehr gutes Angebot!",
+      translation: "Kitabu kinagharimu Euro 12. Hii ni ofa nzuri sana!",
+    };
+  }
+  return {
+    text: "Ja, wir haben das hier im Regal. Möchten Sie es anprobieren oder kaufen?",
+    translation: "Ndio, tunacho hapa kwenye rafu. Ungependa kukijaribu au kukinunua?",
+  };
+}
+
 export default function ChatScreen() {
   const [activeTopic, setActiveTopic] = useState<Topic | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -115,74 +188,6 @@ export default function ChatScreen() {
     setInputValue("");
   };
 
-  const getAIResponse = (userText: string, topicId: string, history: Message[]): { text: string; translation: string } => {
-    const textLower = userText.toLowerCase();
-    const userMessageCount = history.filter((m) => m.sender === "user").length;
-
-    if (topicId === "intro") {
-      if (userMessageCount === 0) {
-        return {
-          text: "Sehr schön! Ich komme aus Deutschland. Wie alt bist du?",
-          translation: "Nzuri sana! Mimi ninatoka Ujerumani. Una umri gani?",
-        };
-      }
-      if (textLower.includes("alt") || /\d+/.test(textLower)) {
-        return {
-          text: "Wunderbar! Ich bin 24 Jahre alt. Lass uns zusammen Deutsch üben!",
-          translation: "Kuvutia sana! Mimi nina miaka 24. Ngoja tujifunze Kijerumani pamoja!",
-        };
-      }
-      return {
-        text: "Freut mich sehr! Deutsch lernen macht Spaß. Was sind deine Hobbys?",
-        translation: "Nafurahi sana kukutana nawe! Kujifunza Kijerumani kunafurahisha. Hobby zako ni gani?",
-      };
-    }
-
-    if (topicId === "cafe") {
-      if (textLower.includes("kaffee") || textLower.includes("kahawa")) {
-        return {
-          text: "Gerne! Möchten Sie auch ein Stück Kuchen dazu? (Brot oder Torte?)",
-          translation: "Karibu! Je, ungependa pia kipande cha keki? (Mkate au Keki?)",
-        };
-      }
-      if (textLower.includes("rechnung") || textLower.includes("bili") || textLower.includes("zahlen")) {
-        return {
-          text: "Natürlich! Das macht zusammen 4,50 Euro. Bar oder mit Karte?",
-          translation: "Bila shaka! Hiyo inakuja Euro 4.50. Taslimu au kwa kadi?",
-        };
-      }
-      return {
-        text: "Kommt sofort! Haben Sie sonst noch einen Wunsch?",
-        translation: "Inakuja sasa hivi! Je, una hitaji lingine lolote?",
-      };
-    }
-
-    if (topicId === "travel") {
-      if (textLower.includes("berlin") || textLower.includes("munich") || textLower.includes("germany")) {
-        return {
-          text: "Klasse! Deutschland hat viele schöne Städte. Reist du alleine?",
-          translation: "Safi sana! Ujerumani ina miji mingi mizuri. Unasafiri peke yako?",
-        };
-      }
-      return {
-        text: "Interessant! Gute Reise! Wann möchtest du fliegen?",
-        translation: "Inavutia! Safari njema! Unataka kusafiri lini?",
-      };
-    }
-
-    // Default shopping response
-    if (textLower.includes("kostet") || textLower.includes("bei") || textLower.includes("presi")) {
-      return {
-        text: "Das Buch kostet 12 Euro. Das ist ein sehr gutes Angebot!",
-        translation: "Kitabu kinagharimu Euro 12. Hii ni ofa nzuri sana!",
-      };
-    }
-    return {
-      text: "Ja, wir haben das hier im Regal. Möchten Sie es anprobieren oder kaufen?",
-      translation: "Ndio, tunacho hapa kwenye rafu. Ungependa kukijaribu au kukinunua?",
-    };
-  };
-
   const handleSendMessage = () => {
     if (!inputValue.trim() || !activeTopic) return;
 
@@ -199,7 +204,10 @@ export default function ChatScreen() {
     setIsTyping(true);
 
     setTimeout(() => {
-      const response = getAIResponse(userMessageText, activeTopic.id, [...messages, userMessage]);
+      const response = getAIResponse(userMessageText, activeTopic.id, [
+        ...messages,
+        userMessage,
+      ]);
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         sender: "ai",
@@ -239,7 +247,9 @@ export default function ChatScreen() {
             data={messages}
             keyExtractor={(item) => item.id}
             contentContainerStyle={styles.messagesContent}
-            onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
+            onContentSizeChange={() =>
+              flatListRef.current?.scrollToEnd({ animated: true })
+            }
             renderItem={({ item }) => {
               const isUser = item.sender === "user";
               return (
@@ -251,7 +261,10 @@ export default function ChatScreen() {
                 >
                   {!isUser && (
                     <View style={styles.chatAvatar}>
-                      <Image source={images.mascotWelcome || images.mascotLogo} style={styles.chatAvatarImg} />
+                      <Image
+                        source={images.mascotWelcome || images.mascotLogo}
+                        style={styles.chatAvatarImg}
+                      />
                     </View>
                   )}
                   <View
@@ -263,7 +276,9 @@ export default function ChatScreen() {
                     <Text
                       style={[
                         styles.messageText,
-                        isUser ? styles.messageTextUser : styles.messageTextAI,
+                        isUser
+                          ? styles.messageTextUser
+                          : styles.messageTextAI,
                       ]}
                     >
                       {item.text}
@@ -337,7 +352,8 @@ export default function ChatScreen() {
           <View style={styles.heroRight}>
             <Text style={styles.heroTitle}>Improve your writing</Text>
             <Text style={styles.heroDescription}>
-              Chat with our AI tutor on common real-life topics. Type in German or Kiswahili, and get translations and replies!
+              Chat with our AI tutor on common real-life topics. Type in German
+              or Kiswahili, and get translations and replies!
             </Text>
           </View>
         </View>
@@ -360,7 +376,11 @@ export default function ChatScreen() {
             >
               <View style={styles.topicHeader}>
                 <Text style={styles.topicEmoji}>{topic.emoji}</Text>
-                <Ionicons name="chevron-forward" size={18} color="#001328" />
+                <Ionicons
+                  name="chevron-forward"
+                  size={18}
+                  color="#001328"
+                />
               </View>
               <Text style={styles.topicTitle}>{topic.title}</Text>
               <Text style={styles.topicSubtitle}>{topic.subtitle}</Text>

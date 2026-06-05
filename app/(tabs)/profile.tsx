@@ -194,6 +194,7 @@ export default function ProfileScreen() {
           <TouchableOpacity
             style={styles.menuItem}
             onPress={() => router.push("/payment")}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           >
             <View style={styles.menuItemLeft}>
               <Ionicons name="card" size={22} color="#6c4ef5" />
@@ -207,6 +208,7 @@ export default function ProfileScreen() {
           <TouchableOpacity
             style={styles.menuItem}
             onPress={() => router.push("/payment-history")}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           >
             <View style={styles.menuItemLeft}>
               <Ionicons name="receipt" size={22} color="#6c4ef5" />
@@ -217,7 +219,7 @@ export default function ProfileScreen() {
 
           <View style={styles.menuDivider} />
 
-          <TouchableOpacity style={styles.menuItem}>
+          <TouchableOpacity style={styles.menuItem} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
             <View style={styles.menuItemLeft}>
               <Ionicons name="settings" size={22} color="#6c4ef5" />
               <Text style={styles.menuItemText}>Settings</Text>

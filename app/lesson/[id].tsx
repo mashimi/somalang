@@ -213,7 +213,11 @@ export default function LessonScreen() {
     clientRef.current = null;
     agentSessionRef.current = null;
     stopAgentSession(callId, sessionId);
-    router.back();
+    if (router.canGoBack()) {
+      router.back();
+    } else {
+      router.replace("/(tabs)/learn");
+    }
   }
 
   if (!lesson) {
