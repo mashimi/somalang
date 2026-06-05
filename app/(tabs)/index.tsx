@@ -52,6 +52,15 @@ const PLAN_ITEMS = [
     subtitle: "10 words",
     completed: false,
   },
+  {
+    id: "ai-generator",
+    icon: "sparkles" as const,
+    iconBg: "#F5F2FF",
+    iconColor: "#6c4ef5",
+    title: "AI Lesson Generator",
+    subtitle: "Create custom lessons",
+    completed: false,
+  },
 ];
 
 export default function HomeScreen() {
@@ -75,6 +84,8 @@ export default function HomeScreen() {
       router.navigate("/learn");
     } else if (itemId === "ai-conversation") {
       router.navigate("/ai-teacher");
+    } else if (itemId === "ai-generator") {
+      router.navigate("/ai-generator");
     } else {
       router.navigate("/learn");
     }

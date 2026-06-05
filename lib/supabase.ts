@@ -44,6 +44,7 @@ export interface Database {
           phone: string;
           referral_code: string;
           referred_by: string | null;
+          xp_balance: number;
           premium_until: string | null;
           created_at: string;
         };
@@ -52,6 +53,7 @@ export interface Database {
           phone: string;
           referral_code?: string;
           referred_by?: string | null;
+          xp_balance?: number;
           premium_until?: string | null;
         };
         Update: Partial<

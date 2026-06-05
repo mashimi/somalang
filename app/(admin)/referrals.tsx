@@ -21,6 +21,7 @@ type Referral = Database["public"]["Tables"]["referrals"]["Row"] & {
 export default function ReferralsScreen() {
   const [referrals, setReferrals] = useState<Referral[]>([]);
   const [loading, setLoading] = useState(true);
+  const [processing, setProcessing] = useState<string | null>(null);
 
   useEffect(() => {
     loadReferrals();
@@ -56,44 +57,101 @@ export default function ReferralsScreen() {
   );
   const grantedCount = referrals.filter((r) => r.status === "granted").length;
 
-  const renderReferral = ({ item }: { item: Referral }) => (
-    <View style={styles.card}>
-      <View style={styles.cardRow}>
-        <View style={styles.personColumn}>
-          <Text style={styles.personName}>
-            {item.referrer?.phone || "Unknown"}
-          </Text>
-          <Text style={styles.personLabel}>Referrer</Text>
-        </View>
-        <Ionicons name="arrow-forward" size={20} color="#9ca3af" />
-        <View style={[styles.personColumn, { alignItems: "flex-end" }]}>
-          <Text style={styles.personName}>
-            {item.referee?.phone || "Unknown"}
-          </Text>
-          <Text style={styles.personLabel}>Referred</Text>
-        </View>
-      </View>
+  const grantReward = async (referral: Referral) => {
+    if (!referral.referrer_id || !referral.reward_xp) return;
+    setProcessing(referral.id);
+    try {
+      // 1. Update referral status to granted
+      const { error: refError } = await supabase
+        .from("referrals")
+        .update({ status: "granted" })
+        .eq("id", referral.id);
+      if (refError) throw refError;
 
-      <View style={styles.rewardRow}>
-        <View style={styles.rewardBadge}>
-          <Ionicons name="gift" size={16} color="#6c4ef5" />
-          <Text style={styles.rewardText}>+{item.reward_xp} XP</Text>
-        </View>
-        <View
-          style={[
-            styles.statusBadge,
-            item.status === "granted" && styles.statusGranted,
-          ]}
-        >
-          <Text style={styles.statusText}>{item.status.toUpperCase()}</Text>
-        </View>
-      </View>
+      // 2. Add XP to the referrer's balance
+      const { data: profile } = await supabase
+        .from("user_profiles")
+        .select("xp_balance")
+        .eq("id", referral.referrer_id)
+        .single();
 
-      <Text style={styles.dateText}>
-        {new Date(item.created_at).toLocaleDateString()}
-      </Text>
-    </View>
-  );
+      const newBalance = (profile?.xp_balance || 0) + referral.reward_xp;
+
+      const { error: xpError } = await supabase
+        .from("user_profiles")
+        .update({ xp_balance: newBalance })
+        .eq("id", referral.referrer_id);
+
+      if (xpError) throw xpError;
+
+      Alert.alert("Success", `Granted ${referral.reward_xp} XP to referrer`);
+      await loadReferrals();
+    } catch (err) {
+      console.error("Error granting reward:", err);
+      Alert.alert("Error", "Failed to grant reward");
+    } finally {
+      setProcessing(null);
+    }
+  };
+
+  const renderReferral = ({ item }: { item: Referral }) => {
+    const isPending = item.status === "pending";
+    return (
+      <View style={styles.card}>
+        <View style={styles.cardRow}>
+          <View style={styles.personColumn}>
+            <Text style={styles.personName}>
+              {item.referrer?.phone || "Unknown"}
+            </Text>
+            <Text style={styles.personLabel}>Referrer</Text>
+          </View>
+          <Ionicons name="arrow-forward" size={20} color="#9ca3af" />
+          <View style={[styles.personColumn, { alignItems: "flex-end" }]}>
+            <Text style={styles.personName}>
+              {item.referee?.phone || "Unknown"}
+            </Text>
+            <Text style={styles.personLabel}>Referred</Text>
+          </View>
+        </View>
+
+        <View style={styles.rewardRow}>
+          <View style={styles.rewardBadge}>
+            <Ionicons name="gift" size={16} color="#6c4ef5" />
+            <Text style={styles.rewardText}>+{item.reward_xp} XP</Text>
+          </View>
+          <View
+            style={[
+              styles.statusBadge,
+              item.status === "granted" && styles.statusGranted,
+            ]}
+          >
+            <Text style={styles.statusText}>{item.status.toUpperCase()}</Text>
+          </View>
+        </View>
+
+        {isPending && (
+          <TouchableOpacity
+            onPress={() => grantReward(item)}
+            disabled={processing === item.id}
+            style={[styles.grantButton, processing === item.id && styles.buttonDisabled]}
+          >
+            {processing === item.id ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              <>
+                <Ionicons name="checkmark-circle" size={20} color="#fff" />
+                <Text style={styles.grantButtonText}>Grant XP Bonus</Text>
+              </>
+            )}
+          </TouchableOpacity>
+        )}
+
+        <Text style={styles.dateText}>
+          {new Date(item.created_at).toLocaleDateString()}
+        </Text>
+      </View>
+    );
+  };
 
   if (loading) {
     return (
@@ -279,6 +337,24 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins-Regular",
     fontSize: 12,
     color: "#9ca3af",
+  },
+  grantButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#21c16b",
+    borderRadius: 12,
+    padding: 12,
+    gap: 8,
+    marginBottom: 8,
+  },
+  buttonDisabled: {
+    opacity: 0.7,
+  },
+  grantButtonText: {
+    color: "#fff",
+    fontFamily: "Poppins-SemiBold",
+    fontSize: 14,
   },
   emptyContainer: {
     alignItems: "center",

@@ -78,6 +78,8 @@ export default function RootLayout() {
         <Stack.Screen name="lesson/[id]" />
         <Stack.Screen name="payment" />
         <Stack.Screen name="subscription" />
+        <Stack.Screen name="payment-history" />
+        <Stack.Screen name="ai-generator" />
         <Stack.Screen name="(admin)" />
         <Stack.Screen name="admin/login" />
         <Stack.Screen name="admin/dashboard" />

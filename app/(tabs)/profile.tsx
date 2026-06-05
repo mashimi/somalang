@@ -115,6 +115,26 @@ export default function ProfileScreen() {
           )}
         </View>
 
+        {/* Stats Row */}
+        <View style={styles.statsRow}>
+          <View style={styles.statBox}>
+            <Text style={styles.statValue}>{profile?.xp_balance || 0}</Text>
+            <Text style={styles.statLabel}>Total XP</Text>
+          </View>
+          <View style={styles.statBox}>
+            <Text style={styles.statValue}>
+              {isPremium
+                ? Math.ceil(
+                    (new Date(profile!.premium_until!).getTime() -
+                      Date.now()) /
+                      (1000 * 60 * 60 * 24)
+                  )
+                : 0}
+            </Text>
+            <Text style={styles.statLabel}>Days Left</Text>
+          </View>
+        </View>
+
         {/* Premium Status */}
         <TouchableOpacity
           style={styles.subscriptionCard}
@@ -186,7 +206,7 @@ export default function ProfileScreen() {
 
           <TouchableOpacity
             style={styles.menuItem}
-            onPress={() => router.push("/subscription")}
+            onPress={() => router.push("/payment-history")}
           >
             <View style={styles.menuItemLeft}>
               <Ionicons name="receipt" size={22} color="#6c4ef5" />
@@ -285,6 +305,31 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins-SemiBold",
     fontSize: 12,
     color: "#D97706",
+  },
+  statsRow: {
+    flexDirection: "row",
+    gap: 12,
+    marginBottom: 16,
+  },
+  statBox: {
+    flex: 1,
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    padding: 16,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+  },
+  statValue: {
+    fontFamily: "Poppins-Bold",
+    fontSize: 24,
+    color: "#6c4ef5",
+  },
+  statLabel: {
+    fontFamily: "Poppins-Regular",
+    fontSize: 12,
+    color: "#6b7280",
+    marginTop: 4,
   },
   subscriptionCard: {
     backgroundColor: "#fff",

@@ -257,6 +257,18 @@ export default function AdminDashboardScreen() {
         </TouchableOpacity>
       </View>
 
+      {/* Navigation */}
+      <View style={styles.navRow}>
+        <TouchableOpacity
+          style={styles.navButton}
+          onPress={() => router.push("/(admin)/referrals")}
+        >
+          <Ionicons name="gift" size={20} color="#6c4ef5" />
+          <Text style={styles.navButtonText}>Manage Referral Rewards</Text>
+          <Ionicons name="chevron-forward" size={20} color="#6c4ef5" />
+        </TouchableOpacity>
+      </View>
+
       {/* Stats */}
       <View style={styles.statsContainer}>
         <View style={styles.statCard}>
@@ -438,6 +450,25 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontFamily: "Poppins-SemiBold",
     fontSize: 14,
+  },
+  navRow: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
+  navButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#f5f2ff",
+    padding: 16,
+    borderRadius: 12,
+    justifyContent: "space-between",
+    borderWidth: 1,
+    borderColor: "#e4d9ff",
+  },
+  navButtonText: {
+    fontFamily: "Poppins-SemiBold",
+    fontSize: 15,
+    color: "#6c4ef5",
   },
   emptyContainer: {
     alignItems: "center",
