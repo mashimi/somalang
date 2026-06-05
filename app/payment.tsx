@@ -1,3 +1,4 @@
+import { ScreenHeader } from "@/components/ScreenHeader";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/lib/supabase";
 import { Ionicons } from "@expo/vector-icons";
@@ -101,17 +102,7 @@ export default function PaymentScreen() {
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
-          {/* Header */}
-          <View style={styles.header}>
-            <TouchableOpacity
-              onPress={() => router.back()}
-              style={styles.backButton}
-            >
-              <Ionicons name="chevron-back" size={24} color="#001328" />
-            </TouchableOpacity>
-            <Text style={styles.headerTitle}>Premium Payment</Text>
-            <View style={styles.backButton} />
-          </View>
+          <ScreenHeader title="Premium Payment" />
 
           {/* M-Pesa Instructions */}
           <View style={styles.instructionCard}>
@@ -219,23 +210,6 @@ const styles = StyleSheet.create({
   scrollContent: {
     padding: 20,
     paddingBottom: 40,
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 24,
-  },
-  backButton: {
-    width: 40,
-    height: 40,
-    justifyContent: "center",
-  },
-  headerTitle: {
-    flex: 1,
-    textAlign: "center",
-    fontFamily: "Poppins-SemiBold",
-    fontSize: 18,
-    color: "#001328",
   },
   instructionCard: {
     backgroundColor: "#FFF5E8",

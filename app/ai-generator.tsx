@@ -1,18 +1,19 @@
+import { ScreenHeader } from "@/components/ScreenHeader";
 import { supabase } from "@/lib/supabase";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
-    ActivityIndicator,
-    Alert,
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -133,17 +134,7 @@ export default function AIGeneratorScreen() {
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
-          {/* Header */}
-          <View style={styles.header}>
-            <TouchableOpacity
-              onPress={() => router.back()}
-              style={styles.backButton}
-            >
-              <Ionicons name="chevron-back" size={24} color="#001328" />
-            </TouchableOpacity>
-            <Text style={styles.headerTitle}>Tengeneza Somo la AI</Text>
-            <View style={{ width: 40 }} />
-          </View>
+          <ScreenHeader title="Tengeneza Somo la AI" />
 
           {/* Hero Section */}
           <View style={styles.heroSection}>

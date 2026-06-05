@@ -1,3 +1,4 @@
+import { ScreenHeader } from "@/components/ScreenHeader";
 import { useLearningStore } from "@/store/learningStore";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -71,14 +72,7 @@ export default function ReviewScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#f6f7fb" }}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
-          <Ionicons name="chevron-back" size={24} color="#001328" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Kukariri Maneno</Text>
-        <View style={{ width: 24 }} />
-      </View>
+      <ScreenHeader title="Kukariri Maneno" />
 
       {/* Progress */}
       <View style={styles.progressContainer}>

@@ -1,6 +1,6 @@
+import { ScreenHeader } from "@/components/ScreenHeader";
 import { Database, supabase } from "@/lib/supabase";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -165,19 +165,14 @@ export default function ReferralsScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#f6f7fb" }}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => router.back()}
-          style={styles.backButton}
-        >
-          <Ionicons name="chevron-back" size={24} color="#001328" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Referral Rewards</Text>
-        <TouchableOpacity onPress={loadReferrals} style={styles.refreshButton}>
-          <Ionicons name="refresh" size={24} color="#6c4ef5" />
-        </TouchableOpacity>
-      </View>
+      <ScreenHeader
+        title="Referral Rewards"
+        rightElement={
+          <TouchableOpacity onPress={loadReferrals} className="w-10 h-10 items-center justify-center">
+            <Ionicons name="refresh" size={24} color="#6c4ef5" />
+          </TouchableOpacity>
+        }
+      />
 
       {/* Stats */}
       <View style={styles.statsContainer}>

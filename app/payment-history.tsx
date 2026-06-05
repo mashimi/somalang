@@ -1,15 +1,16 @@
+import { ScreenHeader } from "@/components/ScreenHeader";
 import { useAuth } from "@/hooks/useAuth";
 import { Database, supabase } from "@/lib/supabase";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import {
-    ActivityIndicator,
-    FlatList,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -102,16 +103,7 @@ export default function PaymentHistoryScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#f6f7fb" }}>
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => router.back()}
-          style={styles.backButton}
-        >
-          <Ionicons name="chevron-back" size={24} color="#001328" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Payment History</Text>
-        <View style={{ width: 40 }} />
-      </View>
+      <ScreenHeader title="Payment History" />
 
       <FlatList
         data={payments}
